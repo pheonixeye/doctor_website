@@ -1,15 +1,13 @@
-import 'dart:async';
-
-import 'package:after_layout/after_layout.dart';
-import 'package:doctor_website_models/doctor_website__models.dart';
+import 'package:doctor_website/extensions/first_where_or_null_ext.dart';
+import 'package:doctor_website/models/clinic.dart';
+import 'package:doctor_website/providers/px_booking.dart';
+import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_website/components/loading_animation_widget.dart';
 import 'package:doctor_website/components/no_items_in_list_card.dart';
 import 'package:doctor_website/functions/res_size.dart';
 import 'package:doctor_website/providers/locale_p.dart';
-import 'package:doctor_website/providers/px_booking_make.dart';
 import 'package:doctor_website/providers/px_booking_s_c.dart';
-import 'package:doctor_website/providers/px_clinics_get.dart';
 import 'package:doctor_website/styles/styles.dart';
 import 'package:provider/provider.dart';
 
@@ -20,38 +18,31 @@ class SelectClinicSection extends StatefulWidget {
   State<SelectClinicSection> createState() => _SelectClinicSectionState();
 }
 
-class _SelectClinicSectionState extends State<SelectClinicSection>
-    with AfterLayoutMixin {
-  @override
-  FutureOr<void> afterFirstLayout(BuildContext context) {
-    _initClinics();
-  }
-
-  Future _initClinics() async {
-    await context.read<PxClinicGet>().fetchClinics();
-  }
-
+class _SelectClinicSectionState extends State<SelectClinicSection> {
   @override
   Widget build(BuildContext context) {
-    return Consumer2<PxClinicGet, PxBookingMake>(
-      builder: (context, cl, b, c) {
-        while (cl.clinics == null) {
+    return Consumer2<PxGetDoctorData, PxBooking>(
+      builder: (context, m, b, _) {
+        while (m.model == null || m.model!.clinics == null) {
           return const LoadingAnimationWidget();
         }
-        while (cl.clinics!.isEmpty) {
+        while (m.model!.clinics!.isEmpty) {
           return const NoItemsInListCard();
         }
         return Flex(
           direction: isMobile(context) ? Axis.vertical : Axis.horizontal,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: cl.clinics!.map((e) {
+          children: m.model!.clinics!.map((e) {
             return Expanded(
               child: ClinicSelectionCard(
-                clinic: e,
+                clinic: e.clinic,
                 onValueChanged: (clinic) {
-                  b.setclinic(e);
+                  b.setBooking(clinic_id: e.clinic.id);
                 },
-                groupValue: b.clinic,
+                groupValue: m.model!.clinics!
+                    .firstWhereOrNull(
+                        (x) => x.clinic.id == b.booking!.clinic_id)
+                    ?.clinic,
               ),
             );
           }).toList(),
@@ -85,8 +76,8 @@ class _ClinicSelectionCardState extends State<ClinicSelectionCard> {
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Consumer3<PxBookingMake, PxBookingSC, PxLocale>(
-        builder: (context, b, s, l, c) {
+      child: Consumer2<PxBookingSC, PxLocale>(
+        builder: (context, s, l, c) {
           bool isEnglish = l.lang == 'en';
           return GestureDetector(
             onTap: () {
@@ -123,7 +114,7 @@ class _ClinicSelectionCardState extends State<ClinicSelectionCard> {
                         : Colors.grey,
                 child: Center(
                   child: Text(
-                    isEnglish ? widget.clinic.nameEn : widget.clinic.nameAr,
+                    isEnglish ? widget.clinic.name_en : widget.clinic.name_ar,
                     style: Styles.TITLESTEXTSYTYLE(context),
                   ),
                 ),

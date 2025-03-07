@@ -1,37 +1,21 @@
-import 'dart:async';
-
-import 'package:after_layout/after_layout.dart';
+import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_website/components/collective_footer.dart';
 import 'package:doctor_website/components/loading_animation_widget.dart';
 import 'package:doctor_website/components/no_items_in_list_card.dart';
 import 'package:doctor_website/components/subroute_bkgrnd.dart';
 import 'package:doctor_website/functions/res_size.dart';
-import 'package:doctor_website/providers/px_before_after_list_get.dart';
 import 'package:doctor_website/sr_before_after_view/_widgets/before_after_card.dart';
 import 'package:provider/provider.dart';
 
 class BeforeAfterViewPage extends StatefulWidget {
-  const BeforeAfterViewPage({super.key, this.categoryId});
-  final String? categoryId;
+  const BeforeAfterViewPage({super.key});
 
   @override
   State<BeforeAfterViewPage> createState() => _BeforeAfterViewPageState();
 }
 
-class _BeforeAfterViewPageState extends State<BeforeAfterViewPage>
-    with AfterLayoutMixin {
-  @override
-  FutureOr<void> afterFirstLayout(BuildContext context) async {
-    await _initBeforeAfterList();
-  }
-
-  _initBeforeAfterList() async {
-    await context
-        .read<PxBeforeAfterListGet>()
-        .fetchBeforeAfterList(widget.categoryId ?? '');
-  }
-
+class _BeforeAfterViewPageState extends State<BeforeAfterViewPage> {
   @override
   Widget build(BuildContext context) {
     return SubRouteBackground(
@@ -40,23 +24,25 @@ class _BeforeAfterViewPageState extends State<BeforeAfterViewPage>
         children: [
           SizedBox(
             height: sectionHeightHomepageViewAboutDiv(context),
-            child: Consumer<PxBeforeAfterListGet>(
-              builder: (context, ba, c) {
-                while (ba.beforeAfter == null) {
+            child: Consumer<PxGetDoctorData>(
+              builder: (context, m, c) {
+                while (m.model == null) {
                   return const LoadingAnimationWidget();
                 }
-                while (ba.beforeAfter!.isEmpty) {
+                while (m.model!.cases == null || m.model!.cases!.isEmpty) {
                   return const NoItemsInListCard();
                 }
                 return GridView.builder(
-                  itemCount: ba.beforeAfter!.length,
+                  itemCount: m.model!.cases?.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: 1,
                   ),
                   itemBuilder: (context, index) {
+                    final item = m.model!.cases![index];
+
                     return BeforeAfterCard(
-                      ba: ba.beforeAfter![index],
+                      ba: item,
                     );
                   },
                 );

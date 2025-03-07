@@ -1,9 +1,9 @@
+import 'package:doctor_website/functions/loc_ext_fns.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:doctor_website/functions/res_size.dart';
 import 'package:doctor_website/providers/locale_p.dart';
 import 'package:provider/provider.dart';
-import 'package:doctor_website/exports/exports.dart';
 
 class BookAppHeroButton extends StatefulWidget {
   const BookAppHeroButton({super.key});

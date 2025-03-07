@@ -1,9 +1,9 @@
+import 'package:doctor_website/functions/loc_ext_fns.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_website/components/link_text.dart';
 import 'package:doctor_website/custom_font_icons_icons.dart';
 import 'package:doctor_website/functions/res_size.dart';
 import 'package:doctor_website/styles/styles.dart';
-import 'package:doctor_website/exports/exports.dart';
 
 class DivSocial extends StatelessWidget {
   const DivSocial({super.key});

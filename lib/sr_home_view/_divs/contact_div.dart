@@ -3,13 +3,12 @@
 
 import 'dart:async';
 
-import 'package:after_layout/after_layout.dart';
+import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_website/components/loading_animation_widget.dart';
 import 'package:doctor_website/components/no_items_in_list_card.dart';
 import 'package:doctor_website/functions/res_size.dart';
 import 'package:doctor_website/providers/locale_p.dart';
-import 'package:doctor_website/providers/px_clinics_get.dart';
 import 'package:doctor_website/styles/styles.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +21,7 @@ class DivContact extends StatefulWidget {
   State<DivContact> createState() => _DivContactState();
 }
 
-class _DivContactState extends State<DivContact> with AfterLayoutMixin {
+class _DivContactState extends State<DivContact> {
   late final Timer timer;
   late final PageController pageController;
   @override
@@ -30,22 +29,6 @@ class _DivContactState extends State<DivContact> with AfterLayoutMixin {
     super.initState();
     wids.loadLibrary();
     pageController = PageController();
-    timer = Timer.periodic(const Duration(seconds: 10), (timer) {
-      if (context.read<PxClinicGet>().clinics != null &&
-          context.read<PxClinicGet>().clinics!.isNotEmpty) {
-        context.read<PxClinicGet>().setPage();
-        pageController.animateToPage(
-          context.read<PxClinicGet>().page,
-          duration: const Duration(seconds: 3),
-          curve: Curves.ease,
-        );
-      }
-    });
-  }
-
-  @override
-  FutureOr<void> afterFirstLayout(BuildContext context) async {
-    await _initClinics();
   }
 
   @override
@@ -53,10 +36,6 @@ class _DivContactState extends State<DivContact> with AfterLayoutMixin {
     pageController.dispose();
     timer.cancel();
     super.dispose();
-  }
-
-  Future _initClinics() async {
-    await context.read<PxClinicGet>().fetchClinics();
   }
 
   @override
@@ -71,32 +50,34 @@ class _DivContactState extends State<DivContact> with AfterLayoutMixin {
         child: Builder(
           builder: (context) {
             if (isMobile(context)) {
-              return Consumer2<PxClinicGet, PxLocale>(
-                builder: (context, cl, l, c) {
-                  while (cl.clinics == null) {
+              return Consumer2<PxGetDoctorData, PxLocale>(
+                builder: (context, m, l, c) {
+                  while (m.model == null) {
                     return const LoadingAnimationWidget();
                   }
-                  while (cl.clinics!.isEmpty) {
+                  while (
+                      m.model!.clinics == null || m.model!.clinics!.isEmpty) {
                     return const NoItemsInListCard();
                   }
                   return PageView.builder(
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: cl.clinics!.length,
+                    itemCount: m.model!.clinics!.length,
                     controller: pageController,
                     onPageChanged: (value) {},
                     itemBuilder: (context, index) {
                       // String venue = l.lang == 'en'
                       //     ? '${cl.clinics![index].govEn} - ${cl.clinics![index].distEn} - ${cl.clinics![index].venueEn}'
                       //     : '${cl.clinics![index].govAr} - ${cl.clinics![index].distAr} - ${cl.clinics![index].venueAr}';
-                      String address = l.lang == 'en'
-                          ? cl.clinics![index].addressEn
-                          : cl.clinics![index].addressAr;
+                      String address = l.isEnglish
+                          ? m.model!.clinics![index].clinic.address_en
+                          : m.model!.clinics![index].clinic.address_ar;
                       return Column(
                         children: [
                           Expanded(
                             flex: 1,
                             child: wids.MapViewIframe(
-                              link: cl.clinics![index].locationEmbedLink,
+                              link:
+                                  m.model!.clinics![index].clinic.location_link,
                             ),
                           ),
                           Expanded(
@@ -121,11 +102,7 @@ class _DivContactState extends State<DivContact> with AfterLayoutMixin {
                                 Expanded(
                                   flex: 3,
                                   child: wids.HoursTile(
-                                    schedule: cl.clinics![index].schedule,
-                                    hasSpecialSchedule:
-                                        cl.clinics![index].hasSpecialSchedule,
-                                    ssEn: cl.clinics![index].specialScheduleEn,
-                                    ssAr: cl.clinics![index].specialScheduleAr,
+                                    schedule: m.model!.clinics![index].schedule,
                                   ),
                                 ),
                               ],
@@ -138,50 +115,42 @@ class _DivContactState extends State<DivContact> with AfterLayoutMixin {
                 },
               );
             } else {
-              return Consumer2<PxClinicGet, PxLocale>(
-                builder: (context, cl, l, c) {
-                  while (cl.clinics == null) {
+              return Consumer2<PxGetDoctorData, PxLocale>(
+                builder: (context, m, l, c) {
+                  while (m.model == null) {
                     return const LoadingAnimationWidget();
                   }
-                  while (cl.clinics!.isEmpty) {
+                  while (
+                      m.model!.clinics == null || m.model!.clinics!.isEmpty) {
                     return const NoItemsInListCard();
                   }
                   return PageView.builder(
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: cl.clinics!.length,
+                    itemCount: m.model!.clinics!.length,
                     controller: pageController,
                     onPageChanged: (value) {},
                     itemBuilder: (context, index) {
-                      String venue = l.lang == 'en'
-                          ? '${cl.clinics![index].govEn} - ${cl.clinics![index].distEn} - ${cl.clinics![index].venueEn}'
-                          : '${cl.clinics![index].govAr} - ${cl.clinics![index].distAr} - ${cl.clinics![index].venueAr}';
                       String address = l.lang == 'en'
-                          ? cl.clinics![index].addressEn
-                          : cl.clinics![index].addressAr;
+                          ? m.model!.clinics![index].clinic.address_en
+                          : m.model!.clinics![index].clinic.address_ar;
                       return Row(
                         children: [
                           Expanded(
                             flex: 1,
                             child: wids.MapViewIframe(
-                              link: cl.clinics![index].locationEmbedLink,
+                              link:
+                                  m.model!.clinics![index].clinic.location_link,
                             ),
                           ),
                           Expanded(
                             flex: 1,
                             child: Column(
                               children: [
-                                wids.VenueTile(
-                                  venue: venue,
-                                ),
                                 wids.AddressTile(
                                   address: address,
                                 ),
                                 wids.HoursTile(
-                                  schedule: cl.clinics![index].schedule,
-                                  hasSpecialSchedule:
-                                      cl.clinics![index].hasSpecialSchedule,
-                                  ssEn: cl.clinics![index].specialScheduleEn,
-                                  ssAr: cl.clinics![index].specialScheduleAr,
+                                  schedule: m.model!.clinics![index].schedule,
                                 ),
                               ],
                             ),

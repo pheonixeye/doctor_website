@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:doctor_website/components/loading_animation_widget.dart';
 import 'package:doctor_website/functions/time_fns.dart';
 import 'package:doctor_website/providers/locale_p.dart';
-import 'package:doctor_website/providers/px_booking_make.dart';
 import 'package:doctor_website/providers/px_booking_s_c.dart';
 import 'package:doctor_website/sr_home_view/_divs/_widgets_book_div/no_clinic_selected_card.dart';
 import 'package:doctor_website/styles/styles.dart';
 import 'package:provider/provider.dart';
-
-import '../../../providers/px_clinics_get.dart';
 
 class SelectDateSection extends StatefulWidget {
   const SelectDateSection({super.key});

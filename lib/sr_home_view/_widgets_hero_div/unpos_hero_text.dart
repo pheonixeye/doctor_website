@@ -1,4 +1,4 @@
-import 'package:doctor_website_models/doctor_website__models.dart';
+import 'package:doctor_website/models/hero_item.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_website/providers/locale_p.dart';
 import 'package:doctor_website/styles/styles.dart';
@@ -13,13 +13,14 @@ class HeroTextUnpositioned extends StatelessWidget {
       builder: (context, l, c) {
         return Column(
           children: heroTextList.map((e) {
-            final style = Styles.HEROITEMTEXTSTYLE(e.fontSize);
+            final style =
+                Styles.HEROITEMTEXTSTYLE(e.font_mobile?.toDouble() ?? 16);
 
             if (l.lang == 'en') {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  e.textEn,
+                  e.text_en ?? '',
                   style: style,
                   textAlign: TextAlign.center,
                 ),
@@ -28,7 +29,7 @@ class HeroTextUnpositioned extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  e.textAr,
+                  e.text_ar ?? '',
                   style: style,
                   textAlign: TextAlign.center,
                 ),

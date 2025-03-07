@@ -1,18 +1,16 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:math';
 
-import 'package:doctor_website_models/doctor_website__models.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:doctor_website/models/case.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:doctor_website/pages/pages.dart';
 import 'package:doctor_website/providers/locale_p.dart';
 import 'package:doctor_website/styles/styles.dart';
 import 'package:provider/provider.dart';
 
 class BeforeAfterCard extends StatefulWidget {
   const BeforeAfterCard({super.key, required this.ba});
-  final BeforeAfter ba;
+  final Case ba;
 
   @override
   State<BeforeAfterCard> createState() => _BeforeAfterCardState();
@@ -35,13 +33,13 @@ class _BeforeAfterCardState extends State<BeforeAfterCard> {
 
   _imageWidget(int num) {
     return num == 0
-        ? Image.memory(
-            base64Decode(widget.ba.beforeImg),
+        ? CachedNetworkImage(
+            imageUrl: (widget.ba.pre_image),
             key: const ValueKey('before'),
             fit: BoxFit.cover,
           )
-        : Image.memory(
-            base64Decode(widget.ba.afterImg),
+        : CachedNetworkImage(
+            imageUrl: (widget.ba.pre_image),
             key: const ValueKey('after'),
             fit: BoxFit.cover,
           );
@@ -61,12 +59,6 @@ class _BeforeAfterCardState extends State<BeforeAfterCard> {
         builder: (context, l, c) {
           bool isEnglish = l.lang == 'en';
           return InkWell(
-            onTap: () {
-              if (widget.ba.mediaItemId != null) {
-                GoRouter.of(context).go(
-                    '/${l.lang}/${PageNumbers.MediaView.i}/${widget.ba.mediaItemId}');
-              }
-            },
             child: Card(
               clipBehavior: Clip.antiAliasWithSaveLayer,
               elevation: 10,
@@ -97,7 +89,7 @@ class _BeforeAfterCardState extends State<BeforeAfterCard> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          isEnglish ? widget.ba.titleEn : widget.ba.titleAr,
+                          isEnglish ? widget.ba.name_en : widget.ba.name_ar,
                           style: Styles.ARTICLETITLESTEXTSYTYLE(context),
                           textAlign: TextAlign.center,
                         ),
@@ -106,8 +98,8 @@ class _BeforeAfterCardState extends State<BeforeAfterCard> {
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           isEnglish
-                              ? widget.ba.descriptionEn
-                              : widget.ba.descriptionAr,
+                              ? widget.ba.description_en
+                              : widget.ba.description_ar,
                           style: Styles.ARTICLESUBTITLESTEXTSYTYLE(context),
                           textAlign: TextAlign.center,
                         ),

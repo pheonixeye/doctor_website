@@ -1,9 +1,9 @@
+import 'package:doctor_website/functions/loc_ext_fns.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_website/config/const.dart';
 import 'package:doctor_website/functions/res_size.dart';
 import 'package:doctor_website/providers/locale_p.dart';
 import 'package:doctor_website/styles/styles.dart';
-import 'package:doctor_website/exports/exports.dart';
 import 'package:provider/provider.dart';
 
 const mFont = TextStyle(

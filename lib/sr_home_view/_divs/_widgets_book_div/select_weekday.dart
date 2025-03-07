@@ -1,11 +1,9 @@
-import 'package:doctor_website_models/doctor_website__models.dart';
+import 'package:doctor_website/models/schedule.dart';
+import 'package:doctor_website/providers/px_booking.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_website/components/loading_animation_widget.dart';
-import 'package:doctor_website/extensions/model_ext.dart';
 import 'package:doctor_website/providers/locale_p.dart';
-import 'package:doctor_website/providers/px_booking_make.dart';
 import 'package:doctor_website/providers/px_booking_s_c.dart';
-import 'package:doctor_website/providers/px_clinics_get.dart';
 import 'package:doctor_website/sr_home_view/_divs/_widgets_book_div/no_clinic_selected_card.dart';
 import 'package:doctor_website/styles/styles.dart';
 import 'package:provider/provider.dart';
@@ -74,8 +72,8 @@ class _WeekdaySelectionCardState extends State<WeekdaySelectionCard> {
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Consumer3<PxBookingMake, PxBookingSC, PxLocale>(
-        builder: (context, b, s, l, c) {
+      child: Consumer3<PxBooking, PxBookingSC, PxLocale>(
+        builder: (context, b, s, l, _) {
           return GestureDetector(
             onTap: () {
               widget.onValueChanged(widget.schedule);

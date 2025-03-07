@@ -1,11 +1,11 @@
+import 'package:doctor_website/extensions/first_where_or_null_ext.dart';
+import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_website/components/collective_footer.dart';
 import 'package:doctor_website/components/loading_animation_widget.dart';
 import 'package:doctor_website/components/subroute_bkgrnd.dart';
 import 'package:doctor_website/functions/res_size.dart';
-import 'package:doctor_website/functions/time_fns.dart';
 import 'package:doctor_website/providers/locale_p.dart';
-import 'package:doctor_website/providers/px_media_view.dart';
 import 'package:doctor_website/sr_home_view/_widgets_contact_div/map_view.dart';
 import 'package:doctor_website/styles/styles.dart';
 import 'package:provider/provider.dart';
@@ -19,27 +19,17 @@ class MediaItemViewPage extends StatefulWidget {
 
 class _MediaItemViewPageState extends State<MediaItemViewPage> {
   @override
-  void initState() {
-    super.initState();
-    _initMediaItem();
-  }
-
-  _initMediaItem() async {
-    await context
-        .read<PxMediaView>()
-        .selectMediaItemFromServer(widget.itemId ?? '');
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SubRouteBackground(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<PxMediaView>(
-          builder: (context, m, c) {
-            while (m.mediaItem == null) {
+        child: Consumer<PxGetDoctorData>(
+          builder: (context, m, _) {
+            while (m.model == null) {
               return const LoadingAnimationWidget();
             }
+            final item =
+                m.model?.videos?.firstWhereOrNull((v) => v.id == widget.itemId);
             return Consumer<PxLocale>(
               builder: (context, l, c) {
                 bool isEnglish = l.lang == 'en';
@@ -50,7 +40,7 @@ class _MediaItemViewPageState extends State<MediaItemViewPage> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        isEnglish ? m.mediaItem!.titleEn : m.mediaItem!.titleAr,
+                        isEnglish ? item?.title_en ?? '' : item?.title_en ?? '',
                         style: Styles.TITLESTEXTSYTYLE(context),
                       ),
                     ),
@@ -58,26 +48,26 @@ class _MediaItemViewPageState extends State<MediaItemViewPage> {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         isEnglish
-                            ? m.mediaItem!.descriptionEn
-                            : m.mediaItem!.descriptionAr,
+                            ? item?.description_en ?? ''
+                            : item?.description_ar ?? '',
                         style: Styles.ARTICLESUBTITLESTEXTSYTYLE(context),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        m.mediaItem!.timeadded.toFormattedDate(context),
-                        style: Styles.TAGSTEXTSYTYLE(),
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(8.0),
+                    //   child: Text(
+                    //     m.mediaItem!.timeadded.toFormattedDate(context),
+                    //     style: Styles.TAGSTEXTSYTYLE(),
+                    //   ),
+                    // ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: SizedBox(
-                        height: m.mediaItem!.isLong
+                        height: item?.is_long ?? true
                             ? sectionHeightHomepageViewAboutDiv(context) * 1.6
                             : sectionHeightHomepageViewAboutDiv(context),
                         child: MapViewIframe(
-                          link: m.mediaItem!.src,
+                          link: item?.src ?? '',
                         ),
                       ),
                     ),

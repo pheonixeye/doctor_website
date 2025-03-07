@@ -1,21 +1,29 @@
+import 'package:doctor_website/constant/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:doctor_website/config/const.dart';
 import 'package:doctor_website/language/app_localizations.dart';
 import 'package:doctor_website/providers/_px_main.dart';
 import 'package:doctor_website/providers/locale_p.dart';
 import 'package:doctor_website/routes/routes.dart';
 import 'package:doctor_website/styles/styles.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-void main() {
-  const String environment = String.fromEnvironment(
-    'ENVIRONMENT',
-    defaultValue: Environment.PROD,
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await initializeDateFormatting('ar');
+
+  await dotenv.load(fileName: "assets/env/.env");
+
+  await Supabase.initialize(
+    url: dotenv.env[AppConstants.SUPABASE_URL]!,
+    anonKey: dotenv.env[AppConstants.SUPABASE_ANON_KEY]!,
   );
-  // print(environment);
-  Environment().initConfig(environment);
+
   runApp(const MyApp());
 }
 

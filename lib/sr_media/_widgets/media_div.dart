@@ -1,13 +1,10 @@
-import 'dart:async';
-
-import 'package:after_layout/after_layout.dart';
+import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:doctor_website/components/loading_animation_widget.dart';
 import 'package:doctor_website/components/no_items_in_list_card.dart';
 import 'package:doctor_website/functions/loc_ext_fns.dart';
 import 'package:doctor_website/functions/res_size.dart';
-import 'package:doctor_website/providers/px_media_get.dart';
 import 'package:doctor_website/sr_media/_widgets/media_item_card.dart';
 import 'package:doctor_website/styles/styles.dart';
 import 'package:provider/provider.dart';
@@ -19,12 +16,7 @@ class DivMedia extends StatefulWidget {
   State<DivMedia> createState() => _DivMediaState();
 }
 
-class _DivMediaState extends State<DivMedia> with AfterLayoutMixin {
-  @override
-  FutureOr<void> afterFirstLayout(BuildContext context) async {
-    await context.read<PxMediaGet>().fetchMediaItems();
-  }
-
+class _DivMediaState extends State<DivMedia> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -34,12 +26,12 @@ class _DivMediaState extends State<DivMedia> with AfterLayoutMixin {
         elevation: 10,
         shape: Styles.ABOUTCARDBORDER,
         color: Styles.MAINPAGECOMPONENTCARDCOLOR,
-        child: Consumer<PxMediaGet>(
-          builder: (context, m, c) {
-            while (m.mediaItems == null) {
+        child: Consumer<PxGetDoctorData>(
+          builder: (context, m, _) {
+            while (m.model == null) {
               return const LoadingAnimationWidget();
             }
-            while (m.mediaItems!.isEmpty) {
+            while (m.model!.videos == null || m.model!.videos!.isEmpty) {
               return const NoItemsInListCard();
             }
             return Column(
@@ -49,9 +41,9 @@ class _DivMediaState extends State<DivMedia> with AfterLayoutMixin {
                   child: ListView.builder(
                     cacheExtent: 3000,
                     addAutomaticKeepAlives: true,
-                    itemCount: m.mediaItems!.length,
+                    itemCount: m.model!.videos?.length,
                     itemBuilder: (context, index) {
-                      return MediaItemCard(mediaItem: m.mediaItems![index]);
+                      return MediaItemCard(mediaItem: m.model!.videos![index]);
                     },
                   ),
                 ),
@@ -69,7 +61,7 @@ class _DivMediaState extends State<DivMedia> with AfterLayoutMixin {
                         ),
                         onPressed: () async {
                           await EasyLoading.show(status: context.loc.loading);
-                          await m.previousPage();
+                          // await m.previousPage();
                           await EasyLoading.dismiss();
                         },
                         child: const Center(
@@ -79,13 +71,13 @@ class _DivMediaState extends State<DivMedia> with AfterLayoutMixin {
                       const SizedBox(
                         width: 20,
                       ),
-                      FloatingActionButton(
-                        heroTag: 'mediapagenumber',
-                        onPressed: null,
-                        child: Center(
-                          child: Text('${m.page + 1}'),
-                        ),
-                      ),
+                      // FloatingActionButton(
+                      //   heroTag: 'mediapagenumber',
+                      //   onPressed: null,
+                      //   child: Center(
+                      //     child: Text('${m.page + 1}'),
+                      //   ),
+                      // ),
                       const SizedBox(
                         width: 20,
                       ),
@@ -96,7 +88,7 @@ class _DivMediaState extends State<DivMedia> with AfterLayoutMixin {
                         ),
                         onPressed: () async {
                           await EasyLoading.show(status: context.loc.loading);
-                          await m.nextPage();
+                          // await m.nextPage();
                           await EasyLoading.dismiss();
                         },
                         child: const Center(

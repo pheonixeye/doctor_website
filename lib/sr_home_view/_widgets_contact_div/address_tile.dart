@@ -1,7 +1,7 @@
+import 'package:doctor_website/functions/loc_ext_fns.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_website/components/link_text.dart';
 import 'package:doctor_website/styles/styles.dart';
-import 'package:doctor_website/exports/exports.dart';
 
 class AddressTile extends StatelessWidget {
   const AddressTile({super.key, required this.address});

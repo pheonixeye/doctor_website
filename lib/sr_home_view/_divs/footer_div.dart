@@ -1,12 +1,12 @@
 // ignore: avoid_web_libraries_in_flutter
-import 'dart:html';
+import 'package:doctor_website/functions/loc_ext_fns.dart';
+import 'package:web/web.dart' as w;
 
 import 'package:flutter/material.dart';
 import 'package:doctor_website/components/link_text.dart';
 import 'package:doctor_website/functions/res_size.dart';
 import 'package:doctor_website/functions/tr_number.dart';
 import 'package:doctor_website/styles/styles.dart';
-import 'package:doctor_website/exports/exports.dart';
 
 class DivFooter extends StatelessWidget {
   const DivFooter({super.key});
@@ -39,7 +39,7 @@ class DivFooter extends StatelessWidget {
                 color: Colors.grey,
               ),
               onTap: () {
-                window.open(
+                w.window.open(
                   'https://drkaz.dev',
                   '_blank',
                 );

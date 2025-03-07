@@ -1,7 +1,7 @@
+import 'package:doctor_website/providers/px_booking.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:doctor_website/functions/loc_ext_fns.dart';
-import 'package:doctor_website/providers/px_booking_make.dart';
 import 'package:doctor_website/providers/px_booking_s_c.dart';
 import 'package:doctor_website/styles/styles.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +11,7 @@ class BookingConfirmedSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<PxBookingSC, PxBookingMake>(
+    return Consumer2<PxBookingSC, PxBooking>(
       builder: (context, sc, b, c) {
         return Flex(
           direction: Axis.vertical,
@@ -60,8 +60,10 @@ class BookingConfirmedSection extends StatelessWidget {
                       onPressed: () async {
                         await EasyLoading.show(status: context.loc.loading)
                             .then((value) {
-                          b.nullifyValues();
-                          sc.scrollToPage(0, context);
+                          b.resetBooking();
+                          if (context.mounted) {
+                            sc.scrollToPage(0, context);
+                          }
                         }).then((value) async {
                           await EasyLoading.dismiss();
                         });

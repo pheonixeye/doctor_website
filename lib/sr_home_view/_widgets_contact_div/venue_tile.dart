@@ -1,6 +1,6 @@
+import 'package:doctor_website/functions/loc_ext_fns.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_website/components/link_text.dart';
-import 'package:doctor_website/exports/exports.dart';
 import 'package:doctor_website/styles/styles.dart';
 
 class VenueTile extends StatelessWidget {

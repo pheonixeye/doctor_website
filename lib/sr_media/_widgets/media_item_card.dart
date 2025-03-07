@@ -1,18 +1,16 @@
 import 'dart:convert';
 
-import 'package:doctor_website_models/doctor_website__models.dart';
+import 'package:doctor_website/models/video.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:doctor_website/functions/time_fns.dart';
 import 'package:doctor_website/pages/pages.dart';
 import 'package:doctor_website/providers/locale_p.dart';
-import 'package:doctor_website/providers/px_media_view.dart';
 import 'package:doctor_website/styles/styles.dart';
 import 'package:provider/provider.dart';
 
 class MediaItemCard extends StatelessWidget {
   const MediaItemCard({super.key, required this.mediaItem});
-  final MediaItem mediaItem;
+  final Video mediaItem;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -42,7 +40,7 @@ class MediaItemCard extends StatelessWidget {
               title: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  isEnglish ? mediaItem.titleEn : mediaItem.titleAr,
+                  isEnglish ? mediaItem.title_en : mediaItem.title_ar,
                   style: Styles.TITLESTEXTSYTYLE(context),
                 ),
               ),
@@ -53,22 +51,22 @@ class MediaItemCard extends StatelessWidget {
                   children: [
                     Text(
                       isEnglish
-                          ? mediaItem.descriptionEn
-                          : mediaItem.descriptionAr,
+                          ? mediaItem.description_en
+                          : mediaItem.description_ar,
                       style: Styles.ARTICLESUBTITLESTEXTSYTYLE(context),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        mediaItem.timeadded.toFormattedDate(context),
-                        style: Styles.TAGSTEXTSYTYLE(),
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(8.0),
+                    //   child: Text(
+                    //     mediaItem.timeadded.toFormattedDate(context),
+                    //     style: Styles.TAGSTEXTSYTYLE(),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
               onTap: () {
-                context.read<PxMediaView>().selectMediaItem(mediaItem);
+                // context.read<PxMediaView>().selectMediaItem(mediaItem);
                 GoRouter.of(context).push(
                     '/${l.lang}/${PageNumbers.MediaView.i}/${mediaItem.id}');
               },

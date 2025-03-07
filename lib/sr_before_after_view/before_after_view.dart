@@ -1,7 +1,7 @@
+import 'package:doctor_website/sr_before_after_view/_widgets/bas_view_page.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_website/components/collective_footer.dart';
 import 'package:doctor_website/providers/exp_opacity_p.dart';
-import 'package:doctor_website/sr_before_after_view/_widgets/categories_div.dart';
 import 'package:provider/provider.dart';
 
 class BeforeAfterView extends StatelessWidget {
@@ -16,7 +16,7 @@ class BeforeAfterView extends StatelessWidget {
           child: ListView(
             cacheExtent: 3000,
             children: const [
-              DivCategories(),
+              BeforeAfterViewPage(),
               ...COLLECTIVEFOOTER,
             ],
           ),

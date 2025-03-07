@@ -1,18 +1,12 @@
-import 'dart:async';
-import 'dart:convert';
-
-import 'package:after_layout/after_layout.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:doctor_website/extensions/first_where_or_null_ext.dart';
+import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:doctor_website/components/collective_footer.dart';
-import 'package:doctor_website/components/link_text.dart';
 import 'package:doctor_website/components/loading_animation_widget.dart';
 import 'package:doctor_website/components/subroute_bkgrnd.dart';
-import 'package:doctor_website/functions/loc_ext_fns.dart';
 import 'package:doctor_website/functions/res_size.dart';
-import 'package:doctor_website/pages/pages.dart';
 import 'package:doctor_website/providers/locale_p.dart';
-import 'package:doctor_website/providers/px_service_one_get.dart';
 import 'package:doctor_website/styles/styles.dart';
 import 'package:provider/provider.dart';
 
@@ -23,27 +17,17 @@ class OneServiceViewPage extends StatefulWidget {
   State<OneServiceViewPage> createState() => _OneServiceViewPageState();
 }
 
-class _OneServiceViewPageState extends State<OneServiceViewPage>
-    with AfterLayoutMixin {
-  @override
-  FutureOr<void> afterFirstLayout(BuildContext context) async {
-    _initService();
-  }
-
-  _initService() async {
-    await context
-        .read<PxOneServiceGet>()
-        .fetchOneServiceFromServer(widget.serviceId ?? '');
-  }
-
+class _OneServiceViewPageState extends State<OneServiceViewPage> {
   @override
   Widget build(BuildContext context) {
     return SubRouteBackground(
-      child: Consumer<PxOneServiceGet>(
-        builder: (context, s, c) {
-          while (s.service == null) {
+      child: Consumer<PxGetDoctorData>(
+        builder: (context, m, _) {
+          while (m.model == null || m.model?.services == null) {
             return const LoadingAnimationWidget();
           }
+          final item = m.model!.services!
+              .firstWhereOrNull((s) => s.service.id == widget.serviceId);
           return Consumer<PxLocale>(
             builder: (context, l, c) {
               bool isEnglish = l.lang == 'en';
@@ -53,7 +37,9 @@ class _OneServiceViewPageState extends State<OneServiceViewPage>
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      isEnglish ? s.service!.titleEn : s.service!.titleAr,
+                      isEnglish
+                          ? item?.service.name_en ?? ''
+                          : item?.service.name_ar ?? '',
                       style: Styles.TITLESTEXTSYTYLE(context),
                       textAlign: TextAlign.center,
                     ),
@@ -62,8 +48,8 @@ class _OneServiceViewPageState extends State<OneServiceViewPage>
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       isEnglish
-                          ? s.service!.descriptionEn
-                          : s.service!.descriptionAr,
+                          ? item?.service.description_en ?? ''
+                          : item?.service.description_ar ?? '',
                       style: Styles.ARTICLESUBTITLESTEXTSYTYLE(context),
                       textAlign: TextAlign.center,
                     ),
@@ -76,14 +62,14 @@ class _OneServiceViewPageState extends State<OneServiceViewPage>
                         elevation: 10,
                         shape: Styles.CARDSHAPE,
                         clipBehavior: Clip.antiAliasWithSaveLayer,
-                        child: Image.memory(
-                          base64Decode(s.service!.image),
+                        child: CachedNetworkImage(
+                          imageUrl: (item!.service.image),
                           fit: BoxFit.contain,
                         ),
                       ),
                     ),
                   ),
-                  ...s.service!.faqs.map(
+                  ...item.faqs.map(
                     (e) => ExpansionTile(
                       leading: Container(
                         width: 50,
@@ -104,7 +90,7 @@ class _OneServiceViewPageState extends State<OneServiceViewPage>
                       title: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          isEnglish ? e.questionEn : e.questionAr,
+                          isEnglish ? e.q_en : e.q_ar,
                           style: Styles.ARTICLETITLESTEXTSYTYLE(context),
                         ),
                       ),
@@ -112,20 +98,10 @@ class _OneServiceViewPageState extends State<OneServiceViewPage>
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            isEnglish ? e.answerEn : e.answerAr,
+                            isEnglish ? e.a_en : e.a_ar,
                             style: Styles.ARTICLESUBTITLESTEXTSYTYLE(context),
                           ),
                         ),
-                        e.mediaItemId != null
-                            ? LinkText(
-                                context.loc.media,
-                                style: Styles.TITLESTEXTSYTYLE(context),
-                                onTap: () {
-                                  GoRouter.of(context).go(
-                                      '/${l.lang}/${PageNumbers.MediaView.i}/${e.mediaItemId!}');
-                                },
-                              )
-                            : const SizedBox(),
                       ],
                     ),
                   ),

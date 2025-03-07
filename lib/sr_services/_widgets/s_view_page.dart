@@ -1,7 +1,5 @@
-import 'dart:async';
-import 'dart:convert';
-
-import 'package:after_layout/after_layout.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:doctor_website/components/collective_footer.dart';
@@ -11,40 +9,26 @@ import 'package:doctor_website/components/subroute_bkgrnd.dart';
 import 'package:doctor_website/functions/res_size.dart';
 import 'package:doctor_website/pages/pages.dart';
 import 'package:doctor_website/providers/locale_p.dart';
-import 'package:doctor_website/providers/px_services_get.dart';
 import 'package:doctor_website/styles/styles.dart';
 import 'package:provider/provider.dart';
 
 class ServicesViewPage extends StatefulWidget {
-  const ServicesViewPage({super.key, required this.mfId});
-  final String? mfId;
+  const ServicesViewPage({super.key});
 
   @override
   State<ServicesViewPage> createState() => _ServicesViewPageState();
 }
 
-class _ServicesViewPageState extends State<ServicesViewPage>
-    with AfterLayoutMixin {
-  @override
-  FutureOr<void> afterFirstLayout(BuildContext context) async {
-    await _initServices();
-  }
-
-  _initServices() async {
-    if (widget.mfId != null) {
-      await context.read<PxServicesGet>().fetchServices(widget.mfId!);
-    }
-  }
-
+class _ServicesViewPageState extends State<ServicesViewPage> {
   @override
   Widget build(BuildContext context) {
     return SubRouteBackground(
-      child: Consumer<PxServicesGet>(
-        builder: (context, s, c) {
-          while (s.services == null) {
+      child: Consumer<PxGetDoctorData>(
+        builder: (context, m, _) {
+          while (m.model == null) {
             return const LoadingAnimationWidget();
           }
-          while (s.services!.isEmpty) {
+          while (m.model!.services == null || m.model!.services!.isEmpty) {
             return const NoItemsInListCard();
           }
           return ListView(
@@ -53,12 +37,14 @@ class _ServicesViewPageState extends State<ServicesViewPage>
               SizedBox(
                 height: sectionHeightHomepageViewAboutDiv(context),
                 child: GridView.builder(
-                  itemCount: s.services!.length,
+                  itemCount: m.model!.services?.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: 1.5,
                   ),
                   itemBuilder: (context, index) {
+                    final item = m.model!.services![index];
+
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Consumer<PxLocale>(
@@ -67,7 +53,7 @@ class _ServicesViewPageState extends State<ServicesViewPage>
                           return InkWell(
                             onTap: () {
                               GoRouter.of(context).push(
-                                  '/${l.lang}/${PageNumbers.ServicesView.i}/${widget.mfId}/${s.services![index].id}');
+                                  '/${l.lang}/${PageNumbers.ServicesView.i}/${item.service.id}');
                             },
                             child: Card(
                               color: Colors.transparent,
@@ -79,8 +65,8 @@ class _ServicesViewPageState extends State<ServicesViewPage>
                                     height: 10,
                                   ),
                                   Expanded(
-                                    child: Image.memory(
-                                      base64Decode(s.services![index].image),
+                                    child: CachedNetworkImage(
+                                      imageUrl: item.service.image,
                                       fit: BoxFit.cover,
                                       matchTextDirection: true,
                                     ),
@@ -89,8 +75,8 @@ class _ServicesViewPageState extends State<ServicesViewPage>
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
                                       isEnglish
-                                          ? s.services![index].titleEn
-                                          : s.services![index].titleAr,
+                                          ? item.service.name_en
+                                          : item.service.name_ar,
                                       style: Styles.ARTICLETITLESTEXTSYTYLE(
                                           context),
                                       textAlign: TextAlign.center,
