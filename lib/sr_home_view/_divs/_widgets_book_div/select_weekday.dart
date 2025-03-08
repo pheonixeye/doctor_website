@@ -1,5 +1,7 @@
-import 'package:doctor_website/models/schedule.dart';
+import 'package:doctor_website/extensions/first_where_or_null_ext.dart';
+import 'package:doctor_website/extensions/schedule_ext.dart';
 import 'package:doctor_website/providers/px_booking.dart';
+import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_website/components/loading_animation_widget.dart';
 import 'package:doctor_website/providers/locale_p.dart';
@@ -19,26 +21,30 @@ class _SelectWeekdaySectionState extends State<SelectWeekdaySection> {
   final _controller = ScrollController();
   @override
   Widget build(BuildContext context) {
-    return Consumer2<PxClinicGet, PxBookingMake>(
-      builder: (context, cl, b, c) {
-        while (cl.clinics == null || cl.clinics!.isEmpty) {
+    return Consumer2<PxGetDoctorData, PxBooking>(
+      builder: (context, m, b, c) {
+        while (m.model == null || m.model!.clinics == null) {
           return const LoadingAnimationWidget();
         }
-        while (b.clinic == null) {
+        while (b.booking == null || b.booking!.clinic_id == null) {
           return const NoClinicSelectedCard();
         }
+        final _selectedClinic = m.model!.clinics!
+            .firstWhereOrNull((crm) => crm.clinic.id == b.booking!.clinic_id);
         return SingleChildScrollView(
           controller: _controller,
           child: Flex(
             direction: Axis.vertical,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: b.clinic!.schedule.map((e) {
+            children: _selectedClinic!.schedule.map((e) {
               return WeekdaySelectionCard(
-                schedule: e,
-                onValueChanged: (sch) {
-                  b.setDay(sch);
+                schedule_id: e.id,
+                onValueChanged: (id) {
+                  b.setBooking(
+                    schedule_id: id,
+                  );
                 },
-                groupValue: b.day,
+                groupValue: b.booking?.schedule_id,
               );
             }).toList(),
           ),
@@ -51,13 +57,13 @@ class _SelectWeekdaySectionState extends State<SelectWeekdaySection> {
 class WeekdaySelectionCard extends StatefulWidget {
   const WeekdaySelectionCard({
     super.key,
-    required this.schedule,
+    required this.schedule_id,
     required this.onValueChanged,
     this.groupValue,
   });
-  final Schedule schedule;
-  final void Function(Schedule clinic) onValueChanged;
-  final Schedule? groupValue;
+  final String schedule_id;
+  final void Function(String clinic) onValueChanged;
+  final String? groupValue;
 
   @override
   State<WeekdaySelectionCard> createState() => _WeekdaySelectionCardState();
@@ -68,15 +74,22 @@ class _WeekdaySelectionCardState extends State<WeekdaySelectionCard> {
   bool isHovering = false;
   @override
   Widget build(BuildContext context) {
-    isSelected = widget.groupValue == widget.schedule;
-
+    isSelected = widget.groupValue == widget.schedule_id;
+    final _sch = context
+        .read<PxGetDoctorData>()
+        .model!
+        .clinics!
+        .firstWhereOrNull(
+            (c) => c.clinic.id == context.read<PxBooking>().booking!.clinic_id)!
+        .schedule
+        .firstWhereOrNull((s) => s.id == widget.schedule_id);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Consumer3<PxBooking, PxBookingSC, PxLocale>(
         builder: (context, b, s, l, _) {
           return GestureDetector(
             onTap: () {
-              widget.onValueChanged(widget.schedule);
+              widget.onValueChanged(widget.schedule_id);
               setState(() {
                 isHovering = false;
               });
@@ -112,14 +125,14 @@ class _WeekdaySelectionCardState extends State<WeekdaySelectionCard> {
                     title: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        widget.schedule.dayString(context),
+                        _sch?.dayString(context) ?? '',
                         style: Styles.TITLESTEXTSYTYLE(context),
                       ),
                     ),
                     subtitle: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        widget.schedule.scheduleString(context),
+                        _sch?.scheduleString(context) ?? '',
                         style: Styles.SUBTITLESTEXTSYTYLE(context),
                       ),
                     ),

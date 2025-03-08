@@ -1,8 +1,11 @@
 import 'package:doctor_website/api/get/hx_main.dart';
+import 'package:doctor_website/api/post/hx_post.dart';
 import 'package:doctor_website/constant/constants.dart';
 import 'package:doctor_website/providers/exp_opacity_p.dart';
 import 'package:doctor_website/providers/locale_p.dart';
 import 'package:doctor_website/providers/nav_index_p.dart';
+import 'package:doctor_website/providers/px_booking.dart';
+import 'package:doctor_website/providers/px_booking_s_c.dart';
 import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +18,12 @@ final List<SingleChildWidget> providers = [
   ChangeNotifierProvider(
     create: (context) => PxGetDoctorData(
       service: HxMain.common(dotenv.env[AppConstants.DOC_ID]!),
+    ),
+  ),
+  ChangeNotifierProvider(create: (context) => PxBookingSC()),
+  ChangeNotifierProvider(
+    create: (context) => PxBooking(
+      service: BookingApi.common(),
     ),
   ),
 ];
