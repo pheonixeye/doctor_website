@@ -19,8 +19,16 @@ class SelectDateSection extends StatefulWidget {
 
 class _SelectDateSectionState extends State<SelectDateSection> {
   DateTime getstartingdate() {
-    var startingday =
-        DateTime.parse(context.read<PxBooking>().booking!.date!).weekday;
+    final _clinic = context
+        .read<PxGetDoctorData>()
+        .model!
+        .clinics!
+        .firstWhereOrNull((crm) =>
+            crm.clinic.id == context.read<PxBooking>().booking!.clinic_id);
+    final _sch = _clinic!.schedule;
+    final _selectedSch = _sch.firstWhereOrNull(
+        (s) => s.id == context.read<PxBooking>().booking!.schedule_id);
+    var startingday = _selectedSch?.intday;
 
     while (NOW.weekday != startingday) {
       NOW = NOW.add(const Duration(days: 1));
@@ -38,7 +46,7 @@ class _SelectDateSectionState extends State<SelectDateSection> {
         while (b.booking == null || b.booking!.clinic_id == null) {
           return const NoClinicSelectedCard();
         }
-        while (b.booking!.date == null) {
+        while (b.booking!.schedule_id == null) {
           return const NoDaySelectedCard();
         }
         return Card(
@@ -68,16 +76,18 @@ class _SelectDateSectionState extends State<SelectDateSection> {
             child: CalendarDatePicker(
               initialDate: getstartingdate(),
               firstDate: getstartingdate(),
+              currentDate: DateTime.tryParse(b.booking!.date ?? ''),
               lastDate: NOW.add(const Duration(days: 356)),
               selectableDayPredicate: (datetime) {
                 final _clinic = m.model!.clinics!.firstWhereOrNull(
                     (crm) => crm.clinic.id == b.booking!.clinic_id);
                 final _sch = _clinic!.schedule;
-                final List<int> onDates = _sch.map((s) => s.intday).toList();
-                if (DateTime.parse(b.booking!.date!).weekday ==
-                        datetime.weekday ||
-                    onDates
-                        .contains(DateTime.parse(b.booking!.date!).weekday)) {
+                final _selectedSch = _sch
+                    .firstWhereOrNull((s) => s.id == b.booking!.schedule_id);
+                if (_selectedSch == null) {
+                  return false;
+                }
+                if (datetime.weekday == _selectedSch.intday) {
                   return true;
                 } else {
                   return false;

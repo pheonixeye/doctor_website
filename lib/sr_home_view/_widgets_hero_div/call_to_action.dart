@@ -14,7 +14,7 @@ class CallToActionColumn extends StatelessWidget {
         Spacer(),
         PlaceHolderText(),
         SizedBox(
-          height: 30,
+          height: 10,
         ),
         PlaceHolderText(),
         Spacer(

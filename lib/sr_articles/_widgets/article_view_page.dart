@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctor_website/extensions/first_where_or_null_ext.dart';
+import 'package:doctor_website/extensions/model_image_url_extractor.dart';
 import 'package:doctor_website/providers/locale_p.dart';
 import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
@@ -63,9 +64,14 @@ class _ArticleViewPageState extends State<ArticleViewPage> {
                     elevation: 10,
                     shape: Styles.CARDSHAPE,
                     clipBehavior: Clip.antiAliasWithSaveLayer,
-                    child: CachedNetworkImage(
-                      imageUrl: (item.article.thumbnail),
-                      fit: BoxFit.fill,
+                    child: Hero(
+                      tag: item.article.id,
+                      key: ValueKey(item.article.id),
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            item.article.imageUrl(item.article.thumbnail) ?? '',
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
                 ...item.paragraphs.map((e) {
@@ -83,7 +89,7 @@ class _ArticleViewPageState extends State<ArticleViewPage> {
                           child: Text(
                             l.isEnglish ? e.title_en : e.title_ar,
                             style: Styles.TITLESTEXTSYTYLE(context),
-                            textAlign: TextAlign.center,
+                            textAlign: TextAlign.start,
                           ),
                         ),
                         subtitle: Padding(
@@ -91,6 +97,7 @@ class _ArticleViewPageState extends State<ArticleViewPage> {
                           child: Text(
                             l.isEnglish ? e.body_en : e.body_ar,
                             style: Styles.ARTICLESUBTITLESTEXTSYTYLE(context),
+                            textAlign: TextAlign.start,
                           ),
                         ),
                       ),

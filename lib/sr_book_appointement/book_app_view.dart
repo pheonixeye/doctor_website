@@ -1,10 +1,7 @@
+import 'package:doctor_website/components/collective_footer.dart';
 import 'package:flutter/material.dart';
-import 'package:doctor_website/components/divider.dart';
 import 'package:doctor_website/providers/exp_opacity_p.dart';
 import 'package:doctor_website/sr_home_view/_divs/book_div.dart';
-import 'package:doctor_website/sr_home_view/_divs/footer_div.dart';
-import 'package:doctor_website/sr_home_view/_divs/phone_div.dart';
-import 'package:doctor_website/sr_home_view/_divs/social_div.dart';
 import 'package:provider/provider.dart';
 
 class BookAppointementView extends StatelessWidget {
@@ -20,12 +17,7 @@ class BookAppointementView extends StatelessWidget {
             cacheExtent: 3000,
             children: const [
               DivBookApp(),
-              GlobalDivider(),
-              DivSocial(),
-              GlobalDivider(),
-              DivPhone(),
-              GlobalDivider(),
-              DivFooter(),
+              ...COLLECTIVEFOOTER,
             ],
           ),
         );

@@ -32,6 +32,7 @@ class _SelectClinicSectionState extends State<SelectClinicSection> {
         return Flex(
           direction: isMobile(context) ? Axis.vertical : Axis.horizontal,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
+          spacing: 10,
           children: m.model!.clinics!.map((e) {
             return Expanded(
               child: ClinicSelectionCard(
@@ -78,7 +79,6 @@ class _ClinicSelectionCardState extends State<ClinicSelectionCard> {
       padding: const EdgeInsets.all(8.0),
       child: Consumer2<PxBookingSC, PxLocale>(
         builder: (context, s, l, c) {
-          bool isEnglish = l.lang == 'en';
           return GestureDetector(
             onTap: () {
               widget.onValueChanged(widget.clinic);
@@ -114,7 +114,7 @@ class _ClinicSelectionCardState extends State<ClinicSelectionCard> {
                         : Colors.grey,
                 child: Center(
                   child: Text(
-                    isEnglish ? widget.clinic.name_en : widget.clinic.name_ar,
+                    l.isEnglish ? widget.clinic.name_en : widget.clinic.name_ar,
                     style: Styles.TITLESTEXTSYTYLE(context),
                   ),
                 ),

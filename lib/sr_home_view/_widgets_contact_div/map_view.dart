@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_web_libraries_in_flutter
 
 import 'package:flutter/material.dart';
-import 'dart:html' show IFrameElement;
+import 'package:web/web.dart' as web;
 import 'dart:ui_web' as ui;
 
 class MapViewIframe extends StatefulWidget {
@@ -19,7 +19,7 @@ class MapViewIframe extends StatefulWidget {
 }
 
 class _MapViewIframeState extends State<MapViewIframe> {
-  final IFrameElement _iframeElement = IFrameElement();
+  final web.HTMLIFrameElement _iframeElement = web.HTMLIFrameElement();
   late final GlobalObjectKey key;
   @override
   void initState() {

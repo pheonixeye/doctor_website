@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:doctor_website/extensions/model_image_url_extractor.dart';
 import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:doctor_website/components/collective_footer.dart';
-import 'package:doctor_website/components/loading_animation_widget.dart';
 import 'package:doctor_website/components/no_items_in_list_card.dart';
 import 'package:doctor_website/components/subroute_bkgrnd.dart';
 import 'package:doctor_website/functions/res_size.dart';
@@ -26,7 +26,7 @@ class _ServicesViewPageState extends State<ServicesViewPage> {
       child: Consumer<PxGetDoctorData>(
         builder: (context, m, _) {
           while (m.model == null) {
-            return const LoadingAnimationWidget();
+            return const SizedBox();
           }
           while (m.model!.services == null || m.model!.services!.isEmpty) {
             return const NoItemsInListCard();
@@ -36,12 +36,9 @@ class _ServicesViewPageState extends State<ServicesViewPage> {
             children: [
               SizedBox(
                 height: sectionHeightHomepageViewAboutDiv(context),
-                child: GridView.builder(
+                child: ListView.builder(
+                  shrinkWrap: true,
                   itemCount: m.model!.services?.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 1.5,
-                  ),
                   itemBuilder: (context, index) {
                     final item = m.model!.services![index];
 
@@ -49,37 +46,75 @@ class _ServicesViewPageState extends State<ServicesViewPage> {
                       padding: const EdgeInsets.all(8.0),
                       child: Consumer<PxLocale>(
                         builder: (context, l, c) {
-                          bool isEnglish = l.lang == 'en';
                           return InkWell(
                             onTap: () {
-                              GoRouter.of(context).push(
+                              GoRouter.of(context).go(
                                   '/${l.lang}/${PageNumbers.ServicesView.i}/${item.service.id}');
                             },
-                            child: Card(
-                              color: Colors.transparent,
-                              elevation: 20,
-                              shape: Styles.CARDSHAPE,
-                              child: Column(
+                            child: Container(
+                              height: isMobile(context) ? 300 : 150,
+                              decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Flex(
+                                direction: isMobile(context)
+                                    ? Axis.vertical
+                                    : Axis.horizontal,
                                 children: [
                                   const SizedBox(
                                     height: 10,
                                   ),
                                   Expanded(
-                                    child: CachedNetworkImage(
-                                      imageUrl: item.service.image,
-                                      fit: BoxFit.cover,
-                                      matchTextDirection: true,
+                                    flex: isMobile(context) ? 3 : 1,
+                                    child: Container(
+                                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: CachedNetworkImage(
+                                        imageUrl: item.service
+                                                .imageUrl(item.service.image) ??
+                                            '',
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      isEnglish
-                                          ? item.service.name_en
-                                          : item.service.name_ar,
-                                      style: Styles.ARTICLETITLESTEXTSYTYLE(
-                                          context),
-                                      textAlign: TextAlign.center,
+                                  Expanded(
+                                    flex: isMobile(context) ? 1 : 3,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              l.isEnglish
+                                                  ? item.service.name_en
+                                                  : item.service.name_ar,
+                                              style: Styles
+                                                  .ARTICLETITLESTEXTSYTYLE(
+                                                      context),
+                                              textAlign: TextAlign.start,
+                                            ),
+                                          ),
+                                          if (item.service.description_en
+                                                  .isNotEmpty &&
+                                              item.service.description_ar
+                                                  .isNotEmpty)
+                                            Text(
+                                              l.isEnglish
+                                                  ? item.service.description_en
+                                                  : item.service.description_ar,
+                                              style: Styles
+                                                  .ARTICLETITLESTEXTSYTYLE(
+                                                      context),
+                                              textAlign: TextAlign.start,
+                                            ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ],

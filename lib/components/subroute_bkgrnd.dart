@@ -11,8 +11,8 @@ class SubRouteBackground extends StatelessWidget {
       body: Opacity(
         opacity: 0.8,
         child: Container(
-          height: double.infinity,
-          width: double.infinity,
+          height: MediaQuery.sizeOf(context).height,
+          width: MediaQuery.sizeOf(context).width,
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/images/bkgrnd_${Initials.i_}.jpg'),

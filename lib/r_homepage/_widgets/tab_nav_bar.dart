@@ -53,7 +53,7 @@ class _NavTabBarState extends State<NavTabBar>
   @override
   Widget build(BuildContext context) {
     return Consumer2<PxLocale, PxNavIndex>(
-      builder: (context, l, i, c) {
+      builder: (context, l, i, _) {
         return TabBar(
           controller: _tabController,
           onTap: (value) {

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
-import 'package:doctor_website/components/loading_animation_widget.dart';
 import 'package:doctor_website/components/no_items_in_list_card.dart';
 import 'package:doctor_website/functions/res_size.dart';
 import 'package:doctor_website/styles/styles.dart';
@@ -18,12 +17,22 @@ class DivHero extends StatefulWidget {
 }
 
 class _DivHeroState extends State<DivHero> {
+  //TODO
   late Timer timer;
   late final PageController pageController;
   @override
   void initState() {
     super.initState();
     pageController = PageController();
+    timer = Timer.periodic(
+      const Duration(seconds: 3),
+      (t) {
+        pageController.nextPage(
+          duration: const Duration(seconds: 1),
+          curve: Curves.easeIn,
+        );
+      },
+    );
   }
 
   @override
@@ -49,7 +58,7 @@ class _DivHeroState extends State<DivHero> {
             Consumer<PxGetDoctorData>(
               builder: (context, m, _) {
                 while (m.model == null) {
-                  return const LoadingAnimationWidget();
+                  return const SizedBox();
                 }
                 while (
                     m.model!.heroItems == null || m.model!.heroItems!.isEmpty) {

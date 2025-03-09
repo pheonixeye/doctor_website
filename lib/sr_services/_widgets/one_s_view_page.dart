@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:doctor_website/components/loading_animation_widget.dart';
 import 'package:doctor_website/extensions/first_where_or_null_ext.dart';
+import 'package:doctor_website/extensions/model_image_url_extractor.dart';
+import 'package:doctor_website/models/service_response_model.dart';
 import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_website/components/collective_footer.dart';
-import 'package:doctor_website/components/loading_animation_widget.dart';
 import 'package:doctor_website/components/subroute_bkgrnd.dart';
 import 'package:doctor_website/functions/res_size.dart';
 import 'package:doctor_website/providers/locale_p.dart';
@@ -23,23 +25,26 @@ class _OneServiceViewPageState extends State<OneServiceViewPage> {
     return SubRouteBackground(
       child: Consumer<PxGetDoctorData>(
         builder: (context, m, _) {
+          late final ServiceResponseModel? item;
           while (m.model == null || m.model?.services == null) {
             return const LoadingAnimationWidget();
           }
-          final item = m.model!.services!
+          item = m.model!.services!
               .firstWhereOrNull((s) => s.service.id == widget.serviceId);
+          while (item == null) {
+            return const SizedBox();
+          }
           return Consumer<PxLocale>(
             builder: (context, l, c) {
-              bool isEnglish = l.lang == 'en';
               return ListView(
                 cacheExtent: 3000,
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      isEnglish
-                          ? item?.service.name_en ?? ''
-                          : item?.service.name_ar ?? '',
+                      l.isEnglish
+                          ? item!.service.name_en
+                          : item!.service.name_ar,
                       style: Styles.TITLESTEXTSYTYLE(context),
                       textAlign: TextAlign.center,
                     ),
@@ -47,9 +52,9 @@ class _OneServiceViewPageState extends State<OneServiceViewPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      isEnglish
-                          ? item?.service.description_en ?? ''
-                          : item?.service.description_ar ?? '',
+                      l.isEnglish
+                          ? item.service.description_en
+                          : item.service.description_ar,
                       style: Styles.ARTICLESUBTITLESTEXTSYTYLE(context),
                       textAlign: TextAlign.center,
                     ),
@@ -63,7 +68,8 @@ class _OneServiceViewPageState extends State<OneServiceViewPage> {
                         shape: Styles.CARDSHAPE,
                         clipBehavior: Clip.antiAliasWithSaveLayer,
                         child: CachedNetworkImage(
-                          imageUrl: (item!.service.image),
+                          imageUrl:
+                              item.service.imageUrl(item.service.image) ?? '',
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -90,7 +96,7 @@ class _OneServiceViewPageState extends State<OneServiceViewPage> {
                       title: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          isEnglish ? e.q_en : e.q_ar,
+                          l.isEnglish ? e.q_en : e.q_ar,
                           style: Styles.ARTICLETITLESTEXTSYTYLE(context),
                         ),
                       ),
@@ -98,7 +104,7 @@ class _OneServiceViewPageState extends State<OneServiceViewPage> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            isEnglish ? e.a_en : e.a_ar,
+                            l.isEnglish ? e.a_en : e.a_ar,
                             style: Styles.ARTICLESUBTITLESTEXTSYTYLE(context),
                           ),
                         ),

@@ -12,7 +12,6 @@ import 'package:doctor_website/sr_before_after_view/_widgets/bas_view_page.dart'
 import 'package:doctor_website/sr_media/_widgets/media_item_view_page.dart';
 import 'package:doctor_website/sr_page_not_found_view/page_not_found_view.dart';
 import 'package:doctor_website/sr_services/_widgets/one_s_view_page.dart';
-import 'package:doctor_website/sr_services/_widgets/s_view_page.dart';
 import 'package:provider/provider.dart';
 
 final GoRouter router = GoRouter(
@@ -81,8 +80,11 @@ final GoRouter router = GoRouter(
                 }
                 switch (pageId) {
                   case '2':
-                    return ServicesViewPage(
-                      key: state.pageKey,
+                    final serviceId = state.pathParameters['itemid'];
+                    final _key = ValueKey('$pageId$serviceId');
+                    return OneServiceViewPage(
+                      key: _key,
+                      serviceId: serviceId,
                     );
 
                   case '3':
@@ -109,24 +111,6 @@ final GoRouter router = GoRouter(
                     );
                 }
               },
-              routes: [
-                GoRoute(
-                  path: ':serviceid',
-                  builder: (context, state) {
-                    final pageId = state.pathParameters['id'];
-                    final serviceId = state.pathParameters['serviceid'];
-                    if (pageId != null && pageId == '2') {
-                      return OneServiceViewPage(
-                        key: state.pageKey,
-                        serviceId: serviceId,
-                      );
-                    }
-                    return PageNotFoundView(
-                      key: state.pageKey,
-                    );
-                  },
-                ),
-              ],
             ),
           ],
         ),

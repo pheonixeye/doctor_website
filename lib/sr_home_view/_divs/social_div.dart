@@ -1,9 +1,13 @@
+import 'package:doctor_website/components/loading_animation_widget.dart';
 import 'package:doctor_website/functions/loc_ext_fns.dart';
+import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_website/components/link_text.dart';
 import 'package:doctor_website/custom_font_icons_icons.dart';
 import 'package:doctor_website/functions/res_size.dart';
 import 'package:doctor_website/styles/styles.dart';
+import 'package:provider/provider.dart';
+import 'package:web/web.dart' as web;
 
 class DivSocial extends StatelessWidget {
   const DivSocial({super.key});
@@ -17,56 +21,72 @@ class DivSocial extends StatelessWidget {
         elevation: 10,
         shape: Styles.HEROCARDBORDER,
         color: Styles.MAINPAGECOMPONENTCARDCOLOR,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Spacer(
-              flex: 2,
-            ),
-            LinkText(
-              context.loc.follow,
-              style: Styles.TITLESTEXTSYTYLE(context),
-            ),
-            const Spacer(
-              flex: 2,
-            ),
-            SocialButton(
-              heroTag: 'Facebook',
-              onPressed: () {
-                //TODO:FACEBOOK
-              },
-              backgroundColor: Colors.white,
-              child: const Icon(
-                CustomFontIcons.facebook_squared,
-                color: Color(0xff1877F2),
-              ),
-            ),
-            const Spacer(),
-            SocialButton(
-              heroTag: 'Instagram',
-              onPressed: () {
-                //TODO:INSTAGRAM
-              },
-              backgroundColor: Colors.white,
-              child: const Icon(
-                CustomFontIcons.instagram,
-                color: Colors.black,
-              ),
-            ),
-            const Spacer(),
-            SocialButton(
-              heroTag: 'Youtube',
-              onPressed: () {
-                //TODO:YOUTUBE
-              },
-              backgroundColor: Colors.white,
-              child: const Icon(
-                CustomFontIcons.youtube_play,
-                color: Color(0xffb2071d),
-              ),
-            ),
-            const Spacer(),
-          ],
+        child: Consumer<PxGetDoctorData>(
+          builder: (context, m, _) {
+            while (m.model == null || m.model!.socialContacts == null) {
+              return const LoadingAnimationWidget();
+            }
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Spacer(
+                  flex: 2,
+                ),
+                LinkText(
+                  context.loc.follow,
+                  style: Styles.TITLESTEXTSYTYLE(context),
+                ),
+                const Spacer(
+                  flex: 2,
+                ),
+                SocialButton(
+                  heroTag: 'Facebook',
+                  onPressed: () {
+                    web.window.open(
+                      m.model!.socialContacts!.fb,
+                      '_blank',
+                    );
+                  },
+                  backgroundColor: Colors.white,
+                  child: const Icon(
+                    CustomFontIcons.facebook_squared,
+                    color: Color(0xff1877F2),
+                  ),
+                ),
+                const Spacer(),
+                SocialButton(
+                  heroTag: 'Instagram',
+                  onPressed: () {
+                    web.window.open(
+                      m.model!.socialContacts!.ig,
+                      '_blank',
+                    );
+                  },
+                  backgroundColor: Colors.white,
+                  child: const Icon(
+                    CustomFontIcons.instagram,
+                    color: Colors.black,
+                  ),
+                ),
+                const Spacer(),
+                SocialButton(
+                  heroTag: 'Youtube',
+                  onPressed: () {
+                    web.window.open(
+                      m.model!.socialContacts!.yt,
+                      '_blank',
+                    );
+                  },
+                  backgroundColor: Colors.white,
+                  child: const Icon(
+                    CustomFontIcons.youtube_play,
+                    color: Color(0xffb2071d),
+                  ),
+                ),
+                const Spacer(),
+              ],
+            );
+          },
         ),
       ),
     );

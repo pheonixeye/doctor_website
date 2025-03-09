@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:doctor_website/extensions/model_image_url_extractor.dart';
+import 'package:doctor_website/functions/res_size.dart';
 import 'package:doctor_website/models/case.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_website/providers/locale_p.dart';
@@ -19,27 +21,27 @@ class BeforeAfterCard extends StatefulWidget {
 class _BeforeAfterCardState extends State<BeforeAfterCard> {
   int number = 0;
   late Timer _timer;
-  final duration = const Duration(seconds: 5);
+  final duration =
+      Duration(seconds: 5 + (3 + Random.secure().nextInt(2).toInt()).toInt());
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(duration * (3.5 + Random.secure().nextDouble()),
-        (timer) {
+    _timer = Timer.periodic(duration, (timer) {
       setState(() {
         number == 0 ? number = 1 : number = 0;
       });
     });
   }
 
-  _imageWidget(int num) {
+  CachedNetworkImage _imageWidget(int num) {
     return num == 0
         ? CachedNetworkImage(
-            imageUrl: (widget.ba.pre_image),
+            imageUrl: widget.ba.imageUrl(widget.ba.pre_image) ?? '',
             key: const ValueKey('before'),
             fit: BoxFit.cover,
           )
         : CachedNetworkImage(
-            imageUrl: (widget.ba.pre_image),
+            imageUrl: widget.ba.imageUrl(widget.ba.post_image) ?? '',
             key: const ValueKey('after'),
             fit: BoxFit.cover,
           );
@@ -57,54 +59,69 @@ class _BeforeAfterCardState extends State<BeforeAfterCard> {
       padding: const EdgeInsets.all(8.0),
       child: Consumer<PxLocale>(
         builder: (context, l, c) {
-          bool isEnglish = l.lang == 'en';
-          return InkWell(
-            child: Card(
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              elevation: 10,
-              shape: Styles.CARDSHAPE,
-              child: Stack(
-                fit: StackFit.loose,
-                alignment: Alignment.center,
+          return Container(
+            height: 300,
+            width: MediaQuery.sizeOf(context).width - 100,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: Colors.black,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Flex(
+                direction: isMobile(context) ? Axis.vertical : Axis.horizontal,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Builder(
-                    builder: (context) {
-                      return AnimatedSwitcher(
+                  Expanded(
+                    child: Container(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: AnimatedSwitcher(
                         switchInCurve: Curves.easeIn,
                         switchOutCurve: Curves.bounceOut,
                         duration: duration,
-                        child: _imageWidget(number),
                         transitionBuilder: (child, animation) {
                           return ScaleTransition(
                             scale: animation,
                             child: SizedBox.expand(child: child),
                           );
                         },
-                      );
-                    },
+                        child: _imageWidget(number),
+                      ),
+                    ),
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          isEnglish ? widget.ba.name_en : widget.ba.name_ar,
-                          style: Styles.ARTICLETITLESTEXTSYTYLE(context),
-                          textAlign: TextAlign.center,
+                  Expanded(
+                    flex: isMobile(context) ? 1 : 3,
+                    child: Flex(
+                      direction: Axis.vertical,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            l.isEnglish ? widget.ba.name_en : widget.ba.name_ar,
+                            style: Styles.ARTICLETITLESTEXTSYTYLE(context),
+                            textAlign: TextAlign.start,
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          isEnglish
-                              ? widget.ba.description_en
-                              : widget.ba.description_ar,
-                          style: Styles.ARTICLESUBTITLESTEXTSYTYLE(context),
-                          textAlign: TextAlign.center,
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              l.isEnglish
+                                  ? widget.ba.description_en
+                                  : widget.ba.description_ar,
+                              style: Styles.ARTICLESUBTITLESTEXTSYTYLE(context),
+                              textAlign: TextAlign.start,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 5,
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),

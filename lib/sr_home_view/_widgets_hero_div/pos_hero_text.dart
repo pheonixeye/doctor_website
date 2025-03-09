@@ -15,7 +15,7 @@ class HeroTextPositioned extends StatelessWidget {
         final style =
             Styles.HEROITEMTEXTSTYLE(heroText.font_mobile?.toDouble() ?? 16);
 
-        if (l.lang == 'en') {
+        if (l.isEnglish) {
           return Align(
             alignment: alignmentFromString(heroText.align ?? ''),
             child: Text(

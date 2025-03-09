@@ -13,7 +13,9 @@ class PxGetDoctorData extends ChangeNotifier {
   }
 
   Future<void> _getDoctorData() async {
-    _model = await service.fetchModelById();
-    notifyListeners();
+    if (_model == null) {
+      _model = await service.fetchModelById();
+      notifyListeners();
+    }
   }
 }

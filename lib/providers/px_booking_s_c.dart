@@ -10,13 +10,8 @@ class PxBookingSC extends ChangeNotifier {
   int _page = 0;
   int get page => _page;
 
-  PageController? _pageController;
+  final PageController? _pageController = PageController();
   PageController? get pageController => _pageController;
-
-  void initController() {
-    _pageController = PageController();
-    notifyListeners();
-  }
 
   void nxtPage(BuildContext context) {
     _page == 3 ? _page : _page++;
@@ -32,7 +27,6 @@ class PxBookingSC extends ChangeNotifier {
 
   void scrollToPage(int p, BuildContext context) {
     _page = p;
-    notifyListeners();
     switchInfo(context);
     _pageController!.animateToPage(
       page,
@@ -44,7 +38,6 @@ class PxBookingSC extends ChangeNotifier {
 
   void prevPage(BuildContext context) {
     _page <= 0 ? _page : _page--;
-    notifyListeners();
     switchInfo(context);
     _pageController!.animateToPage(
       page,
@@ -80,9 +73,5 @@ class PxBookingSC extends ChangeNotifier {
         notifyListeners();
         break;
     }
-  }
-
-  PxBookingSC() {
-    initController();
   }
 }

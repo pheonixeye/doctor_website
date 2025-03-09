@@ -23,12 +23,33 @@ class DivContact extends StatefulWidget {
 
 class _DivContactState extends State<DivContact> {
   late final Timer timer;
-  late final PageController pageController;
+  final PageController pageController = PageController();
+  int _nextPage = 1;
   @override
   void initState() {
     super.initState();
     wids.loadLibrary();
-    pageController = PageController();
+    timer = Timer.periodic(
+      const Duration(seconds: 7),
+      (t) {
+        if (pageController.hasClients &&
+            pageController.positions.isNotEmpty &&
+            context.mounted) {
+          setState(() {
+            if (_nextPage > pageController.page!) {
+              _nextPage = 0;
+            } else {
+              _nextPage += 1;
+            }
+          });
+          pageController.animateToPage(
+            _nextPage,
+            duration: const Duration(seconds: 1),
+            curve: Curves.easeIn,
+          );
+        }
+      },
+    );
   }
 
   @override
@@ -63,11 +84,7 @@ class _DivContactState extends State<DivContact> {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: m.model!.clinics!.length,
                     controller: pageController,
-                    onPageChanged: (value) {},
                     itemBuilder: (context, index) {
-                      // String venue = l.lang == 'en'
-                      //     ? '${cl.clinics![index].govEn} - ${cl.clinics![index].distEn} - ${cl.clinics![index].venueEn}'
-                      //     : '${cl.clinics![index].govAr} - ${cl.clinics![index].distAr} - ${cl.clinics![index].venueAr}';
                       String address = l.isEnglish
                           ? m.model!.clinics![index].clinic.address_en
                           : m.model!.clinics![index].clinic.address_ar;
@@ -90,9 +107,6 @@ class _DivContactState extends State<DivContact> {
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      // wids.VenueTile(
-                                      //   venue: venue,
-                                      // ),
                                       wids.AddressTile(
                                         address: address,
                                       ),
@@ -128,9 +142,8 @@ class _DivContactState extends State<DivContact> {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: m.model!.clinics!.length,
                     controller: pageController,
-                    onPageChanged: (value) {},
                     itemBuilder: (context, index) {
-                      String address = l.lang == 'en'
+                      String address = l.isEnglish
                           ? m.model!.clinics![index].clinic.address_en
                           : m.model!.clinics![index].clinic.address_ar;
                       return Row(

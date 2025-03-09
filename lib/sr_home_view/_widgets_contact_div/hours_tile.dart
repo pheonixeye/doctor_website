@@ -27,14 +27,13 @@ class HoursTile extends StatelessWidget {
       ),
       subtitle: Consumer<PxLocale>(
         builder: (context, l, c) {
-          bool isEnglish = l.lang == 'en';
           return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: schedule.map((e) {
                 return Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: LinkText(
-                    isEnglish
+                    l.isEnglish
                         ? '${e.weekday_en} :\n ${modifyTime(e.start_hour, e.start_min, context)} - ${modifyTime(e.end_hour, e.end_min, context)}'
                         : '${e.weekday_ar} :\n ${modifyTime(e.start_hour, e.start_min, context)} - ${modifyTime(e.end_hour, e.end_min, context)}',
                     align: TextAlign.start,

@@ -54,10 +54,8 @@ class _BookAppHeroButtonState extends State<BookAppHeroButton>
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: 300.0 / (_changeValue.value * 6),
-      ),
+    return Opacity(
+      opacity: _animation.value,
       child: ElevatedButton(
         onPressed: () {
           GoRouter.of(context).go('/${context.read<PxLocale>().lang}/1');

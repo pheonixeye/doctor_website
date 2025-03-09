@@ -156,7 +156,7 @@ class HxMainSupabase implements HxMain {
       videos: _videos,
       heroItems: _heroItems,
     );
-    print(_model);
+    print('HxMainSupabase().fetchModelById($doc_id)');
     return _model;
   }
 }

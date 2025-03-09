@@ -1,6 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:doctor_website/components/loading_animation_widget.dart';
+import 'package:doctor_website/extensions/model_image_url_extractor.dart';
 import 'package:doctor_website/functions/loc_ext_fns.dart';
+import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
-import 'package:doctor_website/config/const.dart';
 import 'package:doctor_website/functions/res_size.dart';
 import 'package:doctor_website/providers/locale_p.dart';
 import 'package:doctor_website/styles/styles.dart';
@@ -31,74 +34,80 @@ class DivAbout extends StatelessWidget {
         elevation: 10,
         shape: Styles.ABOUTCARDBORDER,
         color: Styles.MAINPAGECOMPONENTCARDCOLOR,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              flex: isMobile(context) ? 1 : 3,
-              child: ListView(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      context.loc.about,
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        fontSize: isMobile(context) ? 22 : 38,
-                        color: Colors.white,
-                        decorationColor: Colors.amber,
-                        decorationStyle: TextDecorationStyle.wavy,
-                        shadows: const [
-                          BoxShadow(
-                            offset: Offset(3, 3),
-                            blurRadius: 3,
-                            spreadRadius: 3,
-                            color: Colors.amber,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  //todo: COPYWRITE
-                  Consumer<PxLocale>(
-                    builder: (context, l, _) {
-                      return Padding(
+        child: Consumer2<PxGetDoctorData, PxLocale>(
+          builder: (context, m, l, _) {
+            while (m.model == null) {
+              return LoadingAnimationWidget();
+            }
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  flex: isMobile(context) ? 1 : 3,
+                  child: ListView(
+                    children: [
+                      Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          l.isEnglish
-                              ? DoctorStaticData.current().aboutEn
-                              : DoctorStaticData.current().aboutAr,
-                          style: _tStyle(context),
+                          context.loc.about,
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            fontSize: isMobile(context) ? 22 : 38,
+                            color: Colors.white,
+                            decorationColor: Colors.amber,
+                            decorationStyle: TextDecorationStyle.wavy,
+                            shadows: const [
+                              BoxShadow(
+                                offset: Offset(3, 3),
+                                blurRadius: 3,
+                                spreadRadius: 3,
+                                color: Colors.amber,
+                              ),
+                            ],
+                          ),
                         ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-            Expanded(
-              flex: isMobile(context) ? 1 : 2,
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadiusDirectional.circular(20),
-                        color: Colors.white.withOpacity(0.8),
                       ),
-                      child: const SizedBox(),
-                    ),
+                      ...m.model!.doctorAbouts!.map((e) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            l.isEnglish ? e.about_en : e.about_ar,
+                            style: _tStyle(context),
+                          ),
+                        );
+                      })
+                    ],
                   ),
-                  Image.asset(
-                    'assets/images/${Initials.i_}.png',
-                    fit: isMobile(context) ? BoxFit.fitHeight : BoxFit.contain,
+                ),
+                Expanded(
+                  flex: isMobile(context) ? 1 : 2,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadiusDirectional.circular(20),
+                            color: Colors.white.withOpacity(0.8),
+                          ),
+                          child: const SizedBox(),
+                        ),
+                      ),
+                      CachedNetworkImage(
+                        imageUrl: m.model!.doctor!
+                                .imageUrlByKey(m.model!.doctor!.avatar) ??
+                            '',
+                        fit: isMobile(context)
+                            ? BoxFit.fitHeight
+                            : BoxFit.contain,
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-          ],
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

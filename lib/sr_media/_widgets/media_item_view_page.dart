@@ -2,7 +2,6 @@ import 'package:doctor_website/extensions/first_where_or_null_ext.dart';
 import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_website/components/collective_footer.dart';
-import 'package:doctor_website/components/loading_animation_widget.dart';
 import 'package:doctor_website/components/subroute_bkgrnd.dart';
 import 'package:doctor_website/functions/res_size.dart';
 import 'package:doctor_website/providers/locale_p.dart';
@@ -23,58 +22,46 @@ class _MediaItemViewPageState extends State<MediaItemViewPage> {
     return SubRouteBackground(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<PxGetDoctorData>(
-          builder: (context, m, _) {
+        child: Consumer2<PxGetDoctorData, PxLocale>(
+          builder: (context, m, l, _) {
             while (m.model == null) {
-              return const LoadingAnimationWidget();
+              return const SizedBox();
             }
             final item =
                 m.model?.videos?.firstWhereOrNull((v) => v.id == widget.itemId);
-            return Consumer<PxLocale>(
-              builder: (context, l, c) {
-                bool isEnglish = l.lang == 'en';
-                return ListView(
-                  cacheExtent: 3000,
-                  addAutomaticKeepAlives: true,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        isEnglish ? item?.title_en ?? '' : item?.title_en ?? '',
-                        style: Styles.TITLESTEXTSYTYLE(context),
-                      ),
+            return ListView(
+              cacheExtent: 3000,
+              addAutomaticKeepAlives: true,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    l.isEnglish ? item?.title_en ?? '' : item?.title_en ?? '',
+                    style: Styles.TITLESTEXTSYTYLE(context),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    l.isEnglish
+                        ? item?.description_en ?? ''
+                        : item?.description_ar ?? '',
+                    style: Styles.ARTICLESUBTITLESTEXTSYTYLE(context),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    height: item?.is_long ?? true
+                        ? sectionHeightHomepageViewAboutDiv(context) * 1.6
+                        : sectionHeightHomepageViewAboutDiv(context),
+                    child: MapViewIframe(
+                      link: item?.src ?? '',
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        isEnglish
-                            ? item?.description_en ?? ''
-                            : item?.description_ar ?? '',
-                        style: Styles.ARTICLESUBTITLESTEXTSYTYLE(context),
-                      ),
-                    ),
-                    // Padding(
-                    //   padding: const EdgeInsets.all(8.0),
-                    //   child: Text(
-                    //     m.mediaItem!.timeadded.toFormattedDate(context),
-                    //     style: Styles.TAGSTEXTSYTYLE(),
-                    //   ),
-                    // ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        height: item?.is_long ?? true
-                            ? sectionHeightHomepageViewAboutDiv(context) * 1.6
-                            : sectionHeightHomepageViewAboutDiv(context),
-                        child: MapViewIframe(
-                          link: item?.src ?? '',
-                        ),
-                      ),
-                    ),
-                    ...COLLECTIVEFOOTER,
-                  ],
-                );
-              },
+                  ),
+                ),
+                ...COLLECTIVEFOOTER,
+              ],
             );
           },
         ),

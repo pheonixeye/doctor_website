@@ -1,8 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:doctor_website/extensions/model_image_url_extractor.dart';
+import 'package:doctor_website/functions/res_size.dart';
 import 'package:doctor_website/models/article.dart';
+import 'package:doctor_website/pages/pages.dart';
 import 'package:doctor_website/providers/locale_p.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_website/styles/styles.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class ArticleCard extends StatefulWidget {
@@ -16,65 +20,73 @@ class ArticleCard extends StatefulWidget {
 class _ArticleCardState extends State<ArticleCard> {
   @override
   Widget build(BuildContext context) {
-    return RotatedBox(
-      quarterTurns: 1,
-      child: Card(
-        elevation: 10,
-        shape: Styles.CARDSHAPE,
-        color: Colors.black,
+    return InkWell(
+      onTap: () {
+        GoRouter.of(context).go(
+            '/${context.read<PxLocale>().lang}/${PageNumbers.ArticlesView.i}/${widget.e.id}');
+      },
+      child: Container(
+        height: isMobile(context) ? 100 : 200,
+        width: MediaQuery.sizeOf(context).width - 100,
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.circular(8),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Consumer<PxLocale>(
             builder: (context, l, _) {
-              return Container(
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                decoration: Styles.CONTAINERDECORATION,
-                alignment: Alignment.center,
-                child: Stack(
-                  fit: StackFit.expand,
-                  alignment: Alignment.center,
-                  children: [
-                    if (widget.e.thumbnail.isEmpty)
-                      CachedNetworkImage(
-                        imageUrl: (widget.e.thumbnail),
-                        fit: BoxFit.fill,
+              return Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                    Container(
-                      // clipBehavior: Clip.antiAliasWithSaveLayer,
-                      width: double.infinity,
-                      height: double.infinity,
-                      color: Colors.grey.withOpacity(0.6),
+                      child: Hero(
+                        tag: widget.e.id,
+                        key: ValueKey(widget.e.id),
+                        child: CachedNetworkImage(
+                          imageUrl: widget.e.imageUrl(widget.e.thumbnail) ?? '',
+                          fit: BoxFit.fill,
+                        ),
+                      ),
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             l.isEnglish ? widget.e.title_en : widget.e.title_ar,
                             style: Styles.ARTICLETITLESTEXTSYTYLE(context),
-                            textAlign: TextAlign.center,
                           ),
                         ),
-                        if (widget.e.description_ar.isNotEmpty &&
-                            widget.e.description_en.isNotEmpty)
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                l.isEnglish
-                                    ? widget.e.description_en
-                                    : widget.e.description_ar,
-                                style:
-                                    Styles.ARTICLESUBTITLESTEXTSYTYLE(context),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
+                        (widget.e.description_ar.isNotEmpty &&
+                                widget.e.description_en.isNotEmpty)
+                            ? Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    l.isEnglish
+                                        ? widget.e.description_en
+                                        : widget.e.description_ar,
+                                    style: Styles.ARTICLESUBTITLESTEXTSYTYLE(
+                                        context),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: isMobile(context) ? 4 : 3,
+                                  ),
+                                ),
+                              )
+                            : const SizedBox()
                       ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               );
             },
           ),
