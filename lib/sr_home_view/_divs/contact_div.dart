@@ -11,6 +11,7 @@ import 'package:doctor_website/functions/res_size.dart';
 import 'package:doctor_website/providers/locale_p.dart';
 import 'package:doctor_website/styles/styles.dart';
 import 'package:provider/provider.dart';
+import 'package:web/web.dart' as web;
 
 import '../_widgets_contact_div/_exp.dart' deferred as wids;
 
@@ -110,6 +111,16 @@ class _DivContactState extends State<DivContact> {
                                       wids.AddressTile(
                                         address: address,
                                       ),
+                                      wids.PhoneTile(
+                                        phone: m.model!.clinics![index].clinic
+                                            .phone,
+                                        onTap: () {
+                                          web.window.open(
+                                            'tel:+20${m.model!.clinics![index].clinic.phone}',
+                                            '_blank',
+                                          );
+                                        },
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -164,6 +175,15 @@ class _DivContactState extends State<DivContact> {
                                 ),
                                 wids.HoursTile(
                                   schedule: m.model!.clinics![index].schedule,
+                                ),
+                                wids.PhoneTile(
+                                  phone: m.model!.clinics![index].clinic.phone,
+                                  onTap: () {
+                                    web.window.open(
+                                      'tel:+20${m.model!.clinics![index].clinic.phone}',
+                                      '_blank',
+                                    );
+                                  },
                                 ),
                               ],
                             ),

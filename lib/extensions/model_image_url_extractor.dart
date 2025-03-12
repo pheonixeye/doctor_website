@@ -2,6 +2,7 @@ import 'package:doctor_website/api/common/common.dart';
 import 'package:doctor_website/models/article.dart';
 import 'package:doctor_website/models/case.dart';
 import 'package:doctor_website/models/doctor.dart';
+import 'package:doctor_website/models/hero_item.dart';
 import 'package:doctor_website/models/service.dart';
 import 'package:doctor_website/models/video.dart';
 import 'package:pocketbase/pocketbase.dart';
@@ -105,6 +106,23 @@ extension ImageUrlExtractorArticle on Article {
       : switch (DataSourceHelper().dataSource) {
           DataSource.pb => _baseUrlPocketbase(
               collection: 'articles',
+              id: id,
+              fileKey: fileKey,
+            ),
+          DataSource.sb => _baseUrlSupabase(
+              collection: 'base',
+              id: id,
+              fileKey: fileKey,
+            ),
+        };
+}
+
+extension ImageUrlExtractorHeroItem on HeroItem {
+  String? imageUrl(String fileKey) => fileKey.isEmpty
+      ? null
+      : switch (DataSourceHelper().dataSource) {
+          DataSource.pb => _baseUrlPocketbase(
+              collection: 'hero_items',
               id: id,
               fileKey: fileKey,
             ),

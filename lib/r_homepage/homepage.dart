@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin, AfterLayoutMixin {
   late final ScrollController _scrollController;
   double get _logoDimentions {
-    return isMobile(context) ? 50 : 150;
+    return 50;
   }
 
   @override
@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage>
                               imageUrl: m.model!.doctor!
                                       .imageUrlByKey(m.model!.doctor!.logo) ??
                                   '',
-                              fit: BoxFit.scaleDown,
+                              fit: BoxFit.cover,
                               width: _logoDimentions,
                               height: _logoDimentions,
                             ),

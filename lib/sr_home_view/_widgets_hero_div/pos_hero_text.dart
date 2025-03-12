@@ -1,3 +1,4 @@
+import 'package:doctor_website/functions/res_size.dart';
 import 'package:doctor_website/models/align_from_string.dart';
 import 'package:doctor_website/models/hero_item.dart';
 import 'package:flutter/material.dart';
@@ -11,29 +12,29 @@ class HeroTextPositioned extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<PxLocale>(
-      builder: (context, l, c) {
-        final style =
-            Styles.HEROITEMTEXTSTYLE(heroText.font_mobile?.toDouble() ?? 16);
+      builder: (context, l, _) {
+        final style = Styles.HEROITEMTEXTSTYLE(isMobile(context)
+            ? heroText.font_mobile?.toDouble() ?? 16
+            : heroText.font_other?.toDouble() ?? 16);
 
-        if (l.isEnglish) {
-          return Align(
-            alignment: alignmentFromString(heroText.align ?? ''),
+        return Align(
+          alignment: alignmentFromString(heroText.align ?? ''),
+          child: Padding(
+            padding: EdgeInsetsDirectional.only(
+              top: (isMobile(context)
+                  ? heroText.top_mobile ?? 0
+                  : heroText.top_other ?? 0) as double,
+              start: (isMobile(context)
+                  ? heroText.start_mobile ?? 0
+                  : heroText.start_other ?? 0) as double,
+            ),
             child: Text(
-              heroText.text_en ?? '',
+              l.isEnglish ? heroText.text_en ?? '' : heroText.text_ar ?? '',
               style: style,
               textAlign: TextAlign.center,
             ),
-          );
-        } else {
-          return Align(
-            alignment: alignmentFromString(heroText.align ?? ''),
-            child: Text(
-              heroText.text_ar ?? '',
-              style: style,
-              textAlign: TextAlign.center,
-            ),
-          );
-        }
+          ),
+        );
       },
     );
   }

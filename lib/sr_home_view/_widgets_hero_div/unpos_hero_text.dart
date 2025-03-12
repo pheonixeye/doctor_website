@@ -1,3 +1,4 @@
+import 'package:doctor_website/functions/res_size.dart';
 import 'package:doctor_website/models/hero_item.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_website/providers/locale_p.dart';
@@ -16,9 +17,16 @@ class HeroTextUnpositioned extends StatelessWidget {
             final style =
                 Styles.HEROITEMTEXTSTYLE(e.font_mobile?.toDouble() ?? 16);
 
-            if (l.lang == 'en') {
+            if (l.isEnglish) {
               return Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsetsDirectional.only(
+                  top: (isMobile(context)
+                      ? e.top_mobile ?? 0
+                      : e.top_other ?? 0) as double,
+                  start: (isMobile(context)
+                      ? e.start_mobile ?? 0
+                      : e.start_other ?? 0) as double,
+                ),
                 child: Text(
                   e.text_en ?? '',
                   style: style,
@@ -27,7 +35,14 @@ class HeroTextUnpositioned extends StatelessWidget {
               );
             } else {
               return Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsetsDirectional.only(
+                  top: (isMobile(context)
+                      ? e.top_mobile ?? 0
+                      : e.top_other ?? 0) as double,
+                  start: (isMobile(context)
+                      ? e.start_mobile ?? 0
+                      : e.start_other ?? 0) as double,
+                ),
                 child: Text(
                   e.text_ar ?? '',
                   style: style,

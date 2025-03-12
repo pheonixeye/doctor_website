@@ -3,25 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:doctor_website/components/link_text.dart';
 import 'package:doctor_website/styles/styles.dart';
 
-class VenueTile extends StatelessWidget {
-  const VenueTile({super.key, required this.venue});
-  final String venue;
+class PhoneTile extends StatelessWidget {
+  const PhoneTile({
+    super.key,
+    required this.phone,
+    required this.onTap,
+  });
+  final String phone;
+  final VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
-        context.loc.venue,
+        context.loc.phone,
         style: Styles.TITLESTEXTSYTYLE(context),
       ),
       subtitle: Padding(
         padding: const EdgeInsets.all(8.0),
         child: LinkText(
-          venue,
+          phone,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: Styles.ADAPTIVEFONTSIZE(context),
             color: Colors.white,
           ),
+          onTap: onTap,
         ),
       ),
       dense: true,
