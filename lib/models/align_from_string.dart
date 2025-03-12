@@ -38,6 +38,6 @@ Alignment alignmentFromString(String value) {
     'bottomLeft' => bottomLeft,
     'bottomCenter' => bottomCenter,
     'bottomRight' => bottomRight,
-    _ => throw UnimplementedError(),
+    _ => center,
   };
 }

@@ -176,7 +176,7 @@ abstract class AppLocalizations {
   /// No description provided for @rights.
   ///
   /// In en, this message translates to:
-  /// **'All Rights Reserved @Dr. Khaled Nabil Clinics'**
+  /// **'All Rights Reserved @'**
   String get rights;
 
   /// No description provided for @design.
@@ -308,7 +308,7 @@ abstract class AppLocalizations {
   /// No description provided for @thanks.
   ///
   /// In en, this message translates to:
-  /// **'Thank you for booking with Dr.Khaled Nabil Clinics.'**
+  /// **'Thank you for booking with'**
   String get thanks;
 
   /// No description provided for @to_contact.

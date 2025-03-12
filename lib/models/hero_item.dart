@@ -1,5 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
 import 'package:equatable/equatable.dart';
 
 class HeroItem extends Equatable {
@@ -21,26 +19,49 @@ class HeroItem extends Equatable {
   final String? t_align;
   final String? s_align;
   final String? d_align;
-
+  final int? t_top_mobile;
+  final int? t_start_mobile;
+  final int? t_top_other;
+  final int? t_start_other;
+  final int? s_top_mobile;
+  final int? s_start_mobile;
+  final int? s_top_other;
+  final int? s_start_other;
+  final int? d_top_mobile;
+  final int? d_start_mobile;
+  final int? d_top_other;
+  final int? d_start_other;
   const HeroItem({
     required this.id,
     required this.doc_id,
     required this.image,
     required this.title_en,
     required this.title_ar,
-    required this.subtitle_en,
-    required this.subtitle_ar,
-    required this.description_en,
-    required this.description_ar,
-    required this.t_font_mobile,
-    required this.t_font_other,
-    required this.s_font_mobile,
-    required this.s_font_other,
-    required this.d_font_mobile,
-    required this.d_font_other,
-    required this.t_align,
-    required this.s_align,
-    required this.d_align,
+    this.subtitle_en,
+    this.subtitle_ar,
+    this.description_en,
+    this.description_ar,
+    this.t_font_mobile,
+    this.t_font_other,
+    this.s_font_mobile,
+    this.s_font_other,
+    this.d_font_mobile,
+    this.d_font_other,
+    this.t_align,
+    this.s_align,
+    this.d_align,
+    this.t_top_mobile,
+    this.t_start_mobile,
+    this.t_top_other,
+    this.t_start_other,
+    this.s_top_mobile,
+    this.s_start_mobile,
+    this.s_top_other,
+    this.s_start_other,
+    this.d_top_mobile,
+    this.d_start_mobile,
+    this.d_top_other,
+    this.d_start_other,
   });
 
   HeroItem copyWith({
@@ -62,6 +83,18 @@ class HeroItem extends Equatable {
     String? t_align,
     String? s_align,
     String? d_align,
+    int? t_top_mobile,
+    int? t_start_mobile,
+    int? t_top_other,
+    int? t_start_other,
+    int? s_top_mobile,
+    int? s_start_mobile,
+    int? s_top_other,
+    int? s_start_other,
+    int? d_top_mobile,
+    int? d_start_mobile,
+    int? d_top_other,
+    int? d_start_other,
   }) {
     return HeroItem(
       id: id ?? this.id,
@@ -82,8 +115,56 @@ class HeroItem extends Equatable {
       t_align: t_align ?? this.t_align,
       s_align: s_align ?? this.s_align,
       d_align: d_align ?? this.d_align,
+      t_top_mobile: t_top_mobile ?? this.t_top_mobile,
+      t_start_mobile: t_start_mobile ?? this.t_start_mobile,
+      t_top_other: t_top_other ?? this.t_top_other,
+      t_start_other: t_start_other ?? this.t_start_other,
+      s_top_mobile: s_top_mobile ?? this.s_top_mobile,
+      s_start_mobile: s_start_mobile ?? this.s_start_mobile,
+      s_top_other: s_top_other ?? this.s_top_other,
+      s_start_other: s_start_other ?? this.s_start_other,
+      d_top_mobile: d_top_mobile ?? this.d_top_mobile,
+      d_start_mobile: d_start_mobile ?? this.d_start_mobile,
+      d_top_other: d_top_other ?? this.d_top_other,
+      d_start_other: d_start_other ?? this.d_start_other,
     );
   }
+
+  HeroText get title => HeroText(
+        text_en: title_en,
+        text_ar: title_ar,
+        align: t_align,
+        font_mobile: t_font_mobile,
+        font_other: t_font_other,
+        top_mobile: t_top_mobile,
+        top_other: t_top_other,
+        start_mobile: t_start_mobile,
+        start_other: t_start_other,
+      );
+
+  HeroText get subtitle => HeroText(
+        text_en: subtitle_en,
+        text_ar: subtitle_ar,
+        align: s_align,
+        font_mobile: s_font_mobile,
+        font_other: s_font_other,
+        top_mobile: s_top_mobile,
+        top_other: s_top_other,
+        start_mobile: s_start_mobile,
+        start_other: s_start_other,
+      );
+
+  HeroText get description => HeroText(
+        text_en: description_en,
+        text_ar: description_ar,
+        align: d_align,
+        font_mobile: d_font_mobile,
+        font_other: d_font_other,
+        top_mobile: d_top_mobile,
+        top_other: d_top_other,
+        start_mobile: d_start_mobile,
+        start_other: d_start_other,
+      );
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
@@ -105,32 +186,20 @@ class HeroItem extends Equatable {
       't_align': t_align,
       's_align': s_align,
       'd_align': d_align,
+      't_top_mobile': t_top_mobile,
+      't_start_mobile': t_start_mobile,
+      't_top_other': t_top_other,
+      't_start_other': t_start_other,
+      's_top_mobile': s_top_mobile,
+      's_start_mobile': s_start_mobile,
+      's_top_other': s_top_other,
+      's_start_other': s_start_other,
+      'd_top_mobile': d_top_mobile,
+      'd_start_mobile': d_start_mobile,
+      'd_top_other': d_top_other,
+      'd_start_other': d_start_other,
     };
   }
-
-  HeroText get title => HeroText(
-        text_en: title_en,
-        text_ar: title_ar,
-        align: t_align,
-        font_mobile: t_font_mobile,
-        font_other: t_font_other,
-      );
-
-  HeroText get subtitle => HeroText(
-        text_en: subtitle_en,
-        text_ar: subtitle_ar,
-        align: s_align,
-        font_mobile: s_font_mobile,
-        font_other: s_font_other,
-      );
-
-  HeroText get description => HeroText(
-        text_en: description_en,
-        text_ar: description_ar,
-        align: d_align,
-        font_mobile: d_font_mobile,
-        font_other: d_font_other,
-      );
 
   factory HeroItem.fromJson(Map<String, dynamic> map) {
     return HeroItem(
@@ -139,19 +208,55 @@ class HeroItem extends Equatable {
       image: map['image'] as String,
       title_en: map['title_en'] as String,
       title_ar: map['title_ar'] as String,
-      subtitle_en: map['subtitle_en'] as String?,
-      subtitle_ar: map['subtitle_ar'] as String?,
-      description_en: map['description_en'] as String?,
-      description_ar: map['description_ar'] as String?,
-      t_font_mobile: map['t_font_mobile'] as int?,
-      t_font_other: map['t_font_other'] as int?,
-      s_font_mobile: map['s_font_mobile'] as int?,
-      s_font_other: map['s_font_other'] as int?,
-      d_font_mobile: map['d_font_mobile'] as int?,
-      d_font_other: map['d_font_other'] as int?,
-      t_align: map['t_align'] as String?,
-      s_align: map['s_align'] as String?,
-      d_align: map['d_align'] as String?,
+      subtitle_en:
+          map['subtitle_en'] != null ? map['subtitle_en'] as String : null,
+      subtitle_ar:
+          map['subtitle_ar'] != null ? map['subtitle_ar'] as String : null,
+      description_en: map['description_en'] != null
+          ? map['description_en'] as String
+          : null,
+      description_ar: map['description_ar'] != null
+          ? map['description_ar'] as String
+          : null,
+      t_font_mobile:
+          map['t_font_mobile'] != null ? map['t_font_mobile'] as int : null,
+      t_font_other:
+          map['t_font_other'] != null ? map['t_font_other'] as int : null,
+      s_font_mobile:
+          map['s_font_mobile'] != null ? map['s_font_mobile'] as int : null,
+      s_font_other:
+          map['s_font_other'] != null ? map['s_font_other'] as int : null,
+      d_font_mobile:
+          map['d_font_mobile'] != null ? map['d_font_mobile'] as int : null,
+      d_font_other:
+          map['d_font_other'] != null ? map['d_font_other'] as int : null,
+      t_align: map['t_align'] != null ? map['t_align'] as String : null,
+      s_align: map['s_align'] != null ? map['s_align'] as String : null,
+      d_align: map['d_align'] != null ? map['d_align'] as String : null,
+      t_top_mobile:
+          map['t_top_mobile'] != null ? map['t_top_mobile'] as int : null,
+      t_start_mobile:
+          map['t_start_mobile'] != null ? map['t_start_mobile'] as int : null,
+      t_top_other:
+          map['t_top_other'] != null ? map['t_top_other'] as int : null,
+      t_start_other:
+          map['t_start_other'] != null ? map['t_start_other'] as int : null,
+      s_top_mobile:
+          map['s_top_mobile'] != null ? map['s_top_mobile'] as int : null,
+      s_start_mobile:
+          map['s_start_mobile'] != null ? map['s_start_mobile'] as int : null,
+      s_top_other:
+          map['s_top_other'] != null ? map['s_top_other'] as int : null,
+      s_start_other:
+          map['s_start_other'] != null ? map['s_start_other'] as int : null,
+      d_top_mobile:
+          map['d_top_mobile'] != null ? map['d_top_mobile'] as int : null,
+      d_start_mobile:
+          map['d_start_mobile'] != null ? map['d_start_mobile'] as int : null,
+      d_top_other:
+          map['d_top_other'] != null ? map['d_top_other'] as int : null,
+      d_start_other:
+          map['d_start_other'] != null ? map['d_start_other'] as int : null,
     );
   }
 
@@ -179,6 +284,18 @@ class HeroItem extends Equatable {
       t_align,
       s_align,
       d_align,
+      t_top_mobile,
+      t_start_mobile,
+      t_top_other,
+      t_start_other,
+      s_top_mobile,
+      s_start_mobile,
+      s_top_other,
+      s_start_other,
+      d_top_mobile,
+      d_start_mobile,
+      d_top_other,
+      d_start_other,
     ];
   }
 }
@@ -189,6 +306,10 @@ class HeroText extends Equatable {
   final String? align;
   final int? font_mobile;
   final int? font_other;
+  final int? top_mobile;
+  final int? top_other;
+  final int? start_mobile;
+  final int? start_other;
 
   const HeroText({
     required this.text_en,
@@ -196,6 +317,10 @@ class HeroText extends Equatable {
     required this.align,
     required this.font_mobile,
     required this.font_other,
+    required this.top_mobile,
+    required this.start_mobile,
+    required this.top_other,
+    required this.start_other,
   });
 
   @override
@@ -206,6 +331,10 @@ class HeroText extends Equatable {
       align,
       font_mobile,
       font_other,
+      top_mobile,
+      top_other,
+      start_mobile,
+      start_other,
     ];
   }
 }

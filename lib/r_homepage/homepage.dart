@@ -1,13 +1,15 @@
 import 'dart:async';
 
 import 'package:after_layout/after_layout.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:doctor_website/components/subroute_bkgrnd.dart';
+import 'package:doctor_website/extensions/model_image_url_extractor.dart';
+import 'package:doctor_website/providers/locale_p.dart';
+import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
-import 'package:doctor_website/components/animated_fab.dart';
-import 'package:doctor_website/config/const.dart';
 import 'package:doctor_website/providers/nav_index_p.dart';
 import 'package:doctor_website/r_homepage/_widgets/page_view_w.dart';
 import 'package:doctor_website/r_homepage/_widgets/persistent_sidebar.dart';
-import 'package:doctor_website/functions/loc_ext_fns.dart';
 import 'package:doctor_website/functions/res_size.dart';
 import 'package:doctor_website/r_homepage/_widgets/tab_nav_bar.dart';
 import 'package:provider/provider.dart';
@@ -46,40 +48,36 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      floatingActionButton: const MYFAB(),
-      body: Opacity(
-        opacity: 0.8,
-        child: Container(
-          height: double.infinity,
-          width: double.infinity,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/bkgrnd_${Initials.i_}.jpg'),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              if (isMobile(context)) const PersistentSideBar(),
-              Flexible(
-                child: NestedScrollView(
-                  controller: _scrollController,
-                  headerSliverBuilder: (context, innerBoxIsScrolled) {
-                    return [
-                      SliverAppBar(
-                        automaticallyImplyLeading: false,
-                        backgroundColor: Colors.white.withOpacity(0.4),
-                        foregroundColor: Colors.white.withOpacity(0.4),
-                        shadowColor: Colors.transparent,
-                        //! logo
-                        title: Row(
+    return SubRouteBackground(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          if (isMobile(context)) const PersistentSideBar(),
+          Flexible(
+            child: NestedScrollView(
+              controller: _scrollController,
+              headerSliverBuilder: (context, innerBoxIsScrolled) {
+                return [
+                  SliverAppBar(
+                    automaticallyImplyLeading: false,
+                    backgroundColor: Colors.white.withOpacity(0.4),
+                    foregroundColor: Colors.white.withOpacity(0.4),
+                    shadowColor: Colors.transparent,
+                    //! logo
+                    title: Consumer2<PxLocale, PxGetDoctorData>(
+                      builder: (context, l, m, _) {
+                        while (m.model == null || m.model!.doctor == null) {
+                          return const SizedBox();
+                        }
+                        final _text =
+                            '${l.isEnglish ? m.model!.doctor!.prefix_en : m.model!.doctor!.prefix_ar} ${l.isEnglish ? m.model!.doctor!.name_en : m.model!.doctor!.name_ar}';
+                        return Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Image.asset(
-                              'assets/images/logo_${Initials.i_}.png',
+                            CachedNetworkImage(
+                              imageUrl: m.model!.doctor!
+                                      .imageUrlByKey(m.model!.doctor!.logo) ??
+                                  '',
                               fit: BoxFit.scaleDown,
                               width: _logoDimentions,
                               height: _logoDimentions,
@@ -88,7 +86,7 @@ class _HomePageState extends State<HomePage>
                               width: 20,
                             ),
                             Text(
-                              context.loc.doctor_name,
+                              _text,
                               style: TextStyle(
                                 fontSize: isMobile(context) ? 22 : 36,
                                 color: Colors.white,
@@ -105,17 +103,17 @@ class _HomePageState extends State<HomePage>
                               ),
                             ),
                           ],
-                        ),
-                        bottom: isMobile(context) ? null : const NavTabBar(),
-                      ),
-                    ];
-                  },
-                  body: const PageViewHomepage(),
-                ),
-              ),
-            ],
+                        );
+                      },
+                    ),
+                    bottom: isMobile(context) ? null : const NavTabBar(),
+                  ),
+                ];
+              },
+              body: const PageViewHomepage(),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

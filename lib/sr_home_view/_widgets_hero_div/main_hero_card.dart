@@ -15,13 +15,15 @@ class MainHeroCard extends StatelessWidget {
       alignment: Alignment.center,
       fit: StackFit.loose,
       children: [
-        CachedNetworkImage(
-          imageUrl: heroItemModel.image,
-          fit: BoxFit.cover,
-          width: double.infinity,
-          height: double.infinity,
-          matchTextDirection: true,
-        ),
+        heroItemModel.image.isEmpty
+            ? const SizedBox()
+            : CachedNetworkImage(
+                imageUrl: heroItemModel.image,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: double.infinity,
+                matchTextDirection: true,
+              ),
         if (isMobile(context))
           HeroTextUnpositioned(
             heroTextList: [

@@ -48,7 +48,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get follow => 'تابعونا علي';
 
   @override
-  String get rights => 'جميع الحقوق محفوظة @ عيادات د / خالد نبيل';
+  String get rights => 'جميع الحقوق محفوظة @ عيادات';
 
   @override
   String get design => 'تصميم و تنفيذ د / كريم زاهر';
@@ -114,7 +114,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get loading => 'جاري التحميل . . .';
 
   @override
-  String get thanks => 'نشكركم علي الحجز في عيادات د / خالد نبيل';
+  String get thanks => 'نشكركم علي الحجز في عيادات';
 
   @override
   String get to_contact => 'سيتم التواصل بواسطة فريق الريسبشن لتاكيد الموعد';

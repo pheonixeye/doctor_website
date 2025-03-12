@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
-import 'package:pocketbase/pocketbase.dart';
 
 // ignore_for_file: constant_identifier_names, non_constant_identifier_names
 final class Initials {
@@ -81,79 +80,5 @@ class DoctorStaticData extends Equatable {
 
   factory DoctorStaticData.current() {
     return doctorData.firstWhere((e) => e.initials == Initials.i_);
-  }
-}
-
-const Map<String, String> _headers = {
-  "Content-Type": "application/json",
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Credentials": "true",
-  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-  "Access-Control-Allow-Headers": "Origin, Content-Type, Accept"
-};
-
-abstract class Configuration {
-  const Configuration();
-  String get HOST;
-  String get SCHEME;
-  int get PORT;
-  Map<String, String> get HEADERS;
-  PocketBase get pb;
-}
-
-class HxConstDEV implements Configuration {
-  @override
-  String get HOST => 'localhost';
-  @override
-  int get PORT => 8888;
-  @override
-  String get SCHEME => 'http';
-  @override
-  Map<String, String> get HEADERS => _headers;
-  @override
-  PocketBase get pb => PocketBase('$HOST:$PORT');
-}
-
-class HxConstPROD implements Configuration {
-  @override
-  Map<String, String> get HEADERS => _headers;
-
-  @override
-  String get HOST => 'server.drkaz.dev';
-
-  @override
-  int get PORT => 443;
-
-  @override
-  String get SCHEME => 'https';
-
-  @override
-  PocketBase get pb => PocketBase('$HOST:$PORT');
-}
-
-class Environment {
-  static final Environment _singleton = Environment._internal();
-
-  factory Environment() {
-    return _singleton;
-  }
-  Environment._internal();
-
-  static const String DEV = 'DEV';
-  static const String PROD = 'PROD';
-
-  late Configuration config;
-
-  void initConfig(String environment) {
-    config = _getConfig(environment);
-  }
-
-  Configuration _getConfig(String environment) {
-    switch (environment) {
-      case DEV:
-        return HxConstDEV();
-      default:
-        return HxConstPROD();
-    }
   }
 }

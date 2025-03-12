@@ -84,7 +84,7 @@ class Styles {
       );
   static TextStyle ARTICLESUBTITLESTEXTSYTYLE(BuildContext context) =>
       TextStyle(
-        fontSize: isMobile(context) ? 14 : 24,
+        fontSize: isMobile(context) ? 12 : 24,
         color: Colors.white,
         decorationColor: Colors.blue,
         decorationStyle: TextDecorationStyle.wavy,

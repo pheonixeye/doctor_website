@@ -1,4 +1,3 @@
-import 'package:doctor_website/components/loading_animation_widget.dart';
 import 'package:doctor_website/functions/loc_ext_fns.dart';
 import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +23,7 @@ class DivSocial extends StatelessWidget {
         child: Consumer<PxGetDoctorData>(
           builder: (context, m, _) {
             while (m.model == null || m.model!.socialContacts == null) {
-              return const LoadingAnimationWidget();
+              return const SizedBox();
             }
             return Row(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -52,7 +52,7 @@ class _ServicesViewPageState extends State<ServicesViewPage> {
                                   '/${l.lang}/${PageNumbers.ServicesView.i}/${item.service.id}');
                             },
                             child: Container(
-                              height: isMobile(context) ? 300 : 150,
+                              height: isMobile(context) ? 350 : 150,
                               decoration: BoxDecoration(
                                 color: Colors.black,
                                 borderRadius: BorderRadius.circular(8),
@@ -109,9 +109,10 @@ class _ServicesViewPageState extends State<ServicesViewPage> {
                                                   ? item.service.description_en
                                                   : item.service.description_ar,
                                               style: Styles
-                                                  .ARTICLETITLESTEXTSYTYLE(
+                                                  .ARTICLESUBTITLESTEXTSYTYLE(
                                                       context),
                                               textAlign: TextAlign.start,
+                                              overflow: TextOverflow.ellipsis,
                                             ),
                                         ],
                                       ),

@@ -48,7 +48,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get follow => 'Follow Us';
 
   @override
-  String get rights => 'All Rights Reserved @Dr. Khaled Nabil Clinics';
+  String get rights => 'All Rights Reserved @';
 
   @override
   String get design => 'Designed & Maintained By Dr. Kareem Zaher';
@@ -114,7 +114,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loading => 'Loading...';
 
   @override
-  String get thanks => 'Thank you for booking with Dr.Khaled Nabil Clinics.';
+  String get thanks => 'Thank you for booking with';
 
   @override
   String get to_contact => 'You will be contacted by our reception team for confirmation.';

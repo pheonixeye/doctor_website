@@ -23,7 +23,7 @@ class MYFAB extends StatelessWidget {
           fabButtons: [
             FloatingActionButton(
               shape: const CircleBorder(),
-              heroTag: 'l',
+              heroTag: 'locale${i.index}${DateTime.now().toIso8601String()}',
               child: const Icon(Icons.language),
               onPressed: () {
                 l.changeLocale();
@@ -33,7 +33,7 @@ class MYFAB extends StatelessWidget {
             ),
             FloatingActionButton(
               shape: const CircleBorder(),
-              heroTag: 'whatsapp',
+              heroTag: 'whatsapp${i.index}${DateTime.now().toIso8601String()}',
               child: const Icon(CustomFontIcons.whatsapp),
               onPressed: () {
                 html.window.open(
@@ -44,7 +44,7 @@ class MYFAB extends StatelessWidget {
             ),
             FloatingActionButton(
               shape: const CircleBorder(),
-              heroTag: 'call',
+              heroTag: 'call${i.index}${DateTime.now().toIso8601String()}',
               child: const Icon(Icons.call),
               onPressed: () {
                 html.window.open(

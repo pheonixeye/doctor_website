@@ -74,7 +74,7 @@ class _DivContactState extends State<DivContact> {
               return Consumer2<PxGetDoctorData, PxLocale>(
                 builder: (context, m, l, c) {
                   while (m.model == null) {
-                    return const LoadingAnimationWidget();
+                    return const SizedBox();
                   }
                   while (
                       m.model!.clinics == null || m.model!.clinics!.isEmpty) {

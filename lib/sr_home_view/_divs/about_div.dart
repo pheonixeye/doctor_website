@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:doctor_website/components/loading_animation_widget.dart';
 import 'package:doctor_website/extensions/model_image_url_extractor.dart';
 import 'package:doctor_website/functions/loc_ext_fns.dart';
 import 'package:doctor_website/providers/px_get_doctor_data.dart';
@@ -37,7 +36,7 @@ class DivAbout extends StatelessWidget {
         child: Consumer2<PxGetDoctorData, PxLocale>(
           builder: (context, m, l, _) {
             while (m.model == null) {
-              return LoadingAnimationWidget();
+              return SizedBox();
             }
             return Row(
               mainAxisAlignment: MainAxisAlignment.center,
