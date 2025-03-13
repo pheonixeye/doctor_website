@@ -346,6 +346,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Thank you for booking with Dr. Hossam El-Awady Clinics.'**
   String get thanks_ha;
+
+  /// No description provided for @success.
+  ///
+  /// In en, this message translates to:
+  /// **'Success'**
+  String get success;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

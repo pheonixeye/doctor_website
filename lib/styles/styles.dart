@@ -35,7 +35,7 @@ class Styles {
   );
 
   static ThemeData LIGHTTHEMEDATA(BuildContext context) => ThemeData(
-        primarySwatch: Styles.COLOR,
+        primaryColor: Styles.COLOR,
         // fontFamily: 'Cairo',
         useMaterial3: true,
         scaffoldBackgroundColor: SCAFFOLDCOLOR.shade100,

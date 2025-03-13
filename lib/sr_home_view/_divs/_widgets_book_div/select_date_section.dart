@@ -49,17 +49,17 @@ class _SelectDateSectionState extends State<SelectDateSection> {
         while (b.booking!.schedule_id == null) {
           return const NoDaySelectedCard();
         }
-        return Card(
-          elevation: 10,
+        return Card.outlined(
+          elevation: 0,
           shape: Styles.CARDSHAPE,
-          color: Colors.transparent,
+          color: Colors.blue.shade200,
           child: Theme(
             data: Theme.of(context).copyWith(
               platform: TargetPlatform.iOS,
               colorScheme: const ColorScheme.light(
-                primary: Colors.white,
-                onPrimary: Colors.black,
-                onSurface: Colors.white,
+                primary: Colors.black,
+                onPrimary: Colors.white,
+                onSurface: Colors.black,
               ),
               textTheme: Theme.of(context).primaryTextTheme.copyWith(
                     bodySmall: TextStyle(
@@ -69,7 +69,7 @@ class _SelectDateSectionState extends State<SelectDateSection> {
                     ),
                   ),
               iconTheme: const IconThemeData(
-                color: Colors.white,
+                color: Colors.black,
                 size: 50,
               ),
             ),

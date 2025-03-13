@@ -29,7 +29,7 @@ class DivBookApp extends StatelessWidget {
                 Center(
                   child: Text(
                     context.loc.book_app,
-                    style: Styles.HEROITEMTEXTSTYLE(36),
+                    style: Styles.TITLESTEXTSYTYLE(context),
                   ),
                 ),
                 Expanded(

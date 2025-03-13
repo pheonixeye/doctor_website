@@ -1,7 +1,6 @@
 import 'package:doctor_website/constant/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:doctor_website/language/app_localizations.dart';
 import 'package:doctor_website/providers/_px_main.dart';
 import 'package:doctor_website/providers/locale_p.dart';
@@ -45,9 +44,8 @@ class MyApp extends StatelessWidget {
               routeInformationParser: router.routeInformationParser,
               routerDelegate: router.routerDelegate,
               builder: (context, child) {
-                child = EasyLoading.init()(context, child);
                 child = ResponsiveBreakpoints.builder(
-                  child: child,
+                  child: child!,
                   breakpoints: const [
                     Breakpoint(start: 0, end: 450, name: MOBILE),
                     Breakpoint(start: 451, end: 800, name: TABLET),

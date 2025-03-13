@@ -133,4 +133,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get thanks_ha => 'Thank you for booking with Dr. Hossam El-Awady Clinics.';
+
+  @override
+  String get success => 'Success';
 }

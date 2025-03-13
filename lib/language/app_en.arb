@@ -41,5 +41,6 @@
     "page_not_found" : "OOPS!!, 404 Page Not Found...",
     "doctor_name" : "Dr. Hossam El-Awady",
     "rights_ha" : "All Rights Reserved @Dr. Hossam El-Awady Clinics",
-    "thanks_ha" : "Thank you for booking with Dr. Hossam El-Awady Clinics."
+    "thanks_ha" : "Thank you for booking with Dr. Hossam El-Awady Clinics.",
+    "success":"Success"
 }

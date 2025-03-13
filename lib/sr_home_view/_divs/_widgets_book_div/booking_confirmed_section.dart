@@ -1,6 +1,6 @@
+import 'package:doctor_website/functions/shell_function.dart';
 import 'package:doctor_website/providers/px_booking.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:doctor_website/functions/loc_ext_fns.dart';
 import 'package:doctor_website/providers/px_booking_s_c.dart';
 import 'package:doctor_website/styles/styles.dart';
@@ -58,15 +58,15 @@ class BookingConfirmedSection extends StatelessWidget {
                       icon: const Icon(Icons.calendar_month),
                       label: Text(context.loc.book_app),
                       onPressed: () async {
-                        await EasyLoading.show(status: context.loc.loading)
-                            .then((value) {
-                          b.resetBooking();
-                          if (context.mounted) {
-                            sc.scrollToPage(0, context);
-                          }
-                        }).then((value) async {
-                          await EasyLoading.dismiss();
-                        });
+                        await shellFunction(
+                          context,
+                          toExecute: () {
+                            b.resetBooking();
+                            if (context.mounted) {
+                              sc.scrollToPage(0, context);
+                            }
+                          },
+                        );
                       },
                     ),
                   ),

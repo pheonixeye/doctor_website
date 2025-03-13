@@ -133,4 +133,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get thanks_ha => 'نشكركم علي الحجز في عيادات د / حسام العوضي ';
+
+  @override
+  String get success => 'تم بنجاح';
 }

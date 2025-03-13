@@ -1,8 +1,8 @@
+import 'package:doctor_website/functions/shell_function.dart';
 import 'package:doctor_website/providers/px_booking.dart';
 import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:doctor_website/components/error_catcher_dialog.dart';
 import 'package:doctor_website/components/loading_animation_widget.dart';
 import 'package:doctor_website/functions/loc_ext_fns.dart';
@@ -138,17 +138,15 @@ class _EnterCredentialsConfirmBookingSectionState
                               return;
                             }
                             if (context.mounted) {
-                              await EasyLoading.show(
-                                      status: context.loc.loading)
-                                  .then((value) async {
-                                await b.createBooking().then((value) {
+                              await shellFunction(
+                                context,
+                                toExecute: () async {
+                                  await b.createBooking();
                                   if (context.mounted) {
                                     sc.scrollToPage(4, context);
                                   }
-                                }).then((value) async {
-                                  await EasyLoading.dismiss();
-                                });
-                              });
+                                },
+                              );
                             }
                           }
                         },
