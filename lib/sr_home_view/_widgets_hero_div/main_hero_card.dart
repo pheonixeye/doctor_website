@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:doctor_website/extensions/model_image_url_extractor.dart';
 import 'package:doctor_website/functions/res_size.dart';
 import 'package:doctor_website/models/hero_item.dart';
 import 'package:flutter/material.dart';
@@ -16,19 +17,25 @@ class MainHeroCard extends StatelessWidget {
       fit: StackFit.loose,
       children: [
         isMobile(context)
-            ? heroItemModel.image_mobile.isEmpty
+            ? (heroItemModel.image_mobile == null ||
+                    heroItemModel.image_mobile!.isEmpty)
                 ? const SizedBox()
                 : CachedNetworkImage(
-                    imageUrl: heroItemModel.image_mobile,
+                    imageUrl:
+                        heroItemModel.imageUrl(heroItemModel.image_mobile!) ??
+                            '',
                     fit: BoxFit.cover,
                     width: double.infinity,
                     height: double.infinity,
                     matchTextDirection: false,
                   )
-            : heroItemModel.image_other.isEmpty
+            : (heroItemModel.image_other == null ||
+                    heroItemModel.image_other!.isEmpty)
                 ? const SizedBox()
                 : CachedNetworkImage(
-                    imageUrl: heroItemModel.image_other,
+                    imageUrl:
+                        heroItemModel.imageUrl(heroItemModel.image_other!) ??
+                            '',
                     fit: BoxFit.cover,
                     width: double.infinity,
                     height: double.infinity,

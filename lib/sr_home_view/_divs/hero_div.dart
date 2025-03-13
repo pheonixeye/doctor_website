@@ -17,20 +17,33 @@ class DivHero extends StatefulWidget {
 }
 
 class _DivHeroState extends State<DivHero> {
-  //TODO
   late Timer timer;
   late final PageController pageController;
+  int _nextPage = 1;
+
   @override
   void initState() {
     super.initState();
     pageController = PageController();
     timer = Timer.periodic(
-      const Duration(seconds: 3),
+      const Duration(seconds: 7),
       (t) {
-        pageController.nextPage(
-          duration: const Duration(seconds: 1),
-          curve: Curves.easeIn,
-        );
+        if (pageController.hasClients &&
+            pageController.positions.isNotEmpty &&
+            context.mounted) {
+          setState(() {
+            if (_nextPage > pageController.page!) {
+              _nextPage = 0;
+            } else {
+              _nextPage += 1;
+            }
+          });
+          pageController.animateToPage(
+            _nextPage,
+            duration: const Duration(seconds: 1),
+            curve: Curves.easeIn,
+          );
+        }
       },
     );
   }
