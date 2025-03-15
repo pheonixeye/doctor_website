@@ -128,22 +128,6 @@ class Styles {
         ],
       );
 
-  static TextStyle TAGSTEXTSYTYLE() => const TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.bold,
-        color: Colors.black,
-        decorationColor: Colors.blue,
-        decorationStyle: TextDecorationStyle.wavy,
-        shadows: [
-          BoxShadow(
-            offset: Offset(3, 3),
-            blurRadius: 3,
-            spreadRadius: 3,
-            color: Colors.blue,
-          ),
-        ],
-      );
-
   static final MAINPAGECOMPONENTCARDCOLOR = Colors.white.withOpacity(0.0);
 
   static TextStyle HEROITEMTEXTSTYLE(double fontSize) => TextStyle(

@@ -50,7 +50,7 @@ class DivFooter extends StatelessWidget {
                   ),
                   onTap: () {
                     w.window.open(
-                      'https://drkaz.dev',
+                      'https://kareemzaherportfolio.web.app',
                       '_blank',
                     );
                   },

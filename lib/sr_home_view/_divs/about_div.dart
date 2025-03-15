@@ -50,20 +50,7 @@ class DivAbout extends StatelessWidget {
                         child: Text(
                           context.loc.about,
                           textAlign: TextAlign.start,
-                          style: TextStyle(
-                            fontSize: isMobile(context) ? 22 : 38,
-                            color: Colors.white,
-                            decorationColor: Colors.amber,
-                            decorationStyle: TextDecorationStyle.wavy,
-                            shadows: const [
-                              BoxShadow(
-                                offset: Offset(3, 3),
-                                blurRadius: 3,
-                                spreadRadius: 3,
-                                color: Colors.amber,
-                              ),
-                            ],
-                          ),
+                          style: Styles.SUBTITLESTEXTSYTYLE(context),
                         ),
                       ),
                       ...m.model!.doctorAbouts!.map((e) {
