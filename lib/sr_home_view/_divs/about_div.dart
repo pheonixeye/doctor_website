@@ -8,19 +8,6 @@ import 'package:doctor_website/providers/locale_p.dart';
 import 'package:doctor_website/styles/styles.dart';
 import 'package:provider/provider.dart';
 
-const mFont = TextStyle(
-  fontSize: 14,
-  color: Colors.amber,
-);
-const oFont = TextStyle(
-  fontSize: 22,
-  color: Colors.amber,
-);
-
-TextStyle _tStyle(BuildContext context) {
-  return isMobile(context) ? mFont : oFont;
-}
-
 class DivAbout extends StatelessWidget {
   const DivAbout({super.key});
 
@@ -50,7 +37,8 @@ class DivAbout extends StatelessWidget {
                         child: Text(
                           context.loc.about,
                           textAlign: TextAlign.start,
-                          style: Styles.SUBTITLESTEXTSYTYLE(context),
+                          style: Styles(m.model?.siteSettings)
+                              .SUBTITLESTEXTSYTYLE(context),
                         ),
                       ),
                       ...m.model!.doctorAbouts!.map((e) {
@@ -58,7 +46,8 @@ class DivAbout extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             l.isEnglish ? e.about_en : e.about_ar,
-                            style: _tStyle(context),
+                            style: Styles(m.model?.siteSettings)
+                                .TEXTTEXTSYTYLE(context),
                           ),
                         );
                       })

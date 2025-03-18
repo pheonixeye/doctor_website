@@ -27,7 +27,9 @@ class _SelectWeekdaySectionState extends State<SelectWeekdaySection> {
           return const LoadingAnimationWidget();
         }
         while (b.booking == null || b.booking!.clinic_id == null) {
-          return const NoClinicSelectedCard();
+          return NoClinicSelectedCard(
+            style: Styles(m.model?.siteSettings).SUBTITLESTEXTSYTYLE(context),
+          );
         }
         final _selectedClinic = m.model!.clinics!
             .firstWhereOrNull((crm) => crm.clinic.id == b.booking!.clinic_id);
@@ -45,6 +47,10 @@ class _SelectWeekdaySectionState extends State<SelectWeekdaySection> {
                   );
                 },
                 groupValue: b.booking?.schedule_id,
+                titleStyle:
+                    Styles(m.model?.siteSettings).SUBTITLESTEXTSYTYLE(context),
+                subtitleStyle:
+                    Styles(m.model?.siteSettings).TEXTTEXTSYTYLE(context),
               );
             }).toList(),
           ),
@@ -60,10 +66,14 @@ class WeekdaySelectionCard extends StatefulWidget {
     required this.schedule_id,
     required this.onValueChanged,
     this.groupValue,
+    required this.titleStyle,
+    required this.subtitleStyle,
   });
   final String schedule_id;
   final void Function(String clinic) onValueChanged;
   final String? groupValue;
+  final TextStyle titleStyle;
+  final TextStyle subtitleStyle;
 
   @override
   State<WeekdaySelectionCard> createState() => _WeekdaySelectionCardState();
@@ -126,14 +136,14 @@ class _WeekdaySelectionCardState extends State<WeekdaySelectionCard> {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         _sch?.dayString(context) ?? '',
-                        style: Styles.TITLESTEXTSYTYLE(context),
+                        style: widget.titleStyle,
                       ),
                     ),
                     subtitle: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         _sch?.scheduleString(context) ?? '',
-                        style: Styles.SUBTITLESTEXTSYTYLE(context),
+                        style: widget.subtitleStyle,
                       ),
                     ),
                   ),

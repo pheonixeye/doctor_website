@@ -44,10 +44,14 @@ class _SelectDateSectionState extends State<SelectDateSection> {
           return const LoadingAnimationWidget();
         }
         while (b.booking == null || b.booking!.clinic_id == null) {
-          return const NoClinicSelectedCard();
+          return NoClinicSelectedCard(
+            style: Styles(m.model?.siteSettings).SUBTITLESTEXTSYTYLE(context),
+          );
         }
         while (b.booking!.schedule_id == null) {
-          return const NoDaySelectedCard();
+          return NoDaySelectedCard(
+            style: Styles(m.model?.siteSettings).SUBTITLESTEXTSYTYLE(context),
+          );
         }
         return Card.outlined(
           elevation: 0,

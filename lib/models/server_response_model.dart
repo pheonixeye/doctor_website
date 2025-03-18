@@ -7,6 +7,7 @@ import 'package:doctor_website/models/doctor.dart';
 import 'package:doctor_website/models/doctor_about.dart';
 import 'package:doctor_website/models/hero_item.dart';
 import 'package:doctor_website/models/service_response_model.dart';
+import 'package:doctor_website/models/site_settings.dart';
 import 'package:doctor_website/models/social_contact.dart';
 import 'package:doctor_website/models/video.dart';
 import 'package:equatable/equatable.dart';
@@ -21,6 +22,7 @@ class ServerResponseModel extends Equatable {
   final SocialContact? socialContacts;
   final List<Video>? videos;
   final List<HeroItem>? heroItems;
+  final SiteSettings? siteSettings;
 
   const ServerResponseModel({
     required this.articles,
@@ -32,6 +34,7 @@ class ServerResponseModel extends Equatable {
     required this.socialContacts,
     required this.videos,
     required this.heroItems,
+    required this.siteSettings,
   });
 
   @override
@@ -46,6 +49,7 @@ class ServerResponseModel extends Equatable {
       socialContacts,
       videos,
       heroItems,
+      siteSettings,
     ];
   }
 }

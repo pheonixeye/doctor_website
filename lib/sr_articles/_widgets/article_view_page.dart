@@ -43,7 +43,8 @@ class _ArticleViewPageState extends State<ArticleViewPage> {
                     l.isEnglish
                         ? item?.article.title_en ?? ''
                         : item?.article.title_ar ?? '',
-                    style: Styles.ARTICLETITLESTEXTSYTYLE(context),
+                    style: Styles(m.model?.siteSettings)
+                        .SUBTITLESTEXTSYTYLE(context),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -55,7 +56,8 @@ class _ArticleViewPageState extends State<ArticleViewPage> {
                       l.isEnglish
                           ? item.article.description_en
                           : item.article.description_ar,
-                      style: Styles.ARTICLESUBTITLESTEXTSYTYLE(context),
+                      style:
+                          Styles(m.model?.siteSettings).TEXTTEXTSYTYLE(context),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -88,7 +90,8 @@ class _ArticleViewPageState extends State<ArticleViewPage> {
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             l.isEnglish ? e.title_en : e.title_ar,
-                            style: Styles.TITLESTEXTSYTYLE(context),
+                            style: Styles(m.model?.siteSettings)
+                                .SUBTITLESTEXTSYTYLE(context),
                             textAlign: TextAlign.start,
                           ),
                         ),
@@ -96,7 +99,8 @@ class _ArticleViewPageState extends State<ArticleViewPage> {
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             l.isEnglish ? e.body_en : e.body_ar,
-                            style: Styles.ARTICLESUBTITLESTEXTSYTYLE(context),
+                            style: Styles(m.model?.siteSettings)
+                                .TEXTTEXTSYTYLE(context),
                             textAlign: TextAlign.start,
                           ),
                         ),

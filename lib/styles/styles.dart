@@ -1,10 +1,21 @@
 // ignore_for_file: non_constant_identifier_names, constant_identifier_names
 
+import 'package:doctor_website/models/site_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:doctor_website/functions/res_size.dart';
 
 class Styles {
+  final SiteSettings? settings;
+
+  const Styles._(this.settings);
+
+  static Styles _internal(SiteSettings? settings) => Styles._(settings);
+
+  factory Styles(SiteSettings? settings) {
+    return _internal(settings);
+  }
+
   static const COLOR = Colors.blue;
 
   static const SCAFFOLDCOLOR = Colors.grey;
@@ -34,13 +45,35 @@ class Styles {
     borderRadius: BorderRadiusDirectional.circular(20),
   );
 
-  static ThemeData LIGHTTHEMEDATA(BuildContext context) => ThemeData(
+  ThemeData LIGHTTHEMEDATA(BuildContext context) => ThemeData(
         primaryColor: Styles.COLOR,
         // fontFamily: 'Cairo',
         useMaterial3: true,
         scaffoldBackgroundColor: SCAFFOLDCOLOR.shade100,
         textTheme: GoogleFonts.cairoTextTheme(
           Theme.of(context).textTheme,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            foregroundColor: WidgetStatePropertyAll(Color(
+                int.parse('0xff${settings?.button_font_color ?? 'ffffff'}'))),
+            backgroundColor: WidgetStatePropertyAll(
+                Color(int.parse('0xff${settings?.button_color ?? 'ffffff'}'))),
+          ),
+        ),
+        iconButtonTheme: IconButtonThemeData(
+          style: ButtonStyle(
+            foregroundColor: WidgetStatePropertyAll(Color(
+                int.parse('0xff${settings?.button_font_color ?? 'ffffff'}'))),
+            backgroundColor: WidgetStatePropertyAll(
+                Color(int.parse('0xff${settings?.button_color ?? 'ffffff'}'))),
+          ),
+        ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          foregroundColor: Color(
+              int.parse('0xff${settings?.button_font_color ?? 'ffffff'}')),
+          backgroundColor:
+              Color(int.parse('0xff${settings?.button_color ?? 'ffffff'}')),
         ),
         tabBarTheme: TabBarTheme(
           labelStyle: GoogleFonts.cairo(
@@ -53,97 +86,7 @@ class Styles {
         ),
       );
 
-  static TextStyle TITLESTEXTSYTYLE(BuildContext context) => TextStyle(
-        fontSize: isMobile(context) ? 16 : 26,
-        color: Colors.white,
-        decorationColor: Colors.amber,
-        decorationStyle: TextDecorationStyle.wavy,
-        shadows: const [
-          BoxShadow(
-            offset: Offset(3, 3),
-            blurRadius: 3,
-            spreadRadius: 3,
-            color: Colors.amber,
-          ),
-        ],
-      );
-  static TextStyle ARTICLETITLESTEXTSYTYLE(BuildContext context) => TextStyle(
-        fontSize: isMobile(context) ? 18 : 28,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
-        decorationColor: Colors.amber,
-        decorationStyle: TextDecorationStyle.wavy,
-        shadows: const [
-          BoxShadow(
-            offset: Offset(3, 3),
-            blurRadius: 3,
-            spreadRadius: 3,
-            color: Colors.amber,
-          ),
-        ],
-      );
-  static TextStyle ARTICLESUBTITLESTEXTSYTYLE(BuildContext context) =>
-      TextStyle(
-        fontSize: isMobile(context) ? 12 : 24,
-        color: Colors.white,
-        decorationColor: Colors.blue,
-        decorationStyle: TextDecorationStyle.wavy,
-        shadows: const [
-          BoxShadow(
-            offset: Offset(3, 3),
-            blurRadius: 3,
-            spreadRadius: 3,
-            color: Colors.blue,
-          ),
-        ],
-      );
-
-  static TextStyle SUBTITLESTEXTSYTYLE(BuildContext context) => TextStyle(
-        fontSize: isMobile(context) ? 12 : 22,
-        color: Colors.white,
-        decorationColor: Colors.amber,
-        decorationStyle: TextDecorationStyle.wavy,
-        shadows: const [
-          BoxShadow(
-            offset: Offset(3, 3),
-            blurRadius: 3,
-            spreadRadius: 3,
-            color: Colors.amber,
-          ),
-        ],
-      );
-
-  static TextStyle CLINICSTEXTSYTYLE(BuildContext context) => TextStyle(
-        fontSize: isMobile(context) ? 16 : 26,
-        color: Colors.white,
-        decorationColor: Colors.blue,
-        decorationStyle: TextDecorationStyle.wavy,
-        shadows: const [
-          BoxShadow(
-            offset: Offset(3, 3),
-            blurRadius: 3,
-            spreadRadius: 3,
-            color: Colors.amber,
-          ),
-        ],
-      );
-
   static final MAINPAGECOMPONENTCARDCOLOR = Colors.white.withOpacity(0.0);
-
-  static TextStyle HEROITEMTEXTSTYLE(double fontSize) => TextStyle(
-        fontSize: fontSize,
-        color: Colors.white,
-        decorationColor: Colors.amber,
-        decorationStyle: TextDecorationStyle.double,
-        shadows: const [
-          BoxShadow(
-            offset: Offset(3, 3),
-            blurRadius: 3,
-            spreadRadius: 3,
-            color: Colors.amber,
-          ),
-        ],
-      );
 
   static final CONTAINERDECORATION = BoxDecoration(
     borderRadius: BorderRadius.circular(20),
@@ -157,4 +100,135 @@ class Styles {
       ),
     ],
   );
+
+  TextStyle WEBSITETITLETEXTSYTYLE(BuildContext context) => TextStyle(
+        fontSize: isMobile(context)
+            ? (settings?.website_title_font_size_mobile)?.toDouble() ?? 16
+            : (settings?.website_title_font_size_other)?.toDouble() ?? 16,
+        color: Color(
+            int.parse('0xff${settings?.website_title_font_color ?? 'ffffff'}')),
+        shadows: [
+          BoxShadow(
+            offset: Offset(1, 1),
+            blurRadius: 3,
+            spreadRadius: 2,
+            color: Color(int.parse(
+                '0xff${settings?.website_title_font_shadow_color ?? 'ffffff'}')),
+          ),
+        ],
+      );
+
+  TextStyle TITLESTEXTSYTYLE(BuildContext context) => TextStyle(
+        fontSize: isMobile(context)
+            ? (settings?.titles_font_size_mobile)?.toDouble() ?? 16
+            : (settings?.titles_font_size_other)?.toDouble() ?? 16,
+        color:
+            Color(int.parse('0xff${settings?.titles_font_color ?? 'ffffff'}')),
+        shadows: [
+          BoxShadow(
+            offset: Offset(1, 1),
+            blurRadius: 3,
+            spreadRadius: 2,
+            color: Color(int.parse(
+                '0xff${settings?.titles_font_shadow_color ?? 'ffffff'}')),
+          ),
+        ],
+      );
+
+  TextStyle SUBTITLESTEXTSYTYLE(BuildContext context) => TextStyle(
+        fontSize: isMobile(context)
+            ? (settings?.subtitles_font_size_mobile)?.toDouble() ?? 16
+            : (settings?.subtitles_font_size_other)?.toDouble() ?? 16,
+        color: Color(
+            int.parse('0xff${settings?.subtitles_font_color ?? 'ffffff'}')),
+        shadows: [
+          BoxShadow(
+            offset: Offset(1, 1),
+            blurRadius: 3,
+            spreadRadius: 2,
+            color: Color(int.parse(
+                '0xff${settings?.subtitles_font_shadow_color ?? 'ffffff'}')),
+          ),
+        ],
+      );
+
+  TextStyle TEXTTEXTSYTYLE(BuildContext context) => TextStyle(
+        fontSize: isMobile(context)
+            ? (settings?.text_font_size_mobile)?.toDouble() ?? 16
+            : (settings?.text_font_size_other)?.toDouble() ?? 16,
+        color: Color(int.parse('0xff${settings?.text_font_color ?? 'ffffff'}')),
+        shadows: [
+          BoxShadow(
+            offset: Offset(1, 1),
+            blurRadius: 3,
+            spreadRadius: 2,
+            color: Color(int.parse(
+                '0xff${settings?.text_font_shadow_color ?? 'ffffff'}')),
+          ),
+        ],
+      );
+  TextStyle HEROTITLESTEXTSYTYLE(
+    BuildContext context,
+    num? m_font_size,
+    num? o_font_size,
+  ) =>
+      TextStyle(
+        fontSize: isMobile(context)
+            ? (m_font_size)?.toDouble() ?? 16
+            : (o_font_size)?.toDouble() ?? 16,
+        color:
+            Color(int.parse('0xff${settings?.titles_font_color ?? 'ffffff'}')),
+        shadows: [
+          BoxShadow(
+            offset: Offset(1, 1),
+            blurRadius: 3,
+            spreadRadius: 2,
+            color: Color(int.parse(
+                '0xff${settings?.titles_font_shadow_color ?? 'ffffff'}')),
+          ),
+        ],
+      );
+
+  TextStyle HEROSUBTITLESTEXTSYTYLE(
+    BuildContext context,
+    num? m_font_size,
+    num? o_font_size,
+  ) =>
+      TextStyle(
+        fontSize: isMobile(context)
+            ? (m_font_size)?.toDouble() ?? 16
+            : (o_font_size)?.toDouble() ?? 16,
+        color: Color(
+            int.parse('0xff${settings?.subtitles_font_color ?? 'ffffff'}')),
+        shadows: [
+          BoxShadow(
+            offset: Offset(1, 1),
+            blurRadius: 3,
+            spreadRadius: 2,
+            color: Color(int.parse(
+                '0xff${settings?.subtitles_font_shadow_color ?? 'ffffff'}')),
+          ),
+        ],
+      );
+
+  TextStyle HEROTEXTTEXTSYTYLE(
+    BuildContext context,
+    num? m_font_size,
+    num? o_font_size,
+  ) =>
+      TextStyle(
+        fontSize: isMobile(context)
+            ? (m_font_size)?.toDouble() ?? 16
+            : (o_font_size)?.toDouble() ?? 16,
+        color: Color(int.parse('0xff${settings?.text_font_color ?? 'ffffff'}')),
+        shadows: [
+          BoxShadow(
+            offset: Offset(1, 1),
+            blurRadius: 3,
+            spreadRadius: 2,
+            color: Color(int.parse(
+                '0xff${settings?.text_font_shadow_color ?? 'ffffff'}')),
+          ),
+        ],
+      );
 }

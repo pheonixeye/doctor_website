@@ -1,5 +1,6 @@
 import 'package:doctor_website/functions/shell_function.dart';
 import 'package:doctor_website/providers/px_booking.dart';
+import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_website/functions/loc_ext_fns.dart';
 import 'package:doctor_website/providers/px_booking_s_c.dart';
@@ -11,8 +12,8 @@ class BookingConfirmedSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<PxBookingSC, PxBooking>(
-      builder: (context, sc, b, c) {
+    return Consumer3<PxBookingSC, PxBooking, PxGetDoctorData>(
+      builder: (context, sc, b, m, _) {
         return Flex(
           direction: Axis.vertical,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -27,7 +28,8 @@ class BookingConfirmedSection extends StatelessWidget {
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
                     context.loc.booking_confirmed,
-                    style: Styles.TITLESTEXTSYTYLE(context),
+                    style: Styles(m.model?.siteSettings)
+                        .SUBTITLESTEXTSYTYLE(context),
                   ),
                 ),
               ),
@@ -36,14 +38,16 @@ class BookingConfirmedSection extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 context.loc.thanks_ha,
-                style: Styles.SUBTITLESTEXTSYTYLE(context),
+                style:
+                    Styles(m.model?.siteSettings).SUBTITLESTEXTSYTYLE(context),
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 context.loc.to_contact,
-                style: Styles.SUBTITLESTEXTSYTYLE(context),
+                style:
+                    Styles(m.model?.siteSettings).SUBTITLESTEXTSYTYLE(context),
               ),
             ),
             Row(

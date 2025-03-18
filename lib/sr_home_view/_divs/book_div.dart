@@ -1,3 +1,4 @@
+import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_website/functions/loc_ext_fns.dart';
 import 'package:doctor_website/functions/res_size.dart';
@@ -22,14 +23,15 @@ class DivBookApp extends StatelessWidget {
         elevation: 10,
         color: Styles.MAINPAGECOMPONENTCARDCOLOR,
         shape: Styles.HEROCARDBORDER,
-        child: Consumer<PxBookingSC>(
-          builder: (context, p, c) {
+        child: Consumer2<PxBookingSC, PxGetDoctorData>(
+          builder: (context, p, m, _) {
             return Column(
               children: [
                 Center(
                   child: Text(
                     context.loc.book_app,
-                    style: Styles.TITLESTEXTSYTYLE(context),
+                    style:
+                        Styles(m.model?.siteSettings).TITLESTEXTSYTYLE(context),
                   ),
                 ),
                 Expanded(

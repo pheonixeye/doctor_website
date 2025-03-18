@@ -7,8 +7,17 @@ import 'package:flutter/material.dart';
 import '_exp.dart';
 
 class MainHeroCard extends StatelessWidget {
-  const MainHeroCard({super.key, required this.heroItemModel});
+  const MainHeroCard({
+    super.key,
+    required this.heroItemModel,
+    required this.titleStyle,
+    required this.subtitleStyle,
+    required this.textStyle,
+  });
   final HeroItem heroItemModel;
+  final TextStyle titleStyle;
+  final TextStyle subtitleStyle;
+  final TextStyle textStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +50,18 @@ class MainHeroCard extends StatelessWidget {
                     height: double.infinity,
                     matchTextDirection: false,
                   ),
-        HeroTextPositioned(heroItemModel.title),
-        HeroTextPositioned(heroItemModel.subtitle),
-        HeroTextPositioned(heroItemModel.description),
+        HeroTextPositioned(
+          heroItemModel.title,
+          style: titleStyle,
+        ),
+        HeroTextPositioned(
+          heroItemModel.subtitle,
+          style: subtitleStyle,
+        ),
+        HeroTextPositioned(
+          heroItemModel.description,
+          style: textStyle,
+        ),
       ],
     );
   }

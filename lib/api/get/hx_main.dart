@@ -13,6 +13,7 @@ import 'package:doctor_website/models/schedule.dart';
 import 'package:doctor_website/models/server_response_model.dart';
 import 'package:doctor_website/models/service.dart';
 import 'package:doctor_website/models/service_response_model.dart';
+import 'package:doctor_website/models/site_settings.dart';
 import 'package:doctor_website/models/social_contact.dart';
 import 'package:doctor_website/models/video.dart';
 import 'package:pocketbase/pocketbase.dart';
@@ -65,6 +66,12 @@ class HxMainSupabase implements HxMain {
     final params = {
       'doctor_id': doc_id,
     };
+
+    final _siteSettingsRequest =
+        await _client.from('site_settings').select().eq('doc_id', doc_id);
+
+    final _siteSettings = SiteSettings.fromJson(_siteSettingsRequest.first);
+
     final _articlesRequest = await _client
         .rpc(
           'get_articles',
@@ -155,6 +162,7 @@ class HxMainSupabase implements HxMain {
       socialContacts: _socialContacts,
       videos: _videos,
       heroItems: _heroItems,
+      siteSettings: _siteSettings,
     );
     print('HxMainSupabase().fetchModelById($doc_id)');
     return _model;

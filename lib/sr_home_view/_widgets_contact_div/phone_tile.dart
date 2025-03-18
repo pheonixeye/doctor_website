@@ -8,15 +8,17 @@ class PhoneTile extends StatelessWidget {
     super.key,
     required this.phone,
     required this.onTap,
+    required this.style,
   });
   final String phone;
   final VoidCallback onTap;
+  final TextStyle style;
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
         context.loc.phone,
-        style: Styles.TITLESTEXTSYTYLE(context),
+        style: style,
       ),
       subtitle: Padding(
         padding: const EdgeInsets.all(8.0),

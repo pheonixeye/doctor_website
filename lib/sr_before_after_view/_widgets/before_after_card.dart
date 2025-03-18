@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctor_website/extensions/model_image_url_extractor.dart';
 import 'package:doctor_website/functions/res_size.dart';
 import 'package:doctor_website/models/case.dart';
+import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_website/providers/locale_p.dart';
 import 'package:doctor_website/styles/styles.dart';
@@ -57,8 +58,8 @@ class _BeforeAfterCardState extends State<BeforeAfterCard> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Consumer<PxLocale>(
-        builder: (context, l, c) {
+      child: Consumer2<PxLocale, PxGetDoctorData>(
+        builder: (context, l, m, _) {
           return Container(
             height: 300,
             width: MediaQuery.sizeOf(context).width - 100,
@@ -102,7 +103,8 @@ class _BeforeAfterCardState extends State<BeforeAfterCard> {
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             l.isEnglish ? widget.ba.name_en : widget.ba.name_ar,
-                            style: Styles.ARTICLETITLESTEXTSYTYLE(context),
+                            style: Styles(m.model?.siteSettings)
+                                .SUBTITLESTEXTSYTYLE(context),
                             textAlign: TextAlign.start,
                           ),
                         ),
@@ -113,7 +115,8 @@ class _BeforeAfterCardState extends State<BeforeAfterCard> {
                               l.isEnglish
                                   ? widget.ba.description_en
                                   : widget.ba.description_ar,
-                              style: Styles.ARTICLESUBTITLESTEXTSYTYLE(context),
+                              style: Styles(m.model?.siteSettings)
+                                  .TEXTTEXTSYTYLE(context),
                               textAlign: TextAlign.start,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 5,

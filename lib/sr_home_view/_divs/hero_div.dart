@@ -84,8 +84,27 @@ class _DivHeroState extends State<DivHero> {
                   controller: pageController,
                   onPageChanged: (value) {},
                   itemBuilder: (context, index) {
+                    final item = m.model!.heroItems![index];
                     return MainHeroCard(
-                      heroItemModel: m.model!.heroItems![index],
+                      heroItemModel: item,
+                      titleStyle:
+                          Styles(m.model?.siteSettings).HEROTITLESTEXTSYTYLE(
+                        context,
+                        item.title.font_mobile,
+                        item.title.font_other,
+                      ),
+                      subtitleStyle:
+                          Styles(m.model?.siteSettings).HEROSUBTITLESTEXTSYTYLE(
+                        context,
+                        item.subtitle.font_mobile,
+                        item.subtitle.font_other,
+                      ),
+                      textStyle:
+                          Styles(m.model?.siteSettings).HEROTEXTTEXTSYTYLE(
+                        context,
+                        item.description.font_mobile,
+                        item.description.font_other,
+                      ),
                     );
                   },
                 );

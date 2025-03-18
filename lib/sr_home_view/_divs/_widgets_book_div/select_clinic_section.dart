@@ -44,6 +44,8 @@ class _SelectClinicSectionState extends State<SelectClinicSection> {
                     .firstWhereOrNull(
                         (x) => x.clinic.id == b.booking!.clinic_id)
                     ?.clinic,
+                style:
+                    Styles(m.model?.siteSettings).SUBTITLESTEXTSYTYLE(context),
               ),
             );
           }).toList(),
@@ -59,10 +61,12 @@ class ClinicSelectionCard extends StatefulWidget {
     required this.clinic,
     required this.onValueChanged,
     this.groupValue,
+    required this.style,
   });
   final Clinic clinic;
   final void Function(Clinic clinic) onValueChanged;
   final Clinic? groupValue;
+  final TextStyle style;
 
   @override
   State<ClinicSelectionCard> createState() => _ClinicSelectionCardState();
@@ -115,7 +119,7 @@ class _ClinicSelectionCardState extends State<ClinicSelectionCard> {
                 child: Center(
                   child: Text(
                     l.isEnglish ? widget.clinic.name_en : widget.clinic.name_ar,
-                    style: Styles.TITLESTEXTSYTYLE(context),
+                    style: widget.style,
                   ),
                 ),
               ),

@@ -41,14 +41,16 @@ class _MediaItemViewPageState extends State<MediaItemViewPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     l.isEnglish ? item.title_en : item.title_ar,
-                    style: Styles.TITLESTEXTSYTYLE(context),
+                    style: Styles(m.model?.siteSettings)
+                        .SUBTITLESTEXTSYTYLE(context),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     l.isEnglish ? item.description_en : item.description_ar,
-                    style: Styles.ARTICLESUBTITLESTEXTSYTYLE(context),
+                    style:
+                        Styles(m.model?.siteSettings).TEXTTEXTSYTYLE(context),
                   ),
                 ),
                 Padding(

@@ -33,7 +33,8 @@ class DivSocial extends StatelessWidget {
                 ),
                 LinkText(
                   context.loc.follow,
-                  style: Styles.TITLESTEXTSYTYLE(context),
+                  style: Styles(m.model?.siteSettings)
+                      .SUBTITLESTEXTSYTYLE(context),
                 ),
                 const Spacer(
                   flex: 2,

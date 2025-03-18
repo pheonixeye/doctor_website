@@ -1,3 +1,5 @@
+import 'package:doctor_website/providers/px_get_doctor_data.dart';
+import 'package:doctor_website/styles/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:doctor_website/models/navigation_m.dart';
@@ -16,8 +18,8 @@ class PersistentSideBar extends StatefulWidget {
 class _PersistentSideBarState extends State<PersistentSideBar> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<PxExpOpacity>(
-      builder: (context, e, c) {
+    return Consumer2<PxExpOpacity, PxGetDoctorData>(
+      builder: (context, e, m, _) {
         return AnimatedContainer(
           duration: const Duration(milliseconds: 500),
           color: Colors.white.withOpacity(0.4),
@@ -33,12 +35,16 @@ class _PersistentSideBarState extends State<PersistentSideBar> {
                 groupAlignment: -0.5,
                 labelType: NavigationRailLabelType.none,
                 useIndicator: true,
-                indicatorColor: Colors.amber,
-                selectedLabelTextStyle: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+                indicatorColor: Theme.of(context)
+                        .elevatedButtonTheme
+                        .style
+                        ?.backgroundColor
+                        ?.resolve({}) ??
+                    Colors.amber,
+                unselectedLabelTextStyle:
+                    Styles(m.model?.siteSettings).TEXTTEXTSYTYLE(context),
+                selectedLabelTextStyle:
+                    Styles(m.model?.siteSettings).SUBTITLESTEXTSYTYLE(context),
                 unselectedIconTheme: const IconThemeData(
                   color: Colors.black,
                 ),

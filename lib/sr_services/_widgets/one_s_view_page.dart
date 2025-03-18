@@ -45,7 +45,8 @@ class _OneServiceViewPageState extends State<OneServiceViewPage> {
                       l.isEnglish
                           ? item!.service.name_en
                           : item!.service.name_ar,
-                      style: Styles.TITLESTEXTSYTYLE(context),
+                      style: Styles(m.model?.siteSettings)
+                          .SUBTITLESTEXTSYTYLE(context),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -55,7 +56,8 @@ class _OneServiceViewPageState extends State<OneServiceViewPage> {
                       l.isEnglish
                           ? item.service.description_en
                           : item.service.description_ar,
-                      style: Styles.ARTICLESUBTITLESTEXTSYTYLE(context),
+                      style:
+                          Styles(m.model?.siteSettings).TEXTTEXTSYTYLE(context),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -97,7 +99,8 @@ class _OneServiceViewPageState extends State<OneServiceViewPage> {
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           l.isEnglish ? e.q_en : e.q_ar,
-                          style: Styles.ARTICLETITLESTEXTSYTYLE(context),
+                          style: Styles(m.model?.siteSettings)
+                              .SUBTITLESTEXTSYTYLE(context),
                         ),
                       ),
                       children: [
@@ -105,7 +108,8 @@ class _OneServiceViewPageState extends State<OneServiceViewPage> {
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             l.isEnglish ? e.a_en : e.a_ar,
-                            style: Styles.ARTICLESUBTITLESTEXTSYTYLE(context),
+                            style: Styles(m.model?.siteSettings)
+                                .TEXTTEXTSYTYLE(context),
                           ),
                         ),
                       ],

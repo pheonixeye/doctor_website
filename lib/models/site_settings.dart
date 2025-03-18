@@ -3,30 +3,31 @@ import 'package:equatable/equatable.dart';
 class SiteSettings extends Equatable {
   final String id;
   final String doc_id;
-  final String website_background;
+  final String? website_background;
   //main
-  final String website_title_font_color;
-  final String website_title_font_shadow_color;
-  final int website_title_font_size_mobile;
-  final int website_title_font_size_other;
+  final String? website_title_font_color;
+  final String? website_title_font_shadow_color;
+  final int? website_title_font_size_mobile;
+  final int? website_title_font_size_other;
   //titles
-  final String titles_font_color;
-  final String titles_font_shadow_color;
-  final int titles_font_size_mobile;
-  final int titles_font_size_other;
+  final String? titles_font_color;
+  final String? titles_font_shadow_color;
+  final int? titles_font_size_mobile;
+  final int? titles_font_size_other;
   //subtitles
-  final String subtitles_font_color;
-  final String subtitles_font_shadow_color;
-  final int subtitles_font_size_mobile;
-  final int subtitles_font_size_other;
+  final String? subtitles_font_color;
+  final String? subtitles_font_shadow_color;
+  final int? subtitles_font_size_mobile;
+  final int? subtitles_font_size_other;
   //text
-  final String text_font_color;
-  final String text_font_shadow_color;
-  final int text_font_size_mobile;
-  final int text_font_size_other;
+  final String? text_font_color;
+  final String? text_font_shadow_color;
+  final int? text_font_size_mobile;
+  final int? text_font_size_other;
   //buttons
-  final String button_color;
-  final String button_font_color;
+  final String? button_color;
+  final String? button_font_color;
+
   const SiteSettings({
     required this.id,
     required this.doc_id,
@@ -141,28 +142,29 @@ class SiteSettings extends Equatable {
     return SiteSettings(
       id: map['id'] as String,
       doc_id: map['doc_id'] as String,
-      website_background: map['website_background'] as String,
-      website_title_font_color: map['website_title_font_color'] as String,
+      website_background: map['website_background'] as String?,
+      website_title_font_color: map['website_title_font_color'] as String?,
       website_title_font_shadow_color:
-          map['website_title_font_shadow_color'] as String,
+          map['website_title_font_shadow_color'] as String?,
       website_title_font_size_mobile:
-          map['website_title_font_size_mobile'] as int,
+          map['website_title_font_size_mobile'] as int?,
       website_title_font_size_other:
-          map['website_title_font_size_other'] as int,
-      titles_font_color: map['titles_font_color'] as String,
-      titles_font_shadow_color: map['titles_font_shadow_color'] as String,
-      titles_font_size_mobile: map['titles_font_size_mobile'] as int,
-      titles_font_size_other: map['titles_font_size_other'] as int,
-      subtitles_font_color: map['subtitles_font_color'] as String,
-      subtitles_font_shadow_color: map['subtitles_font_shadow_color'] as String,
-      subtitles_font_size_mobile: map['subtitles_font_size_mobile'] as int,
-      subtitles_font_size_other: map['subtitles_font_size_other'] as int,
-      text_font_color: map['text_font_color'] as String,
-      text_font_shadow_color: map['text_font_shadow_color'] as String,
-      text_font_size_mobile: map['text_font_size_mobile'] as int,
-      text_font_size_other: map['text_font_size_other'] as int,
-      button_color: map['button_color'] as String,
-      button_font_color: map['button_font_color'] as String,
+          map['website_title_font_size_other'] as int?,
+      titles_font_color: map['titles_font_color'] as String?,
+      titles_font_shadow_color: map['titles_font_shadow_color'] as String?,
+      titles_font_size_mobile: map['titles_font_size_mobile'] as int?,
+      titles_font_size_other: map['titles_font_size_other'] as int?,
+      subtitles_font_color: map['subtitles_font_color'] as String?,
+      subtitles_font_shadow_color:
+          map['subtitles_font_shadow_color'] as String?,
+      subtitles_font_size_mobile: map['subtitles_font_size_mobile'] as int?,
+      subtitles_font_size_other: map['subtitles_font_size_other'] as int?,
+      text_font_color: map['text_font_color'] as String?,
+      text_font_shadow_color: map['text_font_shadow_color'] as String?,
+      text_font_size_mobile: map['text_font_size_mobile'] as int?,
+      text_font_size_other: map['text_font_size_other'] as int?,
+      button_color: map['button_color'] as String?,
+      button_font_color: map['button_font_color'] as String?,
     );
   }
 
@@ -170,7 +172,7 @@ class SiteSettings extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props {
+  List<Object?> get props {
     return [
       id,
       doc_id,
@@ -195,4 +197,26 @@ class SiteSettings extends Equatable {
       button_font_color,
     ];
   }
+
+  static List<String> forWidgetsJson() => [
+        'website_background',
+        'website_title_font_color',
+        'website_title_font_shadow_color',
+        'website_title_font_size_mobile',
+        'website_title_font_size_other',
+        'titles_font_color',
+        'titles_font_shadow_color',
+        'titles_font_size_mobile',
+        'titles_font_size_other',
+        'subtitles_font_color',
+        'subtitles_font_shadow_color',
+        'subtitles_font_size_mobile',
+        'subtitles_font_size_other',
+        'text_font_color',
+        'text_font_shadow_color',
+        'text_font_size_mobile',
+        'text_font_size_other',
+        'button_color',
+        'button_font_color',
+      ];
 }

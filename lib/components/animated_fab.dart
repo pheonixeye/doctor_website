@@ -20,6 +20,13 @@ class MYFAB extends StatelessWidget {
           return const LoadingAnimationWidget();
         }
         return AnimatedFloatingActionButton(
+          colorStartAnimation: Theme.of(context)
+                  .elevatedButtonTheme
+                  .style
+                  ?.backgroundColor
+                  ?.resolve({}) ??
+              Colors.white,
+          key: UniqueKey(),
           fabButtons: [
             FloatingActionButton(
               shape: const CircleBorder(),

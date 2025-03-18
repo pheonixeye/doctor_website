@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctor_website/extensions/model_image_url_extractor.dart';
 import 'package:doctor_website/functions/res_size.dart';
 import 'package:doctor_website/models/video.dart';
+import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:doctor_website/pages/pages.dart';
@@ -16,8 +17,8 @@ class MediaItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Consumer<PxLocale>(
-        builder: (context, l, _) {
+      child: Consumer2<PxLocale, PxGetDoctorData>(
+        builder: (context, l, m, _) {
           return ListTile(
             leading: null,
             tileColor: Colors.black,
@@ -28,7 +29,8 @@ class MediaItemCard extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 l.isEnglish ? mediaItem.title_en : mediaItem.title_ar,
-                style: Styles.TITLESTEXTSYTYLE(context),
+                style:
+                    Styles(m.model?.siteSettings).SUBTITLESTEXTSYTYLE(context),
               ),
             ),
             onTap: () {
@@ -44,7 +46,8 @@ class MediaItemCard extends StatelessWidget {
                     l.isEnglish
                         ? mediaItem.description_en
                         : mediaItem.description_ar,
-                    style: Styles.ARTICLESUBTITLESTEXTSYTYLE(context),
+                    style:
+                        Styles(m.model?.siteSettings).TEXTTEXTSYTYLE(context),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -60,8 +63,13 @@ class MediaItemCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                         boxShadow: [
                           BoxShadow(
-                            offset: Offset(2, 2),
-                            color: Colors.amber,
+                            offset: Offset(1, 1),
+                            color: Styles(m.model?.siteSettings)
+                                    .SUBTITLESTEXTSYTYLE(context)
+                                    .shadows
+                                    ?.first
+                                    .color ??
+                                Colors.white,
                             blurRadius: 2,
                             spreadRadius: 2,
                           ),

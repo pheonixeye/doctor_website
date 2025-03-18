@@ -4,6 +4,7 @@ import 'package:doctor_website/functions/res_size.dart';
 import 'package:doctor_website/models/article.dart';
 import 'package:doctor_website/pages/pages.dart';
 import 'package:doctor_website/providers/locale_p.dart';
+import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_website/styles/styles.dart';
 import 'package:go_router/go_router.dart';
@@ -34,8 +35,8 @@ class _ArticleCardState extends State<ArticleCard> {
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Consumer<PxLocale>(
-            builder: (context, l, _) {
+          child: Consumer2<PxLocale, PxGetDoctorData>(
+            builder: (context, l, m, _) {
               return Row(
                 children: [
                   Expanded(
@@ -63,7 +64,8 @@ class _ArticleCardState extends State<ArticleCard> {
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             l.isEnglish ? widget.e.title_en : widget.e.title_ar,
-                            style: Styles.ARTICLETITLESTEXTSYTYLE(context),
+                            style: Styles(m.model?.siteSettings)
+                                .SUBTITLESTEXTSYTYLE(context),
                           ),
                         ),
                         (widget.e.description_ar.isNotEmpty &&
@@ -75,8 +77,8 @@ class _ArticleCardState extends State<ArticleCard> {
                                     l.isEnglish
                                         ? widget.e.description_en
                                         : widget.e.description_ar,
-                                    style: Styles.ARTICLESUBTITLESTEXTSYTYLE(
-                                        context),
+                                    style: Styles(m.model?.siteSettings)
+                                        .TEXTTEXTSYTYLE(context),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: isMobile(context) ? 4 : 3,
                                   ),

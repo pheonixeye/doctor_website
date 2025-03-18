@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:doctor_website/styles/styles.dart';
 
 class NoClinicSelectedCard extends StatelessWidget {
-  const NoClinicSelectedCard({super.key});
+  const NoClinicSelectedCard({super.key, required this.style});
+  final TextStyle style;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class NoClinicSelectedCard extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             context.loc.no_clinic_selected,
-            style: Styles.TITLESTEXTSYTYLE(context),
+            style: style,
           ),
         ),
       ),
@@ -25,7 +26,8 @@ class NoClinicSelectedCard extends StatelessWidget {
 }
 
 class NoDaySelectedCard extends StatelessWidget {
-  const NoDaySelectedCard({super.key});
+  const NoDaySelectedCard({super.key, required this.style});
+  final TextStyle style;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +40,7 @@ class NoDaySelectedCard extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             context.loc.no_day_selected,
-            style: Styles.TITLESTEXTSYTYLE(context),
+            style: style,
           ),
         ),
       ),
@@ -47,7 +49,8 @@ class NoDaySelectedCard extends StatelessWidget {
 }
 
 class NoDateSelectedCard extends StatelessWidget {
-  const NoDateSelectedCard({super.key});
+  const NoDateSelectedCard({super.key, required this.style});
+  final TextStyle style;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +63,7 @@ class NoDateSelectedCard extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Text(
             context.loc.no_date_selected,
-            style: Styles.TITLESTEXTSYTYLE(context),
+            style: style,
           ),
         ),
       ),

@@ -3,20 +3,16 @@ import 'package:doctor_website/models/align_from_string.dart';
 import 'package:doctor_website/models/hero_item.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_website/providers/locale_p.dart';
-import 'package:doctor_website/styles/styles.dart';
 import 'package:provider/provider.dart';
 
 class HeroTextPositioned extends StatelessWidget {
-  const HeroTextPositioned(this.heroText, {super.key});
+  const HeroTextPositioned(this.heroText, {super.key, required this.style});
   final HeroText heroText;
+  final TextStyle style;
   @override
   Widget build(BuildContext context) {
     return Consumer<PxLocale>(
       builder: (context, l, _) {
-        final style = Styles.HEROITEMTEXTSTYLE(isMobile(context)
-            ? heroText.font_mobile?.toDouble() ?? 16
-            : heroText.font_other?.toDouble() ?? 16);
-
         return Align(
           alignment: alignmentFromString(heroText.align ?? ''),
           child: Padding(

@@ -33,13 +33,19 @@ class _EnterCredentialsConfirmBookingSectionState
           return const LoadingAnimationWidget();
         }
         while (b.booking!.clinic_id == null) {
-          return const NoClinicSelectedCard();
+          return NoClinicSelectedCard(
+            style: Styles(m.model?.siteSettings).SUBTITLESTEXTSYTYLE(context),
+          );
         }
         while (b.booking!.schedule_id == null) {
-          return const NoDaySelectedCard();
+          return NoDaySelectedCard(
+            style: Styles(m.model?.siteSettings).SUBTITLESTEXTSYTYLE(context),
+          );
         }
         while (b.booking!.date == null) {
-          return const NoDateSelectedCard();
+          return NoDateSelectedCard(
+            style: Styles(m.model?.siteSettings).SUBTITLESTEXTSYTYLE(context),
+          );
         }
         return Form(
           key: formKey,

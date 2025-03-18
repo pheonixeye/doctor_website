@@ -6,6 +6,7 @@ import 'package:doctor_website/components/subroute_bkgrnd.dart';
 import 'package:doctor_website/extensions/model_image_url_extractor.dart';
 import 'package:doctor_website/providers/locale_p.dart';
 import 'package:doctor_website/providers/px_get_doctor_data.dart';
+import 'package:doctor_website/styles/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor_website/providers/nav_index_p.dart';
 import 'package:doctor_website/r_homepage/_widgets/page_view_w.dart';
@@ -87,20 +88,8 @@ class _HomePageState extends State<HomePage>
                             ),
                             Text(
                               _text,
-                              style: TextStyle(
-                                fontSize: isMobile(context) ? 22 : 36,
-                                color: Colors.white,
-                                decorationColor: Colors.amber,
-                                decorationStyle: TextDecorationStyle.wavy,
-                                shadows: const [
-                                  BoxShadow(
-                                    offset: Offset(3, 3),
-                                    blurRadius: 3,
-                                    spreadRadius: 3,
-                                    color: Colors.amber,
-                                  ),
-                                ],
-                              ),
+                              style: Styles(m.model?.siteSettings)
+                                  .WEBSITETITLETEXTSYTYLE(context),
                             ),
                           ],
                         );

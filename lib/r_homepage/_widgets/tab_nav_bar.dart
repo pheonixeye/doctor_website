@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:after_layout/after_layout.dart';
+import 'package:doctor_website/providers/px_get_doctor_data.dart';
+import 'package:doctor_website/styles/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:doctor_website/models/navigation_m.dart';
@@ -52,17 +54,20 @@ class _NavTabBarState extends State<NavTabBar>
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<PxLocale, PxNavIndex>(
-      builder: (context, l, i, _) {
+    return Consumer3<PxLocale, PxNavIndex, PxGetDoctorData>(
+      builder: (context, l, i, m, _) {
         return TabBar(
           controller: _tabController,
           onTap: (value) {
             i.setIndex(value);
             GoRouter.of(context).go('/${l.lang}/${i.index}');
           },
-          indicatorColor: Colors.amber,
-          labelColor: Colors.amber,
-          unselectedLabelColor: Colors.white,
+          indicatorColor:
+              Styles(m.model?.siteSettings).SUBTITLESTEXTSYTYLE(context).color,
+          labelColor:
+              Styles(m.model?.siteSettings).SUBTITLESTEXTSYTYLE(context).color,
+          unselectedLabelColor:
+              Styles(m.model?.siteSettings).TEXTTEXTSYTYLE(context).color,
           indicatorWeight: 3.0,
           labelPadding: const EdgeInsets.all(0),
           tabs: MxNavigation.NAVITEMS(context).map((e) {

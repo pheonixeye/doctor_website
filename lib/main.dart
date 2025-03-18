@@ -1,4 +1,5 @@
 import 'package:doctor_website/constant/constants.dart';
+import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:doctor_website/language/app_localizations.dart';
@@ -34,12 +35,12 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: providers,
       builder: (context, child) {
-        return Consumer<PxLocale>(
-          builder: (context, l, c) {
+        return Consumer2<PxLocale, PxGetDoctorData>(
+          builder: (context, l, m, _) {
             return MaterialApp.router(
               title: 'Dr. Hossam El-Awady',
               debugShowCheckedModeBanner: false,
-              theme: Styles.LIGHTTHEMEDATA(context),
+              theme: Styles(m.model?.siteSettings).LIGHTTHEMEDATA(context),
               routeInformationProvider: router.routeInformationProvider,
               routeInformationParser: router.routeInformationParser,
               routerDelegate: router.routerDelegate,

@@ -4,14 +4,15 @@ import 'package:doctor_website/components/link_text.dart';
 import 'package:doctor_website/styles/styles.dart';
 
 class AddressTile extends StatelessWidget {
-  const AddressTile({super.key, required this.address});
+  const AddressTile({super.key, required this.address, required this.style});
   final String address;
+  final TextStyle style;
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
         context.loc.address,
-        style: Styles.TITLESTEXTSYTYLE(context),
+        style: style,
       ),
       subtitle: Padding(
         padding: const EdgeInsets.all(8.0),

@@ -94,9 +94,9 @@ class _ServicesViewPageState extends State<ServicesViewPage> {
                                               l.isEnglish
                                                   ? item.service.name_en
                                                   : item.service.name_ar,
-                                              style: Styles
-                                                  .ARTICLETITLESTEXTSYTYLE(
-                                                      context),
+                                              style: Styles(
+                                                      m.model?.siteSettings)
+                                                  .SUBTITLESTEXTSYTYLE(context),
                                               textAlign: TextAlign.start,
                                             ),
                                           ),
@@ -108,9 +108,9 @@ class _ServicesViewPageState extends State<ServicesViewPage> {
                                               l.isEnglish
                                                   ? item.service.description_en
                                                   : item.service.description_ar,
-                                              style: Styles
-                                                  .ARTICLESUBTITLESTEXTSYTYLE(
-                                                      context),
+                                              style:
+                                                  Styles(m.model?.siteSettings)
+                                                      .TEXTTEXTSYTYLE(context),
                                               textAlign: TextAlign.start,
                                               overflow: TextOverflow.ellipsis,
                                             ),

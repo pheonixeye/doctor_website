@@ -110,6 +110,8 @@ class _DivContactState extends State<DivContact> {
                                     children: [
                                       wids.AddressTile(
                                         address: address,
+                                        style: Styles(m.model?.siteSettings)
+                                            .SUBTITLESTEXTSYTYLE(context),
                                       ),
                                       wids.PhoneTile(
                                         phone: m.model!.clinics![index].clinic
@@ -120,6 +122,8 @@ class _DivContactState extends State<DivContact> {
                                             '_blank',
                                           );
                                         },
+                                        style: Styles(m.model?.siteSettings)
+                                            .SUBTITLESTEXTSYTYLE(context),
                                       ),
                                     ],
                                   ),
@@ -128,6 +132,10 @@ class _DivContactState extends State<DivContact> {
                                   flex: 3,
                                   child: wids.HoursTile(
                                     schedule: m.model!.clinics![index].schedule,
+                                    titleStyle: Styles(m.model?.siteSettings)
+                                        .SUBTITLESTEXTSYTYLE(context),
+                                    subtitleStyle: Styles(m.model?.siteSettings)
+                                        .TEXTTEXTSYTYLE(context),
                                   ),
                                 ),
                               ],
@@ -172,9 +180,15 @@ class _DivContactState extends State<DivContact> {
                               children: [
                                 wids.AddressTile(
                                   address: address,
+                                  style: Styles(m.model?.siteSettings)
+                                      .SUBTITLESTEXTSYTYLE(context),
                                 ),
                                 wids.HoursTile(
                                   schedule: m.model!.clinics![index].schedule,
+                                  titleStyle: Styles(m.model?.siteSettings)
+                                      .SUBTITLESTEXTSYTYLE(context),
+                                  subtitleStyle: Styles(m.model?.siteSettings)
+                                      .TEXTTEXTSYTYLE(context),
                                 ),
                                 wids.PhoneTile(
                                   phone: m.model!.clinics![index].clinic.phone,
@@ -184,6 +198,8 @@ class _DivContactState extends State<DivContact> {
                                       '_blank',
                                     );
                                   },
+                                  style: Styles(m.model?.siteSettings)
+                                      .SUBTITLESTEXTSYTYLE(context),
                                 ),
                               ],
                             ),

@@ -15,51 +15,58 @@ class DivPhone extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: sectionHeightSocialFooter(context),
-      child: Card(
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        elevation: 10,
-        shape: const RoundedRectangleBorder(),
-        color: Styles.MAINPAGECOMPONENTCARDCOLOR,
-        child: Row(
-          children: [
-            const Spacer(),
-            Text(
-              context.loc.phone,
-              style: Styles.TITLESTEXTSYTYLE(context),
-            ),
-            const Spacer(),
-            Consumer2<PxLocale, PxGetDoctorData>(
-              builder: (context, l, m, c) {
-                while (m.model == null) {
-                  return const LoadingAnimationWidget();
-                }
-                final number = m.model!.socialContacts!.main_phone;
-                List<int> parsed = number.characters.map(int.parse).toList();
-                bool isEnglish = l.lang == 'en';
-                List<String> no =
-                    parsed.map((e) => ArabicNumbers().convert(e)).toList();
-                String arno = no.fold<String>('', (p, e) => p + e);
+    return Consumer2<PxLocale, PxGetDoctorData>(
+      builder: (context, l, m, c) {
+        while (m.model == null) {
+          return const LoadingAnimationWidget();
+        }
+        return SizedBox(
+          height: sectionHeightSocialFooter(context),
+          child: Card(
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            elevation: 10,
+            shape: const RoundedRectangleBorder(),
+            color: Styles.MAINPAGECOMPONENTCARDCOLOR,
+            child: Row(
+              children: [
+                const Spacer(),
+                Text(
+                  context.loc.phone,
+                  style: Styles(m.model?.siteSettings)
+                      .SUBTITLESTEXTSYTYLE(context),
+                ),
+                const Spacer(),
+                Builder(
+                  builder: (context) {
+                    final number = m.model!.socialContacts!.main_phone;
+                    List<int> parsed =
+                        number.characters.map(int.parse).toList();
+                    bool isEnglish = l.lang == 'en';
+                    List<String> no =
+                        parsed.map((e) => ArabicNumbers().convert(e)).toList();
+                    String arno = no.fold<String>('', (p, e) => p + e);
 
-                return LinkText(
-                  isEnglish ? number : arno,
-                  style: Styles.TITLESTEXTSYTYLE(context),
-                  onTap: () {
-                    web.window.open(
-                      'tel:+2$number',
-                      '_blank',
+                    return LinkText(
+                      isEnglish ? number : arno,
+                      style:
+                          Styles(m.model?.siteSettings).TEXTTEXTSYTYLE(context),
+                      onTap: () {
+                        web.window.open(
+                          'tel:+2$number',
+                          '_blank',
+                        );
+                      },
                     );
                   },
-                );
-              },
+                ),
+                const Spacer(
+                  flex: 2,
+                ),
+              ],
             ),
-            const Spacer(
-              flex: 2,
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
