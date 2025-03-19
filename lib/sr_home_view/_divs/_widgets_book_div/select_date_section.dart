@@ -43,12 +43,15 @@ class _SelectDateSectionState extends State<SelectDateSection> {
         while (m.model == null || m.model!.clinics == null) {
           return const LoadingAnimationWidget();
         }
-        while (b.booking == null || b.booking!.clinic_id == null) {
+        while (b.booking == null ||
+            b.booking!.clinic_id == null ||
+            b.booking!.clinic_id!.isEmpty) {
           return NoClinicSelectedCard(
             style: Styles(m.model?.siteSettings).SUBTITLESTEXTSYTYLE(context),
           );
         }
-        while (b.booking!.schedule_id == null) {
+        while (
+            b.booking!.schedule_id == null || b.booking!.schedule_id!.isEmpty) {
           return NoDaySelectedCard(
             style: Styles(m.model?.siteSettings).SUBTITLESTEXTSYTYLE(context),
           );

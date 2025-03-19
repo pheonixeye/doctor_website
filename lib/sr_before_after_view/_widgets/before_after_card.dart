@@ -84,8 +84,8 @@ class _BeforeAfterCardState extends State<BeforeAfterCard> {
                         switchOutCurve: Curves.bounceOut,
                         duration: duration,
                         transitionBuilder: (child, animation) {
-                          return ScaleTransition(
-                            scale: animation,
+                          return FadeTransition(
+                            opacity: animation,
                             child: SizedBox.expand(child: child),
                           );
                         },

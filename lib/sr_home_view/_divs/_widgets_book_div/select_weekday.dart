@@ -26,7 +26,9 @@ class _SelectWeekdaySectionState extends State<SelectWeekdaySection> {
         while (m.model == null || m.model!.clinics == null) {
           return const LoadingAnimationWidget();
         }
-        while (b.booking == null || b.booking!.clinic_id == null) {
+        while (b.booking == null ||
+            b.booking!.clinic_id == null ||
+            b.booking!.clinic_id!.isEmpty) {
           return NoClinicSelectedCard(
             style: Styles(m.model?.siteSettings).SUBTITLESTEXTSYTYLE(context),
           );

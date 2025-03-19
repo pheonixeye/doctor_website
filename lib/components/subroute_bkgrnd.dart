@@ -28,9 +28,13 @@ class SubRouteBackground extends StatelessWidget {
                   )
                 : BoxDecoration(
                     image: DecorationImage(
-                      image: CachedNetworkImageProvider(
-                        '${m.model?.siteSettings?.imageUrl(m.model?.siteSettings?.website_background ?? '')}',
-                      ),
+                      image: (m.model!.siteSettings!.website_background!
+                              .endsWith('gif'))
+                          ? NetworkImage(
+                              '${m.model?.siteSettings?.imageUrl(m.model?.siteSettings?.website_background ?? '')}')
+                          : CachedNetworkImageProvider(
+                              '${m.model?.siteSettings?.imageUrl(m.model?.siteSettings?.website_background ?? '')}',
+                            ),
                       fit: BoxFit.cover,
                     ),
                   ),
