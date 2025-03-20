@@ -1,4 +1,5 @@
 import 'package:doctor_website/api/get/hx_main.dart';
+import 'package:doctor_website/api/notify/hx_notify.dart';
 import 'package:doctor_website/api/post/hx_post.dart';
 import 'package:doctor_website/constant/constants.dart';
 import 'package:doctor_website/providers/exp_opacity_p.dart';
@@ -24,6 +25,8 @@ final List<SingleChildWidget> providers = [
   ChangeNotifierProvider(
     create: (context) => PxBooking(
       service: BookingApi.common(),
+      notificationsService:
+          NotificationsApi.common(dotenv.env[AppConstants.DOC_ID]!),
     ),
   ),
 ];

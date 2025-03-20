@@ -1,13 +1,19 @@
+import 'package:doctor_website/api/notify/hx_notify.dart';
 import 'package:doctor_website/api/post/hx_post.dart';
 import 'package:doctor_website/constant/constants.dart';
 import 'package:doctor_website/models/booking.dart';
+import 'package:doctor_website/models/booking_notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class PxBooking extends ChangeNotifier {
   final BookingApi service;
+  final NotificationsApi notificationsService;
 
-  PxBooking({required this.service}) {
+  PxBooking({
+    required this.service,
+    required this.notificationsService,
+  }) {
     _initBooking();
   }
 
@@ -53,9 +59,10 @@ class PxBooking extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> createBooking() async {
+  Future<void> createBooking(BookingNotification bookingNotification) async {
     if (_booking != null) {
       await service.createBooking(booking!);
+      await notificationsService.notifyBooking(bookingNotification);
       _booking = null;
       notifyListeners();
     }

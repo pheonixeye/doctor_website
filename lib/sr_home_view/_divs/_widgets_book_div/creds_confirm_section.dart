@@ -1,4 +1,5 @@
 import 'package:doctor_website/functions/shell_function.dart';
+import 'package:doctor_website/models/booking_notification.dart';
 import 'package:doctor_website/providers/px_booking.dart';
 import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
@@ -144,10 +145,15 @@ class _EnterCredentialsConfirmBookingSectionState
                               return;
                             }
                             if (context.mounted) {
+                              final _bookingNotification =
+                                  BookingNotification.fromServerResponseModel(
+                                m.model!,
+                                b.booking!,
+                              );
                               await shellFunction(
                                 context,
                                 toExecute: () async {
-                                  await b.createBooking();
+                                  await b.createBooking(_bookingNotification);
                                   if (context.mounted) {
                                     sc.scrollToPage(4, context);
                                   }
