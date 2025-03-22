@@ -47,7 +47,8 @@ final GoRouter router = GoRouter(
               key: key,
               child: ChangeNotifierProvider.value(
                 value: PxGetDoctorData(
-                  service: HxMain.common(dotenv.env[AppConstants.DOC_ID]!),
+                  service: HxMain.common(
+                      const String.fromEnvironment(AppConstants.DOC_ID)),
                 ),
                 child: HomePage(
                   key: valueKeyIndex,

@@ -1,5 +1,4 @@
 import 'package:doctor_website/constant/constants.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -22,18 +21,9 @@ class DataSourceHelper {
 
   DataSourceHelper() {
     _ds ??= switch (_dataSource) {
-      DataSource.pb => PocketBase(dotenv.env[AppConstants.POCKETBASE_URL]!),
+      DataSource.pb =>
+        PocketBase(const String.fromEnvironment(AppConstants.POCKETBASE_URL)),
       DataSource.sb => Supabase.instance.client,
     };
   }
-}
-
-typedef Pocket = PocketBase;
-typedef Supa = SupabaseClient;
-
-class PocketbaseHelper {
-  static final PocketBase _pb =
-      PocketBase(dotenv.env[AppConstants.POCKETBASE_URL]!);
-
-  static PocketBase get pb => _pb;
 }

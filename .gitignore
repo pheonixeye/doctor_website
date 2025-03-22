@@ -46,3 +46,7 @@ app.*.map.json
 
 
 /assets/env
+/.build
+/firebase.json
+/.firebaserc
+/.firebase

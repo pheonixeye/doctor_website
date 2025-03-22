@@ -18,15 +18,15 @@ final List<SingleChildWidget> providers = [
   ChangeNotifierProvider(create: (context) => PxExpOpacity()),
   ChangeNotifierProvider(
     create: (context) => PxGetDoctorData(
-      service: HxMain.common(dotenv.env[AppConstants.DOC_ID]!),
+      service: HxMain.common(const String.fromEnvironment(AppConstants.DOC_ID)),
     ),
   ),
   ChangeNotifierProvider(create: (context) => PxBookingSC()),
   ChangeNotifierProvider(
     create: (context) => PxBooking(
       service: BookingApi.common(),
-      notificationsService:
-          NotificationsApi.common(dotenv.env[AppConstants.DOC_ID]!),
+      notificationsService: NotificationsApi.common(
+          const String.fromEnvironment(AppConstants.DOC_ID)),
     ),
   ),
 ];

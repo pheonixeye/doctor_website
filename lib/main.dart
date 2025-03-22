@@ -17,11 +17,11 @@ Future<void> main() async {
 
   await initializeDateFormatting('ar');
 
-  await dotenv.load(fileName: "/env/.env");
+  // await dotenv.load(fileName: "/env/.env");
 
   await Supabase.initialize(
-    url: dotenv.env[AppConstants.SUPABASE_URL]!,
-    anonKey: dotenv.env[AppConstants.SUPABASE_ANON_KEY]!,
+    url: const String.fromEnvironment(AppConstants.SUPABASE_URL),
+    anonKey: const String.fromEnvironment(AppConstants.SUPABASE_ANON_KEY),
   );
 
   runApp(const MyApp());
