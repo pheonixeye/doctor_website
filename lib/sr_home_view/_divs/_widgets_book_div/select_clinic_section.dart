@@ -75,15 +75,20 @@ class ClinicSelectionCard extends StatefulWidget {
 class _ClinicSelectionCardState extends State<ClinicSelectionCard> {
   bool isSelected = false;
   bool isHovering = false;
+
+  @override
+  void didChangeDependencies() {
+    isSelected = widget.groupValue == widget.clinic;
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
-    isSelected = widget.groupValue == widget.clinic;
-
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Consumer2<PxBookingSC, PxLocale>(
-        builder: (context, s, l, c) {
-          return GestureDetector(
+        builder: (context, s, l, _) {
+          return InkWell(
             onTap: () {
               widget.onValueChanged(widget.clinic);
               setState(() {
@@ -91,36 +96,29 @@ class _ClinicSelectionCardState extends State<ClinicSelectionCard> {
               });
               s.scrollToPage(1, context);
             },
-            child: MouseRegion(
-              cursor: SystemMouseCursors.click,
-              onEnter: (event) {
-                setState(() {
-                  isHovering = true;
-                });
-              },
-              onExit: (event) {
-                setState(() {
-                  isHovering = false;
-                });
-              },
-              child: Card(
-                elevation: isHovering
-                    ? 20
-                    : isSelected
-                        ? 0
-                        : 10,
-                shape: Styles.CARDSHAPE,
-                shadowColor: isHovering ? Colors.amber : null,
-                color: isHovering
-                    ? Colors.amber
-                    : isSelected
-                        ? Colors.blue
-                        : Colors.grey,
-                child: Center(
-                  child: Text(
-                    l.isEnglish ? widget.clinic.name_en : widget.clinic.name_ar,
-                    style: widget.style,
-                  ),
+            onHover: (value) {
+              setState(() {
+                isHovering = value;
+              });
+            },
+            mouseCursor: SystemMouseCursors.click,
+            child: Card.outlined(
+              elevation: isHovering
+                  ? 20
+                  : isSelected
+                      ? 0
+                      : 10,
+              shape: Styles.CARDSHAPE,
+              shadowColor: isHovering ? Colors.amber : null,
+              color: isHovering
+                  ? Colors.amber
+                  : isSelected
+                      ? Colors.blue
+                      : Colors.grey,
+              child: Center(
+                child: Text(
+                  l.isEnglish ? widget.clinic.name_en : widget.clinic.name_ar,
+                  style: widget.style,
                 ),
               ),
             ),

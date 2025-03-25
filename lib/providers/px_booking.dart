@@ -22,7 +22,8 @@ class PxBooking extends ChangeNotifier {
 
   void _initBooking() {
     if (_booking == null) {
-      _booking = Booking.empty(dotenv.env[AppConstants.DOC_ID]!);
+      _booking =
+          Booking.empty(const String.fromEnvironment(AppConstants.DOC_ID));
       notifyListeners();
     }
   }
