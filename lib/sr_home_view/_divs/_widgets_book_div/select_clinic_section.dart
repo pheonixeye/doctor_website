@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctor_website/extensions/first_where_or_null_ext.dart';
+import 'package:doctor_website/extensions/model_image_url_extractor.dart';
 import 'package:doctor_website/models/clinic.dart';
 import 'package:doctor_website/providers/px_booking.dart';
 import 'package:doctor_website/providers/px_get_doctor_data.dart';
@@ -103,6 +105,7 @@ class _ClinicSelectionCardState extends State<ClinicSelectionCard> {
             },
             mouseCursor: SystemMouseCursors.click,
             child: Card.outlined(
+              clipBehavior: Clip.antiAliasWithSaveLayer,
               elevation: isHovering
                   ? 20
                   : isSelected
@@ -116,10 +119,33 @@ class _ClinicSelectionCardState extends State<ClinicSelectionCard> {
                       ? Colors.blue
                       : Colors.grey,
               child: Center(
-                child: Text(
-                  l.isEnglish ? widget.clinic.name_en : widget.clinic.name_ar,
-                  style: widget.style,
-                ),
+                child: (widget.clinic.image != null &&
+                        widget.clinic.image!.isNotEmpty)
+                    ? Container(
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: CachedNetworkImageProvider(widget.clinic
+                                    .imageUrl(widget.clinic.image ?? '') ??
+                                ''),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          l.isEnglish
+                              ? widget.clinic.name_en
+                              : widget.clinic.name_ar,
+                          style: widget.style,
+                        ),
+                      )
+                    : Text(
+                        l.isEnglish
+                            ? widget.clinic.name_en
+                            : widget.clinic.name_ar,
+                        style: widget.style,
+                      ),
               ),
             ),
           );

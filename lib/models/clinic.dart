@@ -14,6 +14,7 @@ class Clinic extends Equatable {
   final String doc_id;
   final List<String>? schedule_ids;
   final List<String>? off_dates;
+  final String? image;
 
   const Clinic({
     required this.id,
@@ -27,6 +28,7 @@ class Clinic extends Equatable {
     required this.doc_id,
     required this.schedule_ids,
     required this.off_dates,
+    required this.image,
   });
 
   Clinic copyWith({
@@ -41,6 +43,7 @@ class Clinic extends Equatable {
     String? doc_id,
     List<String>? schedule_ids,
     List<String>? off_dates,
+    String? image,
   }) {
     return Clinic(
       id: id ?? this.id,
@@ -54,6 +57,7 @@ class Clinic extends Equatable {
       doc_id: doc_id ?? this.doc_id,
       schedule_ids: schedule_ids ?? this.schedule_ids,
       off_dates: off_dates ?? this.off_dates,
+      image: image ?? this.image,
     );
   }
 
@@ -70,6 +74,7 @@ class Clinic extends Equatable {
       'doc_id': doc_id,
       'schedule_ids': schedule_ids,
       'off_dates': off_dates,
+      'image': image,
     };
   }
 
@@ -94,6 +99,7 @@ class Clinic extends Equatable {
       schedule_ids:
           List<String>.from((map['schedule_ids'] as List<dynamic>? ?? [])),
       off_dates: List<String>.from((map['off_dates'] as List<dynamic>? ?? [])),
+      image: map['image'] as String?,
     );
   }
 
@@ -114,6 +120,7 @@ class Clinic extends Equatable {
       doc_id,
       schedule_ids,
       off_dates,
+      image,
     ];
   }
 

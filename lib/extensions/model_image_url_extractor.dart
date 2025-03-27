@@ -1,6 +1,7 @@
 import 'package:doctor_website/api/common/common.dart';
 import 'package:doctor_website/models/article.dart';
 import 'package:doctor_website/models/case.dart';
+import 'package:doctor_website/models/clinic.dart';
 import 'package:doctor_website/models/doctor.dart';
 import 'package:doctor_website/models/hero_item.dart';
 import 'package:doctor_website/models/service.dart';
@@ -141,6 +142,23 @@ extension ImageUrlExtractorSiteSettings on SiteSettings {
       : switch (DataSourceHelper().dataSource) {
           DataSource.pb => _baseUrlPocketbase(
               collection: 'site-settings',
+              id: id,
+              fileKey: fileKey,
+            ),
+          DataSource.sb => _baseUrlSupabase(
+              collection: 'base',
+              id: id,
+              fileKey: fileKey,
+            ),
+        };
+}
+
+extension ImageUrlExtractorClinic on Clinic {
+  String? imageUrl(String fileKey) => fileKey.isEmpty
+      ? null
+      : switch (DataSourceHelper().dataSource) {
+          DataSource.pb => _baseUrlPocketbase(
+              collection: 'clinics',
               id: id,
               fileKey: fileKey,
             ),

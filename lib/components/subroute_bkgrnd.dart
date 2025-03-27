@@ -3,7 +3,6 @@ import 'package:doctor_website/components/animated_fab.dart';
 import 'package:doctor_website/extensions/model_image_url_extractor.dart';
 import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
-import 'package:doctor_website/config/const.dart';
 import 'package:provider/provider.dart';
 
 class SubRouteBackground extends StatelessWidget {
@@ -20,11 +19,7 @@ class SubRouteBackground extends StatelessWidget {
             width: MediaQuery.sizeOf(context).width,
             decoration: m.model?.siteSettings == null
                 ? BoxDecoration(
-                    image: DecorationImage(
-                      image:
-                          AssetImage('assets/images/bkgrnd_${Initials.i_}.jpg'),
-                      fit: BoxFit.cover,
-                    ),
+                    color: Colors.white,
                   )
                 : BoxDecoration(
                     image: DecorationImage(
