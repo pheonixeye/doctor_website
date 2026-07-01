@@ -8,10 +8,7 @@ class ArticleResponseModel extends Equatable {
   final Article article;
   final List<ArticleParagraph> paragraphs;
 
-  const ArticleResponseModel({
-    required this.article,
-    required this.paragraphs,
-  });
+  const ArticleResponseModel({required this.article, required this.paragraphs});
 
   ArticleResponseModel copyWith({
     Article? article,
@@ -45,8 +42,5 @@ class ArticleResponseModel extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [
-        article,
-        paragraphs,
-      ];
+  List<Object> get props => [article, paragraphs];
 }

@@ -4,16 +4,13 @@ import 'package:doctor_website/constant/constants.dart';
 import 'package:doctor_website/models/booking.dart';
 import 'package:doctor_website/models/booking_notification.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class PxBooking extends ChangeNotifier {
   final BookingApi service;
   final NotificationsApi notificationsService;
 
-  PxBooking({
-    required this.service,
-    required this.notificationsService,
-  }) {
+  PxBooking({required this.service, required this.notificationsService}) {
     _initBooking();
   }
 
@@ -22,14 +19,16 @@ class PxBooking extends ChangeNotifier {
 
   void _initBooking() {
     if (_booking == null) {
-      _booking =
-          Booking.empty(const String.fromEnvironment(AppConstants.DOC_ID));
+      _booking = Booking.empty(
+        const String.fromEnvironment(AppConstants.DOC_ID),
+      );
       notifyListeners();
     }
   }
 
   void verifyBooking() {
-    final condition = _booking != null &&
+    final condition =
+        _booking != null &&
         _booking!.doc_id.isNotEmpty &&
         _booking!.clinic_id != null &&
         _booking!.schedule_id != null &&

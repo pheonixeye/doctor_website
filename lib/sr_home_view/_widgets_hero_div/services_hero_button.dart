@@ -37,7 +37,7 @@ class _ServicesHeroButtonState extends State<ServicesHeroButton>
     super.dispose();
   }
 
-  _animate() {
+  void _animate() {
     _animation = CurvedAnimation(parent: _controller, curve: Curves.linear);
     _changeValue = Tween(begin: 0.0, end: 1.0).animate(_animation);
     _controller.forward(from: 0.0);

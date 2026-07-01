@@ -36,23 +36,19 @@ class ClinicResponseModel extends Equatable {
 
   factory ClinicResponseModel.fromJson(Map<String, dynamic> map) {
     return ClinicResponseModel(
-        clinic: Clinic.fromJson(map['clinic'] as Map<String, dynamic>),
-        schedule: List<Schedule>.from(
-            (map['schedule'] as List<dynamic>).map<Schedule>(
+      clinic: Clinic.fromJson(map['clinic'] as Map<String, dynamic>),
+      schedule: List<Schedule>.from(
+        (map['schedule'] as List<dynamic>).map<Schedule>(
           (x) => Schedule.fromJson(x as Map<String, dynamic>),
-        )),
-        offDates: List<String>.from(
-          (map['offDates'] as List<String>),
-        ));
+        ),
+      ),
+      offDates: List<String>.from((map['offDates'] as List<String>)),
+    );
   }
 
   @override
   bool get stringify => true;
 
   @override
-  List<Object> get props => [
-        clinic,
-        schedule,
-        offDates,
-      ];
+  List<Object> get props => [clinic, schedule, offDates];
 }

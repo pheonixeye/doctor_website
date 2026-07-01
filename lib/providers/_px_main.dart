@@ -8,7 +8,7 @@ import 'package:doctor_website/providers/nav_index_p.dart';
 import 'package:doctor_website/providers/px_booking.dart';
 import 'package:doctor_website/providers/px_booking_s_c.dart';
 import 'package:doctor_website/providers/px_get_doctor_data.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
@@ -26,7 +26,8 @@ final List<SingleChildWidget> providers = [
     create: (context) => PxBooking(
       service: BookingApi.common(),
       notificationsService: NotificationsApi.common(
-          const String.fromEnvironment(AppConstants.DOC_ID)),
+        const String.fromEnvironment(AppConstants.DOC_ID),
+      ),
     ),
   ),
 ];

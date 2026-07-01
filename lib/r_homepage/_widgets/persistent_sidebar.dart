@@ -22,7 +22,7 @@ class _PersistentSideBarState extends State<PersistentSideBar> {
       builder: (context, e, m, _) {
         return AnimatedContainer(
           duration: const Duration(milliseconds: 500),
-          color: Colors.white.withOpacity(0.4),
+          color: Colors.white.withValues(alpha: 0.4),
           width: e.exp ? MediaQuery.of(context).size.width : 48,
           height: double.infinity,
           child: Consumer2<PxLocale, PxNavIndex>(
@@ -35,19 +35,18 @@ class _PersistentSideBarState extends State<PersistentSideBar> {
                 groupAlignment: -0.5,
                 labelType: NavigationRailLabelType.none,
                 useIndicator: true,
-                indicatorColor: Theme.of(context)
-                        .elevatedButtonTheme
-                        .style
-                        ?.backgroundColor
-                        ?.resolve({}) ??
+                indicatorColor:
+                    Theme.of(
+                      context,
+                    ).elevatedButtonTheme.style?.backgroundColor?.resolve({}) ??
                     Colors.amber,
-                unselectedLabelTextStyle:
-                    Styles(m.model?.siteSettings).TEXTTEXTSYTYLE(context),
-                selectedLabelTextStyle:
-                    Styles(m.model?.siteSettings).SUBTITLESTEXTSYTYLE(context),
-                unselectedIconTheme: const IconThemeData(
-                  color: Colors.black,
-                ),
+                unselectedLabelTextStyle: Styles(
+                  m.model?.siteSettings,
+                ).TEXTTEXTSYTYLE(context),
+                selectedLabelTextStyle: Styles(
+                  m.model?.siteSettings,
+                ).SUBTITLESTEXTSYTYLE(context),
+                unselectedIconTheme: const IconThemeData(color: Colors.black),
                 onDestinationSelected: (value) {
                   i.setIndex(value);
                   GoRouter.of(context).go('/${l.lang}/${i.index}');

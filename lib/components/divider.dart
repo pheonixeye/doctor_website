@@ -10,15 +10,10 @@ class GlobalDivider extends StatelessWidget {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.4),
+          color: Colors.white.withValues(alpha: 0.4),
           borderRadius: BorderRadiusDirectional.circular(20),
         ),
-        child: const Center(
-          child: Icon(
-            Icons.star,
-            color: Colors.transparent,
-          ),
-        ),
+        child: const Center(child: Icon(Icons.star, color: Colors.transparent)),
       ),
     );
   }

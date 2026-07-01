@@ -7,7 +7,7 @@ class AppConstants {
     'png',
     'jpg',
     'webp',
-    'gif'
+    'gif',
   ];
 
   static const String SUPABASE_URL = 'SUPABASE_URL';

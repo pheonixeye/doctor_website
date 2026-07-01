@@ -56,8 +56,9 @@ class BookingNotification extends Equatable {
     ServerResponseModel model,
     Booking booking,
   ) {
-    final _clinic = model.clinics!
-        .firstWhere((clinic) => clinic.clinic.id == booking.clinic_id);
+    final _clinic = model.clinics!.firstWhere(
+      (clinic) => clinic.clinic.id == booking.clinic_id,
+    );
     final _weekday = model.clinics!
         .firstWhere((clinic) => clinic.clinic.id == booking.clinic_id)
         .schedule
@@ -69,7 +70,8 @@ class BookingNotification extends Equatable {
       id: '',
       doc_id: booking.doc_id,
       title: 'حجز جديد',
-      body: '''
+      body:
+          '''
 ${_clinic.clinic.name_ar},
 $_name,
 $_phone,

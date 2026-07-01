@@ -1,7 +1,7 @@
 import 'package:doctor_website/constant/constants.dart';
 import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:doctor_website/language/app_localizations.dart';
 import 'package:doctor_website/providers/_px_main.dart';
 import 'package:doctor_website/providers/locale_p.dart';
@@ -21,7 +21,9 @@ Future<void> main() async {
 
   await Supabase.initialize(
     url: const String.fromEnvironment(AppConstants.SUPABASE_URL),
-    anonKey: const String.fromEnvironment(AppConstants.SUPABASE_ANON_KEY),
+    publishableKey: const String.fromEnvironment(
+      AppConstants.SUPABASE_ANON_KEY,
+    ),
   );
 
   runApp(const MyApp());

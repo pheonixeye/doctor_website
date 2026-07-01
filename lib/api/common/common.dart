@@ -11,7 +11,7 @@ enum DataSource {
 
 class DataSourceHelper {
   //TODO: change dynamically
-  final DataSource _dataSource = DataSource.sb;
+  final DataSource _dataSource = DataSource.pb;
 
   DataSource get dataSource => _dataSource;
 
@@ -21,8 +21,9 @@ class DataSourceHelper {
 
   DataSourceHelper() {
     _ds ??= switch (_dataSource) {
-      DataSource.pb =>
-        PocketBase(const String.fromEnvironment(AppConstants.POCKETBASE_URL)),
+      DataSource.pb => PocketBase(
+        const String.fromEnvironment(AppConstants.POCKETBASE_URL),
+      ),
       DataSource.sb => Supabase.instance.client,
     };
   }

@@ -135,16 +135,20 @@ class Doctor extends Equatable {
       title_ar: map['title_ar'] as String,
       prefix_en: map['prefix_en'] as String,
       prefix_ar: map['prefix_ar'] as String,
-      clinic_ids:
-          List<String>.from((map['clinic_ids'] as List<dynamic>? ?? [])),
+      clinic_ids: List<String>.from(
+        (map['clinic_ids'] as List<dynamic>? ?? []),
+      ),
       about_ids: List<String>.from((map['about_ids'] as List<dynamic>? ?? [])),
       video_ids: List<String>.from((map['video_ids'] as List<dynamic>? ?? [])),
-      article_ids:
-          List<String>.from((map['article_ids'] as List<dynamic>? ?? [])),
-      hero_items_ids:
-          List<String>.from((map['hero_items_ids'] as List<dynamic>? ?? [])),
-      services_ids:
-          List<String>.from((map['services_ids'] as List<dynamic>? ?? [])),
+      article_ids: List<String>.from(
+        (map['article_ids'] as List<dynamic>? ?? []),
+      ),
+      hero_items_ids: List<String>.from(
+        (map['hero_items_ids'] as List<dynamic>? ?? []),
+      ),
+      services_ids: List<String>.from(
+        (map['services_ids'] as List<dynamic>? ?? []),
+      ),
       cases_ids: List<String>.from((map['cases_ids'] as List<dynamic>? ?? [])),
       avatar: map['avatar'] as String,
       logo: map['logo'] as String,

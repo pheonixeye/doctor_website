@@ -61,8 +61,8 @@ class _HomePageState extends State<HomePage>
                 return [
                   SliverAppBar(
                     automaticallyImplyLeading: false,
-                    backgroundColor: Colors.white.withOpacity(0.4),
-                    foregroundColor: Colors.white.withOpacity(0.4),
+                    backgroundColor: Colors.white.withValues(alpha: 0.4),
+                    foregroundColor: Colors.white.withValues(alpha: 0.4),
                     shadowColor: Colors.transparent,
                     //! logo
                     title: Consumer2<PxLocale, PxGetDoctorData>(
@@ -76,20 +76,21 @@ class _HomePageState extends State<HomePage>
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             CachedNetworkImage(
-                              imageUrl: m.model!.doctor!
-                                      .imageUrlByKey(m.model!.doctor!.logo) ??
+                              imageUrl:
+                                  m.model!.doctor!.imageUrlByKey(
+                                    m.model!.doctor!.logo,
+                                  ) ??
                                   '',
                               fit: BoxFit.cover,
                               width: _logoDimentions,
                               height: _logoDimentions,
                             ),
-                            const SizedBox(
-                              width: 20,
-                            ),
+                            const SizedBox(width: 20),
                             Text(
                               _text,
-                              style: Styles(m.model?.siteSettings)
-                                  .WEBSITETITLETEXTSYTYLE(context),
+                              style: Styles(
+                                m.model?.siteSettings,
+                              ).WEBSITETITLETEXTSYTYLE(context),
                             ),
                           ],
                         );

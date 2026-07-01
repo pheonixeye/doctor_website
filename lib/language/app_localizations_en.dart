@@ -60,7 +60,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get venue => 'Venue';
 
   @override
-  String get no_clinic_selected => 'No Clinic Selected...Select Clinic First...';
+  String get no_clinic_selected =>
+      'No Clinic Selected...Select Clinic First...';
 
   @override
   String get no_day_selected => 'No Day Selected...Select Day First...';
@@ -117,7 +118,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get thanks => 'Thank you for booking with';
 
   @override
-  String get to_contact => 'You will be contacted by our reception team for confirmation.';
+  String get to_contact =>
+      'You will be contacted by our reception team for confirmation.';
 
   @override
   String get no_items_found => 'No Items Found';
@@ -132,7 +134,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get rights_ha => 'All Rights Reserved @Dr. Hossam El-Awady Clinics';
 
   @override
-  String get thanks_ha => 'Thank you for booking with Dr. Hossam El-Awady Clinics.';
+  String get thanks_ha =>
+      'Thank you for booking with Dr. Hossam El-Awady Clinics.';
 
   @override
   String get success => 'Success';

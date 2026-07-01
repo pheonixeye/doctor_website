@@ -2,7 +2,7 @@ import 'package:doctor_website/api/get/hx_main.dart';
 import 'package:doctor_website/constant/constants.dart';
 import 'package:doctor_website/providers/px_get_doctor_data.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:doctor_website/providers/locale_p.dart';
 import 'package:doctor_website/r_homepage/homepage.dart';
@@ -21,9 +21,7 @@ final GoRouter router = GoRouter(
       path: '/',
       name: 'mainroutepage',
       builder: (context, state) {
-        return MainRoutePage(
-          key: state.pageKey,
-        );
+        return MainRoutePage(key: state.pageKey);
       },
       redirect: (context, GoRouterState state) {
         if (state.fullPath == '/') {
@@ -48,12 +46,10 @@ final GoRouter router = GoRouter(
               child: ChangeNotifierProvider.value(
                 value: PxGetDoctorData(
                   service: HxMain.common(
-                      const String.fromEnvironment(AppConstants.DOC_ID)),
+                    const String.fromEnvironment(AppConstants.DOC_ID),
+                  ),
                 ),
-                child: HomePage(
-                  key: valueKeyIndex,
-                  pageIndex: page,
-                ),
+                child: HomePage(key: valueKeyIndex, pageIndex: page),
               ),
             );
           },
@@ -75,23 +71,16 @@ final GoRouter router = GoRouter(
                 //todo: use switch
                 final pageId = state.pathParameters['id'];
                 if (pageId == null) {
-                  return PageNotFoundView(
-                    key: state.pageKey,
-                  );
+                  return PageNotFoundView(key: state.pageKey);
                 }
                 switch (pageId) {
                   case '2':
                     final serviceId = state.pathParameters['itemid'];
                     final _key = ValueKey('$pageId$serviceId');
-                    return OneServiceViewPage(
-                      key: _key,
-                      serviceId: serviceId,
-                    );
+                    return OneServiceViewPage(key: _key, serviceId: serviceId);
 
                   case '3':
-                    return BeforeAfterViewPage(
-                      key: state.pageKey,
-                    );
+                    return BeforeAfterViewPage(key: state.pageKey);
 
                   case '4':
                     final String? mediaItemId = state.pathParameters['itemid'];
@@ -107,9 +96,7 @@ final GoRouter router = GoRouter(
                     );
 
                   default:
-                    return PageNotFoundView(
-                      key: state.pageKey,
-                    );
+                    return PageNotFoundView(key: state.pageKey);
                 }
               },
             ),

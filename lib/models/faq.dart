@@ -76,14 +76,6 @@ class Faq extends Equatable {
 
   @override
   List<Object?> get props {
-    return [
-      id,
-      service_id,
-      q_en,
-      q_ar,
-      a_en,
-      a_ar,
-      video_id,
-    ];
+    return [id, service_id, q_en, q_ar, a_en, a_ar, video_id];
   }
 }

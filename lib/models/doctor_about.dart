@@ -55,10 +55,5 @@ class DoctorAbout extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object> get props => [
-        id,
-        doc_id,
-        about_en,
-        about_ar,
-      ];
+  List<Object> get props => [id, doc_id, about_en, about_ar];
 }

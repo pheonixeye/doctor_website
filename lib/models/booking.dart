@@ -86,14 +86,6 @@ class Booking extends Equatable {
 
   @override
   List<Object?> get props {
-    return [
-      id,
-      doc_id,
-      clinic_id,
-      schedule_id,
-      date,
-      name,
-      phone,
-    ];
+    return [id, doc_id, clinic_id, schedule_id, date, name, phone];
   }
 }

@@ -141,7 +141,7 @@ extension ImageUrlExtractorSiteSettings on SiteSettings {
       ? null
       : switch (DataSourceHelper().dataSource) {
           DataSource.pb => _baseUrlPocketbase(
-              collection: 'site-settings',
+              collection: 'site_settings',
               id: id,
               fileKey: fileKey,
             ),

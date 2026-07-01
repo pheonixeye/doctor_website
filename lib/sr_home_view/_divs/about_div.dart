@@ -37,8 +37,9 @@ class DivAbout extends StatelessWidget {
                         child: Text(
                           context.loc.about,
                           textAlign: TextAlign.start,
-                          style: Styles(m.model?.siteSettings)
-                              .SUBTITLESTEXTSYTYLE(context),
+                          style: Styles(
+                            m.model?.siteSettings,
+                          ).SUBTITLESTEXTSYTYLE(context),
                         ),
                       ),
                       ...m.model!.doctorAbouts!.map((e) {
@@ -46,11 +47,12 @@ class DivAbout extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             l.isEnglish ? e.about_en : e.about_ar,
-                            style: Styles(m.model?.siteSettings)
-                                .TEXTTEXTSYTYLE(context),
+                            style: Styles(
+                              m.model?.siteSettings,
+                            ).TEXTTEXTSYTYLE(context),
                           ),
                         );
-                      })
+                      }),
                     ],
                   ),
                 ),
@@ -64,14 +66,16 @@ class DivAbout extends StatelessWidget {
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadiusDirectional.circular(20),
-                            color: Colors.white.withOpacity(0.8),
+                            color: Colors.white.withValues(alpha: 0.8),
                           ),
                           child: const SizedBox(),
                         ),
                       ),
                       CachedNetworkImage(
-                        imageUrl: m.model!.doctor!
-                                .imageUrlByKey(m.model!.doctor!.avatar) ??
+                        imageUrl:
+                            m.model!.doctor!.imageUrlByKey(
+                              m.model!.doctor!.avatar,
+                            ) ??
                             '',
                         fit: isMobile(context)
                             ? BoxFit.fitHeight
